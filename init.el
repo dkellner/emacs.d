@@ -1,30 +1,38 @@
-;; init.el --- Emacs configuration of Dominik Kellner <dkellner@dkellner.de>.
+;; init.el --- Emacs configuration of Dominik Kellner <dkellner@dkellner.de>
 
-;; Run in server mode. This is needed for running `emacsclient` and I mostly
-;; use it for integration with mutt.
-(server-mode 1)
+;; Configure the package manager and make sure `use-package' is installed.
+;; I use it to tidy the rest of my configuration.
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+(setq package-enable-at-startup nil)
+(package-initialize)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(setq use-package-verbose t)
+(setq use-package-always-ensure t)
 
 ;; I've split my configuration in multiple files and put them in 'conf/'.
+;; Most of them automatically install packages, so if you for example are not
+;; doing Haskell development at all, you will want to remove the line below
+;; before starting Emacs.
 (add-to-list 'load-path "~/.emacs.d/conf/")
-
-;; This one has to be loaded first as other config files reference
-;; `dkellner/install-package-if-missing' defined there:
-(load-library "dkellner-package")
-
-;; All other configs are just loaded in alphabetical order:
-(load-library "dkellner-ace-window")
-(load-library "dkellner-company")
-(load-library "dkellner-docker")
-(load-library "dkellner-email")
-(load-library "dkellner-haskell")
-(load-library "dkellner-helm")
-(load-library "dkellner-magit")
-(load-library "dkellner-misc")
-(load-library "dkellner-org")
-(load-library "dkellner-projectile")
-(load-library "dkellner-python")
-(load-library "dkellner-restclient")
-(load-library "dkellner-ui")
+(use-package dkellner-ace-window :ensure nil)
+(use-package dkellner-company :ensure nil)
+(use-package dkellner-docker :ensure nil)
+(use-package dkellner-elisp :ensure nil)
+(use-package dkellner-email :ensure nil)
+(use-package dkellner-haskell :ensure nil)
+(use-package dkellner-helm :ensure nil)
+(use-package dkellner-magit :ensure nil)
+(use-package dkellner-misc :ensure nil)
+(use-package dkellner-org :ensure nil)
+(use-package dkellner-projectile :ensure nil)
+(use-package dkellner-python :ensure nil)
+(use-package dkellner-restclient :ensure nil)
+(use-package dkellner-sgml :ensure nil)
+(use-package dkellner-ui :ensure nil)
 
 ;; This file is used to store user customization variables.
 (setq custom-file "~/.emacs.d/custom.el")

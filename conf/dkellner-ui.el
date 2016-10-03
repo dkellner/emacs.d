@@ -1,10 +1,12 @@
 ;; dkellner-ui.el --- make emacs look even prettier
 
-(dkellner/install-package-if-missing 'material-theme)
-(load-theme 'material t)
+(use-package material-theme
+  :config
+  (load-theme 'material t))
 
-(dkellner/install-package-if-missing 'powerline)
-(powerline-default-theme)
+(use-package powerline
+  :config
+  (powerline-default-theme))
 
 (setq visible-bell t)
 
@@ -14,8 +16,12 @@
 (scroll-bar-mode -1)
 (show-paren-mode t)
 
-(require 'whitespace)
-(setq whitespace-style '(face empty tabs lines-tail trailing))
-(global-whitespace-mode t)
+(use-package whitespace
+  :config
+  (setq whitespace-style '(face empty tabs lines-tail trailing))
+  (global-whitespace-mode t)
+  :diminish global-whitespace-mode)
 
 (set-face-font 'default "Inconsolata 12")
+
+(provide 'dkellner-ui)

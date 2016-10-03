@@ -2,4 +2,6 @@
 ;;
 ;; For some inspiration, see http://emacsrocks.com/e15.html .
 
-(dkellner/install-package-if-missing 'restclient)
+(use-package restclient)
+
+(provide 'dkellner-restclient)

@@ -5,6 +5,10 @@
 (setq-default require-final-newline t)
 (setq-default indent-tabs-mode nil)
 
+;; Run in server mode. This is needed for running `emacsclient` and I mostly
+;; use it for integration with mutt.
+(server-mode 1)
+
 ;; Remove trailing whitespace on save:
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -13,9 +17,10 @@
 (put 'downcase-region 'disabled nil)
 
 ;; Some keybindings for convenience:
-(global-set-key (kbd "C-f") 'iy-go-to-char)
-(global-set-key (kbd "C-b") 'iy-go-to-char-backward)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(use-package iy-go-to-char
+  :bind (("C-f" . iy-go-to-char)
+         ("C-b" . iy-go-to-char-backward)))
 
 ;; Just kill the current buffer on pressing C-x k, don't ask which one to kill:
 (defun dkellner/kill-buffer ()
@@ -32,3 +37,5 @@
   "Locally bind `recompile' to \"C-c g\""
   (local-set-key (kbd "C-c g") 'recompile))
 (add-hook 'compilation-mode-hook 'dkellner/bind-recompile)
+
+(provide 'dkellner-misc)

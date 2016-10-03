@@ -2,5 +2,7 @@
 ;;
 ;; See https://github.com/Silex/docker.el .
 
-(mapc 'dkellner/install-package-if-missing '(docker
-                                             dockerfile-mode))
+(use-package docker)
+(use-package dockerfile-mode)
+
+(provide 'dkellner-docker)

@@ -52,3 +52,5 @@
         ("j" "Journal" entry (file "~/org/journal.org")
          "* %?\n  Added: %U")
         ))
+
+(provide 'dkellner-org)

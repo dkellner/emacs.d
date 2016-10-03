@@ -5,7 +5,12 @@
 ;;
 ;; See http://projectile.readthedocs.io/en/latest/ .
 
-(mapc 'dkellner/install-package-if-missing '(projectile
-                                             helm-projectile))
-(projectile-global-mode)
-(helm-projectile-on)
+(use-package projectile
+  :config
+  (projectile-global-mode))
+
+(use-package helm-projectile
+  :config
+  (helm-projectile-on))
+
+(provide 'dkellner-projectile)

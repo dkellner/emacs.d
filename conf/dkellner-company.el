@@ -2,8 +2,12 @@
 ;;
 ;; See http://company-mode.github.io/ .
 
-(mapc 'dkellner/install-package-if-missing '(company
-                                             company-quickhelp))
-(add-hook 'after-init-hook 'global-company-mode)
-(setq company-idle-delay t)
-(company-quickhelp-mode 1)
+(use-package company
+  :config
+  (global-company-mode)
+  (setq company-idle-delay t)
+  (use-package company-quickhelp
+    :config
+    (company-quickhelp-mode 1)))
+
+(provide 'dkellner-company)

@@ -3,11 +3,11 @@
 ;; This mainly enables and configures Elpy:
 ;; https://elpy.readthedocs.io/en/latest/index.html
 
-(dkellner/install-package-if-missing 'elpy)
-(elpy-enable)
-
-;; Disable highlight-indentation-mode, because I don't like it.
-(delete 'elpy-module-highlight-indentation elpy-modules)
+(use-package elpy
+  :config
+  (elpy-enable)
+  ;; Disable highlight-indentation-mode, because I don't like it.
+  (delete 'elpy-module-highlight-indentation elpy-modules))
 
 (defun dkellner/elpy-test-tox-runner (top file module test)
   "Test the project using Tox.
@@ -44,3 +44,5 @@ This function should be added to `after-change-functions'."
   "Adds `dkellner/watch-for-pdb' to `after-change-functions' (buffer-local)."
   (add-hook 'after-change-functions 'dkellner/watch-for-pdb t t))
 (add-hook 'compilation-mode-hook 'dkellner/setup-watch-for-pdb)
+
+(provide 'dkellner-python)

@@ -34,6 +34,7 @@
 (use-package dkellner-restclient :ensure nil)
 (use-package dkellner-sgml :ensure nil)
 (use-package dkellner-ui :ensure nil)
+(use-package dkellner-undo-tree :ensure nil)
 
 ;; This file is used to store user customization variables.
 (setq custom-file "~/.emacs.d/custom.el")

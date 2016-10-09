@@ -11,4 +11,5 @@
  ;; If there is more than one, they won't work right.
  '(aw-leading-char-face ((t (:background "#ef6c00" :foreground "#ffffff" :weight bold :height 1.0))))
  '(org-level-1 ((t (:inherit outline-1 :background "transparent" :foreground "#81d4fa" :box nil :weight bold :height 1.0))))
- '(org-level-2 ((t (:inherit outline-2 :background "transparent" :box nil :weight bold :height 1.0)))))
+ '(org-level-2 ((t (:inherit outline-2 :background "transparent" :box nil :weight bold :height 1.0))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.0)))))

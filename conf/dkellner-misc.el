@@ -18,6 +18,7 @@
 
 ;; Some keybindings for convenience:
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 (use-package iy-go-to-char
   :bind (("C-f" . iy-go-to-char)
          ("C-b" . iy-go-to-char-backward)))

@@ -27,6 +27,7 @@
 (use-package dkellner-magit :ensure nil)
 (use-package dkellner-misc :ensure nil)
 (use-package dkellner-org :ensure nil)
+(use-package dkellner-org-reveal :ensure nil)
 (use-package dkellner-php :ensure nil)
 (use-package dkellner-projectile :ensure nil)
 (use-package dkellner-python :ensure nil)

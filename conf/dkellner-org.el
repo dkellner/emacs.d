@@ -2,8 +2,8 @@
 ;;
 ;; See http://orgmode.org/ .
 
-(global-set-key (kbd "\C-ca") 'org-agenda)
-(global-set-key (kbd "\C-cc") 'org-capture)
+(bind-key "C-c a" 'org-agenda)
+(bind-key "C-c c" 'org-capture)
 
 (setq org-directory "~/org/")
 (setq org-agenda-files '("~/org/main.org"))

@@ -12,13 +12,21 @@
 ;; Remove trailing whitespace on save:
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; Highlight unnecessary whitespace
+(use-package whitespace
+  :config
+  (setq whitespace-style '(face empty tabs lines-tail trailing))
+  (global-whitespace-mode t)
+  :diminish global-whitespace-mode)
+
 ;; Enable commands that are disabled by default:
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
 ;; Some keybindings for convenience:
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+(bind-key "C-s" 'isearch-forward-regexp)
+(bind-key "C-x C-b" 'ibuffer)
+(bind-key "C-n" 'other-window)
 (use-package iy-go-to-char
   :bind (("C-f" . iy-go-to-char)
          ("C-b" . iy-go-to-char-backward)))
@@ -28,7 +36,7 @@
   "Kill the current buffer."
   (interactive)
   (kill-buffer))
-(global-set-key (kbd "C-x k") 'dkellner/kill-buffer)
+(bind-key "C-x k" 'dkellner/kill-buffer)
 
 ;; I use "C-c g" for `recompile' in my own mode for the Python debugger
 ;; (see dkellner-python.el). I don't want to care if it's actually
@@ -64,7 +72,6 @@ point reaches the beginning or end of the buffer, stop there."
     (back-to-indentation)
     (when (= orig-point (point))
       (move-beginning-of-line 1))))
-(global-set-key [remap move-beginning-of-line]
-                'dkellner/smarter-move-beginning-of-line)
+(bind-key "<home>" 'dkellner/smarter-move-beginning-of-line)
 
 (provide 'dkellner-misc)

@@ -13,6 +13,9 @@
 (setq use-package-verbose t)
 (setq use-package-always-ensure t)
 
+;; Make sure the following packages are available as I use them in my configs.
+(use-package hydra)
+
 ;; I've split my configuration in multiple files and put them in 'conf/'.
 ;; Most of them automatically install packages, so if you for example are not
 ;; doing Haskell development at all, you will want to remove the line below

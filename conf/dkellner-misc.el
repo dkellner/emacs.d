@@ -38,6 +38,15 @@
   (kill-buffer))
 (bind-key "C-x k" 'dkellner/kill-buffer)
 
+;; Enable winner-mode and enhance its functionality by making the keybindings
+;; "sticky" - i.e. let you press C-c <left> to undo once, and then just <left>
+;; for another undo, and so on.
+(winner-mode 1)
+(defhydra dkellner/winner-undo (:body-pre (winner-undo))
+  ("<left>" winner-undo)
+  ("<right>" winner-redo))
+(bind-key* "C-c <left>" 'dkellner/winner-undo/body)
+
 ;; I use "C-c g" for `recompile' in my own mode for the Python debugger
 ;; (see dkellner-python.el). I don't want to care if it's actually
 ;; `compilation-mode` or `dkellner/pdb-mode` I'm seeing, so I bind it

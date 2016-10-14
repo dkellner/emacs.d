@@ -53,4 +53,8 @@
          "* %?\n  Added: %U")
         ))
 
+(use-package org-bullets
+  :config
+  (add-hook 'org-mode-hook 'org-bullets-mode))
+
 (provide 'dkellner-org)

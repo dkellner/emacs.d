@@ -83,4 +83,6 @@ point reaches the beginning or end of the buffer, stop there."
       (move-beginning-of-line 1))))
 (bind-key "<home>" 'dkellner/smarter-move-beginning-of-line)
 
+(use-package yaml-mode)
+
 (provide 'dkellner-misc)

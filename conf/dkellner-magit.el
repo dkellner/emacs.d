@@ -4,6 +4,11 @@
 ;; https://www.masteringemacs.org/article/introduction-magit-emacs-mode-git
 
 (use-package magit
-  :bind ("C-c m" . magit-status))
+  :config
+  (defhydra dkellner/magit ()
+    ("b" magit-blame "blame")
+    ("l" magit-log-buffer-file "log-buffer-file")
+    ("s" magit-status "status"))
+  (bind-key "C-c g" 'dkellner/magit/body))
 
 (provide 'dkellner-magit)

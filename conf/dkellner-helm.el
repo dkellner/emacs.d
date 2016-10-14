@@ -5,8 +5,7 @@
 (use-package helm
   ;; I want to use the more powerful "equivalents" most of the time, so I bind
   ;; them to the default Emacs shortcuts.
-  :bind (("C-c g" . helm-grep-do-git-grep)
-         ("C-h a" . helm-apropos)
+  :bind (("C-h a" . helm-apropos)
          ("C-x C-f" . helm-find-files)
          ("C-x b" . helm-mini)
          ("M-x" . helm-M-x)

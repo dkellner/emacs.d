@@ -23,6 +23,7 @@
 (add-to-list 'load-path "~/.emacs.d/conf/")
 (use-package dkellner-company :ensure nil)
 (use-package dkellner-docker :ensure nil)
+(use-package dkellner-elfeed :ensure nil)
 (use-package dkellner-elisp :ensure nil)
 (use-package dkellner-email :ensure nil)
 (use-package dkellner-haskell :ensure nil)

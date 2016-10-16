@@ -5,7 +5,7 @@
 (use-package company
   :config
   (global-company-mode)
-  (setq company-idle-delay t)
+  (setq company-idle-delay 0.2)
   (use-package company-quickhelp
     :config
     (company-quickhelp-mode 1)))

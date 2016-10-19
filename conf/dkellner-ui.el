@@ -16,7 +16,7 @@
 (scroll-bar-mode -1)
 (show-paren-mode t)
 
-(set-face-font 'default "Inconsolata 12")
+(set-face-font 'default "Hack 12")
 
 ;; Transparency
 (set-frame-parameter (selected-frame) 'alpha 93)

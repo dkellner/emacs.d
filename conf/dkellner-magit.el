@@ -5,7 +5,7 @@
 
 (use-package magit
   :config
-  (defhydra dkellner/magit ()
+  (defhydra dkellner/magit (:exit t)
     ("b" magit-blame "blame")
     ("d" magit-diff-buffer-file "diff-buffer-file")
     ("l" magit-log-buffer-file "log-buffer-file")

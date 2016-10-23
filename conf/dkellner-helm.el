@@ -12,6 +12,7 @@
          ("M-y" . helm-show-kill-ring))
   :config
   (require 'helm-config)
+  (setq helm-find-file-ignore-thing-at-point t)
   (helm-mode 1)
   (use-package helm-swoop
     :bind ("C-c s" . helm-swoop))

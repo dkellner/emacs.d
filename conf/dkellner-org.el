@@ -16,6 +16,9 @@
                                     "DONE(d)" "DEFERRED(f)")))
 (setq org-startup-folded t)
 (setq org-log-into-drawer t)
+(setq org-agenda-todo-ignore-scheduled 'all)
+(setq org-agenda-todo-ignore-deadlines 'all)
+(setq org-agenda-tags-todo-honor-ignore-options t)
 
 ;; I mostly use the capture template for "Inbox" to put new ideas, todos etc.
 ;; in my `main.org' file for later processing (GTD-style).
@@ -32,11 +35,29 @@
 ;; My custom agenda command is tailored to suit my workflow.
 (setq org-agenda-custom-commands
       '(("c" "Weekly overview"
-         ((agenda "" ((org-agenda-span 8)
-                      (org-agenda-sorting-strategy '(todo-state-down
-                                                     tag-up
-                                                     effort-up))))
-          (todo "TODO")))))
+         ((agenda "" ((org-agenda-span 8)))
+          (todo "TODO")))
+        ("f" "Overview: fiedlbuehl"
+         ((agenda "" ((org-agenda-span 'day)))
+          (tags-todo "+fiedlbuehl-TODO=\"NEXT\"")
+          (tags-todo "+laptop-TODO=\"NEXT\"")
+          (tags-todo "+phone-TODO=\"NEXT\"")
+          (tags-todo "+internet-TODO=\"NEXT\"")
+          (tags-todo "+guitar-TODO=\"NEXT\"")
+          (tags-todo "+errands-TODO=\"NEXT\"")))
+        ("o" "Overview: office"
+         ((agenda "" ((org-agenda-span 'day)))
+          (tags-todo "+office-TODO=\"NEXT\"")
+          (tags-todo "+laptop-TODO=\"NEXT\"")
+          (tags-todo "+phone-TODO=\"NEXT\"")
+          (tags-todo "+internet-TODO=\"NEXT\"")
+          (tags-todo "+errands-TODO=\"NEXT\"")))
+        ("." "Overview: elsewhere"
+         ((agenda "" ((org-agenda-span 'day)))
+          (tags-todo "+laptop-TODO=\"NEXT\"")
+          (tags-todo "+phone-TODO=\"NEXT\"")
+          (tags-todo "+internet-TODO=\"NEXT\"")
+          (tags-todo "+errands-TODO=\"NEXT\"")))))
 
 ;; Eye candy!
 (setq org-hide-leading-stars t)

@@ -32,11 +32,7 @@
          ("C-b" . iy-go-to-char-backward)))
 
 ;; Just kill the current buffer on pressing C-x k, don't ask which one to kill:
-(defun dkellner/kill-buffer ()
-  "Kill the current buffer."
-  (interactive)
-  (kill-buffer))
-(bind-key "C-x k" 'dkellner/kill-buffer)
+(bind-key "C-x k" 'kill-this-buffer)
 
 ;; Enable winner-mode and enhance its functionality by making the keybindings
 ;; "sticky" - i.e. let you press C-c <left> to undo once, and then just <left>

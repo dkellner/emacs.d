@@ -40,6 +40,10 @@
 ;; Just kill the current buffer on pressing C-x k, don't ask which one to kill:
 (bind-key "C-x k" 'kill-this-buffer)
 
+;; Why would one ever want to suspend Emacs?! :)
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-z"))
+
 ;; Enable winner-mode and enhance its functionality by making the keybindings
 ;; "sticky" - i.e. let you press C-c <left> to undo once, and then just <left>
 ;; for another undo, and so on.

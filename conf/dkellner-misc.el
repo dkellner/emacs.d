@@ -5,10 +5,6 @@
 (setq-default require-final-newline t)
 (setq-default indent-tabs-mode nil)
 
-;; Run in server mode. This is needed for running `emacsclient` and I mostly
-;; use it for integration with mutt.
-(server-mode 1)
-
 ;; Remove trailing whitespace on save:
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 

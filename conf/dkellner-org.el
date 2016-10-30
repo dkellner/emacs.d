@@ -59,6 +59,11 @@
           (tags-todo "+internet-TODO=\"NEXT\"")
           (tags-todo "+errands-TODO=\"NEXT\"")))))
 
+;; Enable more languages for Babel, especially useful for
+;; "Literate Devops", see https://www.youtube.com/watch?v=dljNabciEGg .
+(setq org-babel-load-languages '((emacs-lisp . t)
+                                 (shell . t)))
+
 ;; Eye candy!
 (setq org-hide-leading-stars t)
 (use-package org-bullets

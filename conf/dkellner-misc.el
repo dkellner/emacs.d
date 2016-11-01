@@ -28,7 +28,6 @@
 ;; Some keybindings for convenience:
 (bind-key "C-s" 'isearch-forward-regexp)
 (bind-key "C-x C-b" 'ibuffer)
-(bind-key "C-n" 'other-window)
 (use-package iy-go-to-char
   :bind (("C-f" . iy-go-to-char)
          ("C-b" . iy-go-to-char-backward)))
@@ -39,15 +38,6 @@
 ;; Why would one ever want to suspend Emacs?! :)
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
-
-;; Enable winner-mode and enhance its functionality by making the keybindings
-;; "sticky" - i.e. let you press C-c <left> to undo once, and then just <left>
-;; for another undo, and so on.
-(winner-mode 1)
-(defhydra dkellner/winner-undo (:body-pre (winner-undo))
-  ("<left>" winner-undo)
-  ("<right>" winner-redo))
-(bind-key* "C-c <left>" 'dkellner/winner-undo/body)
 
 ;; I use "C-c g" for `recompile' in my own mode for the Python debugger
 ;; (see dkellner-python.el). I don't want to care if it's actually

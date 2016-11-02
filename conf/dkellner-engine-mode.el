@@ -18,3 +18,5 @@
   (defengine youtube
     "https://www.youtube.com/results?aq=f&oq=&search_query=%s"
     :keybinding "y"))
+
+(provide 'dkellner-engine-mode)

@@ -26,6 +26,7 @@
 (use-package dkellner-elfeed :ensure nil)
 (use-package dkellner-elisp :ensure nil)
 (use-package dkellner-email :ensure nil)
+(use-package dkellner-engine-mode :ensure nil)
 (use-package dkellner-haskell :ensure nil)
 (use-package dkellner-helm :ensure nil)
 (use-package dkellner-magit :ensure nil)

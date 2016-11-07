@@ -28,9 +28,9 @@
 ;; Some keybindings for convenience:
 (bind-key "C-s" 'isearch-forward-regexp)
 (bind-key "C-x C-b" 'ibuffer)
-(use-package iy-go-to-char
-  :bind (("C-f" . iy-go-to-char)
-         ("C-b" . iy-go-to-char-backward)))
+(use-package avy
+  :bind (("C-f" . avy-goto-char-timer)
+         ("M-g g" . avy-goto-line)))
 
 ;; Just kill the current buffer on pressing C-x k, don't ask which one to kill:
 (bind-key "C-x k" 'kill-this-buffer)
@@ -76,5 +76,18 @@ point reaches the beginning or end of the buffer, stop there."
 (bind-key "<home>" 'dkellner/smarter-move-beginning-of-line)
 
 (use-package yaml-mode)
+
+;; Constantly improve myself by using better suited commands instead of
+;; repeating "simple" ones.
+;; see https://bitbucket.org/shackra/dwight-k.-schrute/
+(use-package schrute
+  :config
+  (setq schrute-shortcuts-commands
+        '((avy-goto-char-timer . (right-char))
+          (avy-goto-char-timer . (left-char))
+          (avy-goto-line . (next-line))
+          (avy-goto-line . (previous-line))))
+  (schrute-mode)
+  :diminish schrute-mode)
 
 (provide 'dkellner-misc)

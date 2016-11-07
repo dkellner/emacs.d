@@ -19,6 +19,7 @@
 (setq org-agenda-todo-ignore-scheduled 'all)
 (setq org-agenda-todo-ignore-deadlines 'all)
 (setq org-agenda-tags-todo-honor-ignore-options t)
+(setq org-agenda-restore-windows-after-quit t)
 
 ;; I mostly use the capture template for "Inbox" to put new ideas, todos etc.
 ;; in my `main.org' file for later processing (GTD-style).

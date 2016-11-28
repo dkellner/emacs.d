@@ -16,4 +16,17 @@
   :bind (:map emacs-lisp-mode-map
               ("C-c e" . macrostep-expand)))
 
+;; Make the use of sharp-quote more convenient.
+;; See http://endlessparentheses.com/get-in-the-habit-of-using-sharp-quote.html
+(defun endless/sharp ()
+  "Insert #' unless in a string or comment."
+  (interactive)
+  (call-interactively #'self-insert-command)
+  (let ((ppss (syntax-ppss)))
+    (unless (or (elt ppss 3)
+                (elt ppss 4)
+                (eq (char-after) ?'))
+      (insert "'"))))
+(bind-key "#" #'endless/sharp emacs-lisp-mode-map)
+
 (provide 'dkellner-elisp)

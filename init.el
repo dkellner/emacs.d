@@ -21,6 +21,7 @@
 ;; doing Haskell development at all, you will want to remove the line below
 ;; before starting Emacs.
 (add-to-list 'load-path "~/.emacs.d/conf/")
+(use-package dkellner-browser-bookmarks :ensure nil)
 (use-package dkellner-company :ensure nil)
 (use-package dkellner-docker :ensure nil)
 (use-package dkellner-elfeed :ensure nil)

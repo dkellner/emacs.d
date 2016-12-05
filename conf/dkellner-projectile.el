@@ -7,7 +7,8 @@
 
 (use-package projectile
   :config
-  (projectile-global-mode))
+  (projectile-global-mode)
+  :diminish projectile-mode)
 
 (use-package helm-projectile
   :config

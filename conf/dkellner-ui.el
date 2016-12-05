@@ -16,6 +16,8 @@
 (scroll-bar-mode -1)
 (show-paren-mode t)
 
+(diminish 'auto-revert-mode)
+
 (add-to-list 'default-frame-alist '(font . "Hack 12"))
 
 ;; Transparency

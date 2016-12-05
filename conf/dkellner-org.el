@@ -62,8 +62,9 @@
 
 ;; Enable more languages for Babel, especially useful for
 ;; "Literate Devops", see https://www.youtube.com/watch?v=dljNabciEGg .
-(setq org-babel-load-languages '((emacs-lisp . t)
-                                 (shell . t)))
+(org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
+                                                         (python .t)
+                                                         (sh .t)))
 
 ;; Eye candy!
 (setq org-hide-leading-stars t)

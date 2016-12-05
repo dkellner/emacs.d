@@ -72,6 +72,9 @@
   :config
   (add-hook 'org-mode-hook 'org-bullets-mode))
 
+;; Simple presentations inside Emacs.
+(use-package org-tree-slide)
+
 ;; I put this in an own function because I had problems when doing
 ;; `set-face-foreground' with Emacs running as a daemon. It did not apply the
 ;; setting for newly created frames.

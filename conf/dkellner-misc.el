@@ -15,12 +15,6 @@
   (global-whitespace-mode t)
   :diminish global-whitespace-mode)
 
-;; Highlight certain changes like pasting (yanking) text
-(use-package volatile-highlights
-  :config
-  (volatile-highlights-mode t)
-  :diminish volatile-highlights-mode)
-
 ;; Enable commands that are disabled by default:
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)

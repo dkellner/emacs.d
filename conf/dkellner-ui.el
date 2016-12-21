@@ -8,6 +8,11 @@
   :config
   (powerline-default-theme))
 
+(use-package bar-cursor
+  :config
+  (bar-cursor-mode 1)
+  :diminish bar-cursor-mode)
+
 (setq visible-bell t)
 (setq inhibit-startup-message t)
 

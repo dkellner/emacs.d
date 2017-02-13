@@ -39,6 +39,7 @@
 (use-package dkellner-python :ensure nil)
 (use-package dkellner-restclient :ensure nil)
 (use-package dkellner-sgml :ensure nil)
+(use-package dkellner-switch-org-task :ensure nil)
 (use-package dkellner-ui :ensure nil)
 (use-package dkellner-undo-tree :ensure nil)
 (use-package dkellner-windows-and-navigation :ensure nil)

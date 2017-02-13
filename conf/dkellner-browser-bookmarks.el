@@ -1,6 +1,6 @@
 ;; dkellner-browser-bookmarks.el --- manage bookmarks in an org-file
 
-(bind-key "C-c b" 'dkellner-helm-open-bookmark-in-browser)
+(bind-key "C-c b" #'dkellner/open-browser-bookmark)
 
 (defcustom dkellner-browser-bookmarks-file "~/org/bookmarks.org"
   "Org-file containing bookmarks as HTTP(S)-URLs.
@@ -16,7 +16,7 @@ Example:
 * Search Engines
 ** https://duckduckgo.com/")
 
-(defun dkellner-helm-open-bookmark-in-browser ()
+(defun dkellner/open-browser-bookmark ()
   "Interactively selects and opens a bookmark in the default browser.
 
 It uses `org-open-link-from-string' and thus `browse-url'
@@ -24,25 +24,29 @@ internally for actually sending the URL to the browser. You
 should refer to its documentation if you want to change the
 browser."
   (interactive)
-  (helm :sources (dkellner-bb-helm-sources)
-        :buffer "*helm browser bookmarks*"))
+  (let ((bookmarks (dkellner/browser-bookmarks-in-org-file
+                    dkellner-browser-bookmarks-file)))
+    (ivy-read "Open bookmark: " (map-keys bookmarks)
+              :require-match t
+              :action (lambda (e) (org-open-link-from-string
+                                   (cdr (assoc e bookmarks)))))))
 
-(defun dkellner-bb-helm-sources ()
-  (with-current-buffer
-      (find-file-noselect (expand-file-name dkellner-browser-bookmarks-file))
+(defun dkellner/browser-bookmarks-in-org-file (org-file)
+  (with-current-buffer (find-file-noselect (expand-file-name org-file))
     (org-element-map (org-element-parse-buffer) 'headline
       (lambda (h)
-        (when (= (org-element-property :level h) 1)
-          (dkellner-bb-section-to-helm-source h))))))
+        (when (= (org-element-property :level h) 2)
+          (dkellner/browser-bookmark-to-key-value h))))))
 
-(defun dkellner-bb-section-to-helm-source (headline)
-  `((name . ,(org-element-property :raw-value headline))
-    (candidates . ,(dkellner-bb-contents-to-helm-candidates
-                    (org-element-contents headline)))
-    (action . org-open-link-from-string)))
-
-(defun dkellner-bb-contents-to-helm-candidates (contents)
-  (org-element-map contents 'headline
-    (lambda (h) (org-element-property :raw-value h))))
+(defun dkellner/browser-bookmark-to-key-value (bookmark)
+  (let* ((section (org-element-property :parent bookmark))
+         (section-prefix (concat (org-element-property :raw-value section)
+                                 " :: "))
+         (raw-value (org-element-property :raw-value bookmark))
+         (regexp "\\[\\[\\(.+?\\)]\\[\\(.+?\\)]]"))
+    (if (string-match regexp raw-value)
+        `(,(concat section-prefix (match-string 2 raw-value)) .
+          ,(match-string 1 raw-value))
+      `(,(concat section-prefix raw-value) . ,raw-value))))
 
 (provide 'dkellner-browser-bookmarks)

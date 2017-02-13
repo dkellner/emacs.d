@@ -20,7 +20,6 @@
 (put 'downcase-region 'disabled nil)
 
 ;; Some keybindings for convenience:
-(bind-key "C-s" 'isearch-forward-regexp)
 (bind-key "C-x C-b" 'ibuffer)
 (use-package iy-go-to-char
   :bind (("C-f" . iy-go-to-char)

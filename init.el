@@ -20,7 +20,7 @@
 ;; Most of them automatically install packages, so if you for example are not
 ;; doing Haskell development at all, you will want to remove the line below
 ;; before starting Emacs.
-(add-to-list 'load-path "~/.emacs.d/conf/")
+(add-to-list 'load-path (expand-file-name "conf" user-emacs-directory))
 (use-package dkellner-browser-bookmarks :ensure nil)
 (use-package dkellner-company :ensure nil)
 (use-package dkellner-docker :ensure nil)
@@ -45,5 +45,5 @@
 (use-package dkellner-windows-and-navigation :ensure nil)
 
 ;; This file is used to store user customization variables.
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)

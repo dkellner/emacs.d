@@ -86,4 +86,7 @@ point reaches the beginning or end of the buffer, stop there."
   (schrute-mode)
   :diminish schrute-mode)
 
+(setq term-ansi-default-program "/usr/bin/zsh")
+(setq browse-url-browser-function #'browse-url-firefox)
+
 (provide 'dkellner-misc)

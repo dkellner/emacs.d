@@ -8,6 +8,7 @@
   (defhydra dkellner/magit (:exit t)
     ("b" magit-blame "blame")
     ("d" magit-diff-buffer-file "diff-buffer-file")
+    ("g" counsel-git-grep "grep")
     ("l" magit-log-buffer-file "log-buffer-file")
     ("s" magit-status "status"))
   (bind-key "C-c g" 'dkellner/magit/body))

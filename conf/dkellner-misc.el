@@ -15,6 +15,10 @@
   (global-whitespace-mode t)
   :diminish global-whitespace-mode)
 
+(use-package flycheck
+  :config
+  (global-flycheck-mode))
+
 ;; Enable commands that are disabled by default:
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)

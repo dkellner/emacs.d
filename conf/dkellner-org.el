@@ -87,4 +87,6 @@
   (set-face-foreground 'org-level-2 (face-foreground 'default)))
 (add-hook 'org-mode-hook #'dkellner/beautify-org)
 
+(add-hook 'org-mode-hook (lambda () (auto-fill-mode 1)))
+
 (provide 'dkellner-org)

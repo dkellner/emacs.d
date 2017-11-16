@@ -30,7 +30,7 @@
 (require 'dkellner-engine-mode)
 (require 'dkellner-haskell)
 (require 'dkellner-ivy)
-(require 'dkellner-magit)
+(require 'dkellner-git)
 (require 'dkellner-misc)
 (require 'dkellner-org)
 (require 'dkellner-org-reveal)

@@ -24,6 +24,8 @@
   :config
   (global-flycheck-mode))
 
+(use-package iedit)
+
 ;; Enable commands that are disabled by default:
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)

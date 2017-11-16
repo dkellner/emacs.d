@@ -100,4 +100,13 @@ point reaches the beginning or end of the buffer, stop there."
 (setq term-ansi-default-program "/usr/bin/zsh")
 (setq browse-url-browser-function #'browse-url-firefox)
 
+;; C-x k to kill all buffers, not C-x # for buffers opened by emacsclient.
+;; see https://www.emacswiki.org/emacs/EmacsClient#toc36
+(add-hook 'server-switch-hook
+          (lambda ()
+            (when (current-local-map)
+              (use-local-map (copy-keymap (current-local-map))))
+            (when server-buffer-clients
+              (local-set-key (kbd "C-x k") 'server-edit))))
+
 (provide 'dkellner-misc)

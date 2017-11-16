@@ -25,7 +25,7 @@
 
 (diminish 'auto-revert-mode)
 
-(add-to-list 'default-frame-alist '(font . "Hack 12"))
+(add-to-list 'default-frame-alist '(font . "Meslo LG M 13"))
 
 ;; Transparency
 (add-to-list 'default-frame-alist '(alpha . 93))

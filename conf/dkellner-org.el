@@ -3,14 +3,19 @@
 ;; See http://orgmode.org/ .
 
 ;; Global keybindings to quickly view my agenda and capture thoughts.
-(bind-key "C-c a" 'org-agenda)
-(bind-key "C-c c" 'org-capture)
+(bind-key "C-c a" #'org-agenda)
+(bind-key "C-c c" #'dkellner/org-capture)
+
+(defun dkellner/org-capture ()
+  (interactive)
+  (org-capture nil "i"))
 
 ;; Basic configuration: set main org files for agenda/capturing and
 ;; TODO-keywords.
 (setq org-directory "~/org/")
 (setq org-agenda-files '("~/org/main.org"))
 (setq org-refile-targets (quote (("main.org" :maxlevel . 2)
+                                 ("shopping.org" :maxlevel . 1)
                                  ("someday.org" :level . 1))))
 (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|"
                                     "DONE(d)" "DEFERRED(f)")))
@@ -20,12 +25,17 @@
 (setq org-agenda-todo-ignore-deadlines 'all)
 (setq org-agenda-tags-todo-honor-ignore-options t)
 (setq org-agenda-restore-windows-after-quit t)
+(setq org-time-clocksum-format "%d:%02d")
+(setq org-enforce-todo-dependencies t)
+(setq org-columns-default-format
+      "%40ITEM(Task) %3Priority(Pr.) %16Effort(Estimated Effort){:} %CLOCKSUM{:}")
+(setq org-export-with-sub-superscripts nil)
+(setq org-export-allow-bind-keywords t)
 
 ;; I mostly use the capture template for "Inbox" to put new ideas, todos etc.
 ;; in my `main.org' file for later processing (GTD-style).
 (setq org-capture-templates
-      '(("i" "Inbox" entry (file+headline "~/org/main.org" "Inbox")
-         "* %?\n  Added: %U")
+      '(("i" "Inbox" entry (file+headline "~/org/main.org" "Inbox") "* %?")
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
          "* %?" :kill-buffer t)))
 
@@ -39,32 +49,50 @@
          ((agenda "" ((org-agenda-span 8)))
           (todo "TODO")))
         ("f" "Overview: fiedlbuehl"
-         ((agenda "" ((org-agenda-span 'day)))
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-agenda-sorting-strategy '(habit-down time-up tag-up priority-down))))
           (tags-todo "+fiedlbuehl-TODO=\"NEXT\"")
+          (tags-todo "+work-TODO=\"NEXT\"")
           (tags-todo "+laptop-TODO=\"NEXT\"")
           (tags-todo "+phone-TODO=\"NEXT\"")
           (tags-todo "+internet-TODO=\"NEXT\"")
           (tags-todo "+guitar-TODO=\"NEXT\"")
-          (tags-todo "+errands-TODO=\"NEXT\"")))
+          (tags-todo "+errands-TODO=\"NEXT\"")
+          (tags-todo "+shopping-TODO=\"NEXT\"")))
+        ("h" "Overview: danang"
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-agenda-sorting-strategy '(habit-down time-up tag-up priority-down))))
+          (tags-todo "+danang-TODO=\"NEXT\"")
+          (tags-todo "+work-TODO=\"NEXT\"")
+          (tags-todo "+laptop-TODO=\"NEXT\"")
+          (tags-todo "+phone-TODO=\"NEXT\"")
+          (tags-todo "+internet-TODO=\"NEXT\"")
+          (tags-todo "+errands-TODO=\"NEXT\"")
+          (tags-todo "+shopping-TODO=\"NEXT\"")))
         ("o" "Overview: office"
          ((agenda "" ((org-agenda-span 'day)))
           (tags-todo "+office-TODO=\"NEXT\"")
+          (tags-todo "+work-TODO=\"NEXT\"")
           (tags-todo "+laptop-TODO=\"NEXT\"")
           (tags-todo "+phone-TODO=\"NEXT\"")
           (tags-todo "+internet-TODO=\"NEXT\"")
-          (tags-todo "+errands-TODO=\"NEXT\"")))
+          (tags-todo "+errands-TODO=\"NEXT\"")
+          (tags-todo "+shopping-TODO=\"NEXT\"")))
         ("." "Overview: elsewhere"
          ((agenda "" ((org-agenda-span 'day)))
+          (tags-todo "+work-TODO=\"NEXT\"")
           (tags-todo "+laptop-TODO=\"NEXT\"")
           (tags-todo "+phone-TODO=\"NEXT\"")
           (tags-todo "+internet-TODO=\"NEXT\"")
-          (tags-todo "+errands-TODO=\"NEXT\"")))))
+          (tags-todo "+errands-TODO=\"NEXT\"")
+          (tags-todo "+shopping-TODO=\"NEXT\"")))))
 
 ;; Enable more languages for Babel, especially useful for
 ;; "Literate Devops", see https://www.youtube.com/watch?v=dljNabciEGg .
 (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
-                                                         (python .t)
-                                                         (sh .t)))
+                                                         (python . t)
+                                                         (shell . t)
+                                                         (dot . t)))
 
 ;; Eye candy!
 (setq org-hide-leading-stars t)

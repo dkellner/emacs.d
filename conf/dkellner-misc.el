@@ -29,6 +29,7 @@
 ;; Enable commands that are disabled by default:
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
 
 ;; Some keybindings for convenience:
 (bind-key "C-x C-b" 'ibuffer)
@@ -82,20 +83,10 @@ point reaches the beginning or end of the buffer, stop there."
 (bind-key "<home>" 'dkellner/smarter-move-beginning-of-line)
 
 (use-package markdown-mode)
-(use-package yaml-mode)
-
-;; Constantly improve myself by using better suited commands instead of
-;; repeating "simple" ones.
-;; see https://bitbucket.org/shackra/dwight-k.-schrute/
-(use-package schrute
+(use-package highlight-indentation)
+(use-package yaml-mode
   :config
-  (setq schrute-shortcuts-commands
-        '((iy-go-to-char . (right-char))
-          (iy-go-to-char-backward . (left-char))
-          (avy-goto-line . (next-line))
-          (avy-goto-line . (previous-line))))
-  (schrute-mode)
-  :diminish schrute-mode)
+  (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode))
 
 (setq term-ansi-default-program "/usr/bin/zsh")
 (setq browse-url-browser-function #'browse-url-firefox)

@@ -8,7 +8,8 @@
    '(mode-line ((t (:background "#0d47a1"))))
    '(mode-line-buffer-id ((t (:foreground "#fff59d"))))
    '(mode-line-inactive ((t (:background "#3a3a3a"))))
-   '(org-mode-line-clock ((t (:background nil))))))
+   '(org-mode-line-clock ((t (:background nil))))
+   '(highlight-indentation-current-column-face ((t (:background "#424242"))))))
 
 (use-package bar-cursor
   :config

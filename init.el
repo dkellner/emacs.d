@@ -14,6 +14,7 @@
 (setq use-package-always-ensure t)
 
 ;; Make sure the following packages are available as I use them in my configs.
+(use-package diminish)
 (use-package hydra)
 
 ;; I've split my configuration in multiple files and put them in 'conf/'.

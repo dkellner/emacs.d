@@ -32,6 +32,7 @@
 (require 'dkellner-ivy)
 (require 'dkellner-git)
 (require 'dkellner-misc)
+(require 'dkellner-nix)
 (require 'dkellner-org)
 (require 'dkellner-org-reveal)
 (require 'dkellner-php)

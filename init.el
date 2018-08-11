@@ -10,7 +10,7 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-(setq use-package-verbose t)
+(require 'use-package)
 (setq use-package-always-ensure t)
 
 ;; Make sure the following packages are available as I use them in my configs.

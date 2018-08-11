@@ -3,7 +3,7 @@
 (use-package php-mode
   :config
   (use-package company-php)
-  (add-hook 'php-mode-hook 'dkellner/php-mode-hook))
+  (add-hook 'php-mode-hook #'dkellner/php-mode-hook))
 
 (defun dkellner/php-mode-hook ()
   "Custom settings for php-mode"

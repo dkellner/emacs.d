@@ -11,7 +11,7 @@
 (setq scroll-margin 5)
 
 ;; Remove trailing whitespace on save:
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 ;; Highlight unnecessary whitespace:
 (use-package whitespace
@@ -40,7 +40,7 @@
   :bind ("M-g g" . avy-goto-line))
 
 ;; Just kill the current buffer on pressing C-x k, don't ask which one to kill:
-(bind-key "C-x k" 'kill-this-buffer)
+(bind-key "C-x k" #'kill-this-buffer)
 
 ;; Why would one ever want to suspend Emacs?! :)
 (global-unset-key (kbd "C-z"))
@@ -86,7 +86,7 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package highlight-indentation)
 (use-package yaml-mode
   :config
-  (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode))
+  (add-hook 'yaml-mode-hook #'highlight-indentation-current-column-mode))
 
 (setq term-ansi-default-program "/usr/bin/zsh")
 (setq browse-url-browser-function #'browse-url-firefox)

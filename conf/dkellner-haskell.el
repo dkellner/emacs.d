@@ -3,6 +3,6 @@
 ;; See http://commercialhaskell.github.io/intero/
 (use-package intero
   :config
-  (add-hook 'haskell-mode-hook 'intero-mode))
+  (add-hook 'haskell-mode-hook #'intero-mode))
 
 (provide 'dkellner-haskell)

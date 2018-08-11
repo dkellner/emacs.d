@@ -34,7 +34,6 @@
 (require 'dkellner-misc)
 (require 'dkellner-nix)
 (require 'dkellner-org)
-(require 'dkellner-org-reveal)
 (require 'dkellner-php)
 (require 'dkellner-projectile)
 (require 'dkellner-python)

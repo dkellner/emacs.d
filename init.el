@@ -25,7 +25,6 @@
 (require 'dkellner-browser-bookmarks)
 (require 'dkellner-company)
 (require 'dkellner-docker)
-(require 'dkellner-elfeed)
 (require 'dkellner-elisp)
 (require 'dkellner-email)
 (require 'dkellner-engine-mode)

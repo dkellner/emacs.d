@@ -6,10 +6,6 @@
 (setq-default indent-tabs-mode nil)
 (setq-default fill-column 79)
 
-;; Keep a scroll margin of 5 lines:
-(setq scroll-conservatively 101)
-(setq scroll-margin 5)
-
 ;; Remove trailing whitespace on save:
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 

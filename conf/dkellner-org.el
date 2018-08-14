@@ -117,4 +117,12 @@
 
 (add-hook 'org-mode-hook (lambda () (auto-fill-mode 1)))
 
+(use-package org-pomodoro
+  :bind ("C-c p" . org-pomodoro)
+  :config
+  (setq org-pomodoro-format "● %s"
+        org-pomodoro-short-break-format "◔ %s"
+        org-pomodoro-long-break-format "◕ %s"
+        org-pomodoro-audio-player "aplay"))
+
 (provide 'dkellner-org)

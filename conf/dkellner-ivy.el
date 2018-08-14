@@ -15,7 +15,9 @@
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
          ("M-y" . counsel-yank-pop)
-         ("C-x C-f" . counsel-find-file)))
+         ("C-x C-f" . counsel-find-file))
+  :config
+  (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) ""))
 
 (use-package swiper
   :bind ("C-s" . swiper))

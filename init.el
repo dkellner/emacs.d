@@ -1,5 +1,10 @@
 ;; init.el --- Emacs configuration of Dominik Kellner <dkellner@dkellner.de>
 
+;; This file is used to store user customization variables.
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 ;; Configure the package manager and make sure `use-package' is installed.
 ;; I use it to tidy the rest of my configuration.
 (require 'package)
@@ -45,10 +50,5 @@
 (require 'dkellner-undo-tree)
 (require 'dkellner-web-mode)
 (require 'dkellner-windows-and-navigation)
-
-;; This file is used to store user customization variables.
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(when (file-exists-p custom-file)
-  (load custom-file))
 
 (provide 'init)

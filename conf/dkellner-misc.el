@@ -84,6 +84,11 @@ point reaches the beginning or end of the buffer, stop there."
   :config
   (add-hook 'yaml-mode-hook #'highlight-indentation-current-column-mode))
 
+(use-package which-key
+  :config
+  (which-key-mode)
+  :diminish which-key-mode)
+
 (setq term-ansi-default-program "/usr/bin/zsh")
 (setq browse-url-browser-function #'browse-url-firefox)
 

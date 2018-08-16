@@ -18,6 +18,7 @@
 
 (setq visible-bell t)
 (setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)

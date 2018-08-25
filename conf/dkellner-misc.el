@@ -30,10 +30,13 @@
 ;; Some keybindings for convenience:
 (bind-key "C-x C-b" 'ibuffer)
 (use-package iy-go-to-char
-  :bind (("C-f" . iy-go-to-char)
-         ("C-b" . iy-go-to-char-backward)))
+  :bind (("C-f" . iy-go-up-to-char)
+         ("C-b" . iy-go-up-to-char-backward)))
 (use-package avy
-  :bind ("M-g g" . avy-goto-line))
+  :bind (("M-g g" . avy-goto-line)
+         ("M-g M-g" . avy-goto-line)
+         ("M-g M-s" . avy-goto-word-1)
+         ("M-g M-r" . avy-copy-region)))
 
 ;; Just kill the current buffer on pressing C-x k, don't ask which one to kill:
 (bind-key "C-x k" #'kill-this-buffer)

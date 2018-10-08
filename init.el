@@ -38,6 +38,7 @@
 (require 'dkellner-haskell)
 (require 'dkellner-ivy)
 (require 'dkellner-misc)
+(require 'dkellner-music)
 (require 'dkellner-nix)
 (require 'dkellner-org)
 (require 'dkellner-php)

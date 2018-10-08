@@ -1,22 +1,15 @@
 ;; dkellner-ui.el --- make emacs look even prettier
 
-(use-package material-theme
+(use-package gruvbox-theme
   :config
-  (load-theme 'material t)
-  (custom-theme-set-faces
-   'material
-   '(mode-line ((t (:background "#0d47a1"))))
-   '(mode-line-buffer-id ((t (:foreground "#fff59d"))))
-   '(mode-line-inactive ((t (:background "#3a3a3a"))))
-   '(org-mode-line-clock ((t (:background nil))))
-   '(highlight-indentation-current-column-face ((t (:background "#424242"))))))
+  (load-theme 'gruvbox-dark-hard t))
 
 (use-package bar-cursor
   :config
   (bar-cursor-mode 1)
   :diminish bar-cursor-mode)
 
-(setq visible-bell t)
+(setq ring-bell-function 'ignore)
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 
@@ -28,9 +21,6 @@
 (diminish 'auto-revert-mode)
 
 (add-to-list 'default-frame-alist '(font . "Meslo LG M 13"))
-
-;; Transparency
-(add-to-list 'default-frame-alist '(alpha . 93))
 
 ;; Mode-Line, mostly inspired by this post:
 ;; http://www.holgerschurig.de/en/emacs-tayloring-the-built-in-mode-line/9

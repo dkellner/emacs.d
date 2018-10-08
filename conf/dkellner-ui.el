@@ -53,4 +53,37 @@
                 mode-line-misc-info
                 mode-line-end-spaces))
 
+(setq battery-mode-line-format "%p ")
+(display-battery-mode 1)
+
+(setq display-time-default-load-average nil
+      display-time-24hr-format t)
+(display-time-mode 0)
+
+(setq window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
+(window-divider-mode)
+
+(use-package dimmer
+  :config
+  (setq dimmer-fraction 0.15)
+  (dimmer-mode))
+
+(use-package spaceline
+  :config
+  (spaceline-emacs-theme)
+
+  (setq spaceline-buffer-size-p nil
+        spaceline-buffer-modified-p nil
+        spaceline-buffer-encoding-p nil
+        spaceline-buffer-position-p nil
+        spaceline-buffer-encoding-abbrev-p nil
+        spaceline-hud-p nil
+        spaceline-version-control-p nil
+        spaceline-highlight-face-func #'spaceline-highlight-face-modified)
+
+  (spaceline-define-segment workspace-number
+    (propertize (int-to-string exwm-workspace-current-index) 'face 'bold))
+  (spaceline-compile))
+
 (provide 'dkellner-ui)

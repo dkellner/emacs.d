@@ -94,6 +94,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 (setq term-ansi-default-program "/usr/bin/zsh")
 (setq browse-url-browser-function #'browse-url-firefox)
+(setq browse-url-firefox-arguments '("-p" "exwm"))
 
 ;; C-x k to kill all buffers, not C-x # for buffers opened by emacsclient.
 ;; see https://www.emacswiki.org/emacs/EmacsClient#toc36

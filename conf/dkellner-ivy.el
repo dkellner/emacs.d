@@ -15,7 +15,8 @@
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
          ("M-y" . counsel-yank-pop)
-         ("C-x C-f" . counsel-find-file))
+         ("C-x C-f" . counsel-find-file)
+         ("C-h a" . counsel-apropos))
   :config
   (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) ""))
 

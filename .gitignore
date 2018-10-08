@@ -3,9 +3,15 @@
 /bookmarks
 /custom.el
 /elpa/
+/emms/
 /eshell/
+/games/
+/history
+/image-dired/
 /projectile-bookmarks.eld
 /recentf
-/url
 /tramp
+/url
+
 *~
+\#*

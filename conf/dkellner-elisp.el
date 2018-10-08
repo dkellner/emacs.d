@@ -29,4 +29,8 @@
       (insert "'"))))
 (bind-key "#" #'endless/sharp emacs-lisp-mode-map)
 
+(use-package buttercup
+  :bind (:map emacs-lisp-mode-map
+              ("C-c C-t" . buttercup-run-at-point)))
+
 (provide 'dkellner-elisp)

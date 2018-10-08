@@ -18,7 +18,8 @@
 
 (use-package flycheck
   :config
-  (global-flycheck-mode))
+  (global-flycheck-mode)
+  :diminish flycheck-mode)
 
 (use-package iedit)
 
@@ -39,7 +40,12 @@
          ("M-g M-r" . avy-copy-region)))
 
 ;; Just kill the current buffer on pressing C-x k, don't ask which one to kill:
-(bind-key "C-x k" #'kill-this-buffer)
+(bind-key "C-x k" #'dkellner/kill-current-buffer)
+
+(defun dkellner/kill-current-buffer ()
+  "Kill the current buffer."
+  (interactive)
+  (kill-buffer (current-buffer)))
 
 ;; Why would one ever want to suspend Emacs?! :)
 (global-unset-key (kbd "C-z"))
@@ -96,6 +102,8 @@ point reaches the beginning or end of the buffer, stop there."
 (setq browse-url-browser-function #'browse-url-firefox)
 (setq browse-url-firefox-arguments '("-p" "exwm"))
 
+(global-set-key (kbd "C-x C-c") #'save-buffers-kill-emacs)
+
 ;; C-x k to kill all buffers, not C-x # for buffers opened by emacsclient.
 ;; see https://www.emacswiki.org/emacs/EmacsClient#toc36
 (add-hook 'server-switch-hook
@@ -104,5 +112,7 @@ point reaches the beginning or end of the buffer, stop there."
               (use-local-map (copy-keymap (current-local-map))))
             (when server-buffer-clients
               (local-set-key (kbd "C-x k") 'server-edit))))
+
+(setq shell-file-name "/bin/sh")
 
 (provide 'dkellner-misc)

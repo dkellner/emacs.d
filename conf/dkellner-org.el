@@ -14,10 +14,12 @@
 ;; Basic configuration: set main org files for agenda/capturing and
 ;; TODO-keywords.
 (setq org-directory "~/org/")
-(setq org-agenda-files '("~/org/main.org"))
-(setq org-refile-targets (quote (("main.org" :maxlevel . 2)
-                                 ("shopping.org" :maxlevel . 1)
-                                 ("someday.org" :level . 1))))
+(setq org-agenda-files '("~/org/main.org" "~/org/tickler.org"))
+(setq org-refile-targets '(("main.org" :maxlevel . 2)
+                           ("pap.org" :maxlevel . 1)
+                           ("tickler.org" :maxlevel . 1)
+                           ("bookmarks.org" :maxlevel . 1)
+                           ("someday.org" :level . 1)))
 (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|"
                                     "DONE(d)" "DEFERRED(f)")))
 (setq org-startup-folded t)
@@ -36,7 +38,8 @@
 ;; I mostly use the capture template for "Inbox" to put new ideas, todos etc.
 ;; in my `main.org' file for later processing (GTD-style).
 (setq org-capture-templates
-      '(("i" "Inbox" entry (file+headline "~/org/main.org" "Inbox") "* %?")
+      '(("i" "Inbox" entry (file "~/org/inbox.org")
+         "* %?\n  %a")
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
          "* %?" :kill-buffer t)))
 

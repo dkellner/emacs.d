@@ -12,7 +12,7 @@
   (setq eshell-visual-subcommands
         '(("nixops" "ssh")))
   (setq eshell-visual-options
-        '(("gcloud" "ssh")))
+        '(("gcloud" "connect" "ssh")))
   (setq eshell-where-to-jump 'begin
         eshell-review-quick-commands nil
         eshell-smart-space-goes-to-end t))

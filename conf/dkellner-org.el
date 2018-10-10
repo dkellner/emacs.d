@@ -2,6 +2,8 @@
 ;;
 ;; See http://orgmode.org/ .
 
+(use-package org-plus-contrib)
+
 ;; Global keybindings to quickly view my agenda and capture thoughts.
 (bind-key "C-c a" #'org-agenda)
 (bind-key "C-c c" #'dkellner/org-capture)
@@ -47,6 +49,7 @@
 ;; http://orgmode.org/org.html#Tracking-your-habits .
 (require 'org-habit)
 
+(require 'org-drill)
 (require 'org-notmuch)
 
 ;; My custom agenda command is tailored to suit my workflow.

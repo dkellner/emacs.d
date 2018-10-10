@@ -115,4 +115,11 @@ point reaches the beginning or end of the buffer, stop there."
 
 (setq shell-file-name "/bin/sh")
 
+(use-package crux
+  :bind (("C-c e" . crux-eval-and-replace)
+         ("C-c o" . crux-open-with)
+         ("C-c r" . crux-rename-file-and-buffer)
+         ("C-c u" . crux-view-url)
+         ("C-c D" . crux-delete-file-and-buffer)))
+
 (provide 'dkellner-misc)

@@ -22,27 +22,6 @@
 
 (add-to-list 'default-frame-alist '(font . "Meslo LG M 13"))
 
-;; Mode-Line, mostly inspired by this post:
-;; http://www.holgerschurig.de/en/emacs-tayloring-the-built-in-mode-line/9
-(column-number-mode 1)
-(setq mode-line-position
-      '((line-number-mode ("%l" (column-number-mode ":%c")))))
-(setq-default mode-line-format
-              '("%e"
-                mode-line-front-space
-                mode-line-mule-info
-                mode-line-client
-                mode-line-modified
-                " "
-                mode-line-buffer-identification
-                " "
-                mode-line-position
-                (flycheck-mode flycheck-mode-line)
-                " "
-                mode-line-modes
-                mode-line-misc-info
-                mode-line-end-spaces))
-
 (setq battery-mode-line-format "%p ")
 (display-battery-mode 1)
 
@@ -74,6 +53,7 @@
 
   (spaceline-define-segment workspace-number
     (propertize (int-to-string exwm-workspace-current-index) 'face 'bold))
+
   (spaceline-compile))
 
 (provide 'dkellner-ui)

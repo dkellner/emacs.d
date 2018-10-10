@@ -2,7 +2,12 @@
 
 (use-package gruvbox-theme
   :config
-  (load-theme 'gruvbox-dark-hard t))
+  (load-theme 'gruvbox-dark-hard t)
+  (custom-theme-set-faces
+   'gruvbox-dark-hard
+   '(spaceline-unmodified ((t (:background "#b8bb26" :foreground "#222222"))))
+   '(spaceline-modified ((t (:background "#fb4933" :foreground "#222222"))))
+   '(spaceline-read-only ((t (:background "#d3869b" :foreground "#222222"))))))
 
 (use-package bar-cursor
   :config

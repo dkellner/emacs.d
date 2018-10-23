@@ -2,6 +2,7 @@
 
 (setq default-directory "~/")
 (setq make-backup-files nil)
+(setq kill-ring-max 1000)
 (setq-default require-final-newline t)
 (setq-default indent-tabs-mode nil)
 (setq-default fill-column 79)

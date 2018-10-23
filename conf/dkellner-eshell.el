@@ -12,7 +12,8 @@
   (setq eshell-visual-subcommands
         '(("nixops" "ssh")))
   (setq eshell-visual-options
-        '(("gcloud" "connect" "ssh")))
+        '(("gcloud" "connect" "ssh")
+          ("kubectl" "exec")))
   (setq eshell-where-to-jump 'begin
         eshell-review-quick-commands nil
         eshell-smart-space-goes-to-end t))

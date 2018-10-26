@@ -45,7 +45,6 @@
 (require 'dkellner-projectile)
 (require 'dkellner-python)
 (require 'dkellner-restclient)
-(require 'dkellner-sgml)
 (require 'dkellner-switch-org-task)
 (require 'dkellner-ui)
 (require 'dkellner-undo-tree)

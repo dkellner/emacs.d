@@ -100,7 +100,10 @@ Only works *before* exwm in initialized."
   (require 'exwm-systemtray)
   (exwm-systemtray-enable)
 
-  (use-package exwm-edit))
+  (use-package exwm-edit)
+
+  ;; see https://github.com/ch11ng/exwm/wiki#an-issue-with-ediff-mode-in-magit
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain))
 
 ;; from https://github.com/dakra/dmacs
 (defun dkellner/exwm-counsel-yank-pop ()

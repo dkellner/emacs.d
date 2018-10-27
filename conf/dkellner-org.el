@@ -2,8 +2,6 @@
 ;;
 ;; See http://orgmode.org/ .
 
-(use-package org-plus-contrib)
-
 ;; Global keybindings to quickly view my agenda and capture thoughts.
 (bind-key "C-c a" #'org-agenda)
 (bind-key "C-c c" #'dkellner/org-capture)

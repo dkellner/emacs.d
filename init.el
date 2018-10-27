@@ -5,18 +5,13 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-;; Configure the package manager and make sure `use-package' is installed.
-;; I use it to tidy the rest of my configuration.
+;; Disable the package manager and make sure `use-package' is installed. I use
+;; it to tidy the rest of my configuration.
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-(setq package-enable-at-startup nil)
+(setq package-archives nil
+      package-enable-at-startup nil)
 (package-initialize)
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
 (require 'use-package)
-(setq use-package-always-ensure t)
 
 ;; Make sure the following packages are available as I use them in my configs.
 (use-package diminish)

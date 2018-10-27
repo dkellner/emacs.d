@@ -7,6 +7,14 @@
 (setq-default indent-tabs-mode nil)
 (setq-default fill-column 79)
 
+(use-package recentf
+  :demand t
+  :config
+  (setq recentf-max-saved-items 100)
+  (add-to-list 'recentf-exclude no-littering-etc-directory)
+  (add-to-list 'recentf-exclude no-littering-var-directory)
+  (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))
+
 ;; Remove trailing whitespace on save:
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 

@@ -13,6 +13,9 @@
     ("l" magit-log-buffer-file "log-buffer-file")
     ("s" magit-status "status")
     ("t" git-timemachine-toggle "timemachine"))
-  (bind-key "C-c g" 'dkellner/magit/body))
+  (bind-key "C-c g" 'dkellner/magit/body)
+
+  (setq magit-display-buffer-function
+        #'magit-display-buffer-same-window-except-diff-v1))
 
 (provide 'dkellner-git)

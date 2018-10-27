@@ -6,7 +6,8 @@
   :config
   (projectile-global-mode)
   (define-key projectile-mode-map (kbd "C-p") #'projectile-command-map)
-  (setq projectile-completion-system 'ivy)
+  (setq projectile-completion-system 'ivy
+        projectile-switch-project-action #'projectile-vc)
   :diminish projectile-mode)
 
 (use-package ibuffer-projectile

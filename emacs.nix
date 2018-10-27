@@ -76,6 +76,7 @@ in
     magit
     markdown-mode
     nix-mode
+    no-littering
     org-bullets
     org-pomodoro
     org-tree-slide

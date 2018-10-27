@@ -1,17 +1,6 @@
-# Emacs auto-generated files
-/auto-save-list/
-/bookmarks
+# auto-generated files
 /custom.el
-/elpa/
-/emms/
-/eshell/
-/games/
-/history
-/image-dired/
-/projectile-bookmarks.eld
-/recentf
-/tramp
-/url
+/var
 
 *~
 \#*

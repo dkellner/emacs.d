@@ -17,6 +17,10 @@
 (use-package diminish)
 (use-package hydra)
 
+;; `no-littering' needs to be loaded as early as possible, see
+;; https://github.com/emacscollective/no-littering#usage for details.
+(use-package no-littering)
+
 ;; I've split my configuration in multiple files and put them in 'conf/'.
 ;; Most of them automatically install packages, so if you for example are not
 ;; doing Haskell development at all, you will want to remove the line below

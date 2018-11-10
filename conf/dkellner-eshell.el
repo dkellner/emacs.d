@@ -10,7 +10,9 @@
         '("ssh" "mutt-puzzleandplay" "mutt-dkellner" "mplayer" "mysql" "vi"
           "screen" "top" "less" "more"))
   (setq eshell-visual-subcommands
-        '(("nixops" "ssh")))
+        '(("nixops" "ssh")
+          ("nix" "repl")
+          ("docker" "exec")))
   (setq eshell-visual-options
         '(("gcloud" "connect" "ssh")
           ("kubectl" "exec")))

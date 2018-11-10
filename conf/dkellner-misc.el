@@ -32,6 +32,9 @@
 
 (use-package iedit)
 
+(use-package expand-region
+  :bind (("C-=" . er/expand-region)))
+
 ;; Enable commands that are disabled by default:
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)

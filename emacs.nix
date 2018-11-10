@@ -59,6 +59,7 @@ in
     docker
     dockerfile-mode
     emms
+    expand-region
     exwm-edit
     flycheck
     git-timemachine

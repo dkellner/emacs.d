@@ -38,11 +38,6 @@
       window-divider-default-right-width 1)
 (window-divider-mode)
 
-(use-package dimmer
-  :config
-  (setq dimmer-fraction 0.15)
-  (dimmer-mode))
-
 (use-package spaceline
   :config
   (spaceline-emacs-theme)

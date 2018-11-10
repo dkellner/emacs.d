@@ -15,6 +15,15 @@
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))
 
+(use-package dired
+  :bind (("C-x C-d" . dired))
+  :config
+  (require 'dired-x)
+  (setq dired-listing-switches "-ahl"
+        dired-omit-files "^\\.?#\\|^\\.")
+  (add-hook 'dired-mode-hook
+            (lambda () (dired-omit-mode))))
+
 ;; Remove trailing whitespace on save:
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 

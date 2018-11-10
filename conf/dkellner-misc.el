@@ -50,7 +50,6 @@
 (put 'narrow-to-region 'disabled nil)
 
 ;; Some keybindings for convenience:
-(bind-key "C-x C-b" 'ibuffer)
 (use-package iy-go-to-char
   :bind (("C-f" . iy-go-up-to-char)
          ("C-b" . iy-go-up-to-char-backward)))
@@ -59,6 +58,17 @@
          ("M-g M-g" . avy-goto-line)
          ("M-g M-s" . avy-goto-word-1)
          ("M-g M-r" . avy-copy-region)))
+
+(use-package ibuffer
+  :bind (("C-x C-b" . ibuffer))
+  :config
+  (setq ibuffer-formats '((mark modified read-only locked " "
+                                (name 40 40 :left :elide)
+                                " "
+                                (size 9 -1 :right)
+                                " "
+                                (mode 16 16 :left :elide)
+                                " " filename-and-process))))
 
 ;; Just kill the current buffer on pressing C-x k, don't ask which one to kill:
 (bind-key "C-x k" #'dkellner/kill-current-buffer)

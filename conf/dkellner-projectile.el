@@ -4,10 +4,10 @@
 
 (use-package projectile
   :config
-  (projectile-global-mode)
   (define-key projectile-mode-map (kbd "C-p") #'projectile-command-map)
   (setq projectile-completion-system 'ivy
         projectile-switch-project-action #'projectile-vc)
+  (projectile-mode 1)
   :diminish projectile-mode)
 
 (use-package ibuffer-projectile

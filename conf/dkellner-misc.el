@@ -10,7 +10,7 @@
 (use-package recentf
   :demand t
   :config
-  (setq recentf-max-saved-items 100)
+  (setq recentf-max-saved-items 250)
   (add-to-list 'recentf-exclude no-littering-etc-directory)
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:"))

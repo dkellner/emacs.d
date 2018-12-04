@@ -103,24 +103,10 @@
 
 ;; Eye candy!
 (setq org-hide-leading-stars t)
-(use-package org-bullets
-  :config
-  (add-hook 'org-mode-hook 'org-bullets-mode))
 
 ;; Simple presentations inside Emacs.
 (use-package org-tree-slide)
 
-;; I put this in an own function because I had problems when doing
-;; `set-face-foreground' with Emacs running as a daemon. It did not apply the
-;; setting for newly created frames.
-(defun dkellner/beautify-org ()
-  "Make org-mode look more beautiful."
-  (dolist (face '(org-level-1 org-level-2 org-level-3))
-    (set-face-background face nil)
-    (set-face-attribute face nil :box nil :height 1.0))
-  (set-face-foreground 'org-level-1 (face-foreground 'org-agenda-structure))
-  (set-face-foreground 'org-level-2 (face-foreground 'default)))
-(add-hook 'org-mode-hook #'dkellner/beautify-org)
 
 (add-hook 'org-mode-hook (lambda () (auto-fill-mode 1)))
 

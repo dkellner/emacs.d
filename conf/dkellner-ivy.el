@@ -3,6 +3,7 @@
 ;; See https://github.com/abo-abo/swiper .
 
 (use-package ivy
+  :demand t
   :bind ("C-c C-r" . ivy-resume)
   :config
   (ivy-mode 1)

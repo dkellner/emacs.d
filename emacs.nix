@@ -38,6 +38,68 @@ let
         license = lib.licenses.free;
       };
     }) {};
+  shrink-path = epkgs: epkgs.callPackage ({ dash
+                                          , emacs
+                                          , f
+                                          , fetchFromGitLab
+                                          , fetchurl
+                                          , lib
+                                          , melpaBuild
+                                          , s }:
+    melpaBuild {
+      pname = "shrink-path";
+      ename = "shrink-path";
+      version = "20170812.1947";
+      src = fetchurl {
+        url = "https://gitlab.com/bennya/shrink-path.el/-/archive/master/shrink-path.el-master.tar.gz";
+        sha256 = "089jd59b4y0bairnzfxla9jkxxmg86i8j851g7vjb0cp3msdhjg1";
+      };
+      recipe = fetchurl {
+        url = "https://raw.githubusercontent.com/milkypostman/melpa/86b0d105e8a57d5f0bcde779441dc80b85e170ea/recipes/shrink-path";
+        sha256 = "0fq13c6g7qbq6f2ry9dzdyg1f6p41wimkjcdaj177rnilz77alzb";
+        name = "recipe";
+      };
+      packageRequires = [ dash emacs f s ];
+      meta = {
+        homepage = "https://melpa.org/#/shrink-path";
+        license = lib.licenses.free;
+      };
+    }) {};
+  doom-modeline = epkgs: epkgs.callPackage ({ all-the-icons
+                                            , dash
+                                            , eldoc-eval
+                                            , emacs
+                                            , fetchFromGitHub
+                                            , fetchurl
+                                            , lib
+                                            , melpaBuild
+                                            , projectile }:
+    melpaBuild {
+      pname = "doom-modeline";
+      ename = "doom-modeline";
+      version = "20181204.0530";
+      src = fetchurl {
+        url = "https://github.com/seagle0128/doom-modeline/archive/ac1605a92c21cac43b16b2c4079b5f12290a9e4e.zip";
+        sha256 = "00gli6dj5qziyfrp9khf4bnciya46y9rpxkzgi2vq4lnh9qc7q20";
+      };
+      recipe = fetchurl {
+        url = "https://raw.githubusercontent.com/milkypostman/melpa/f4f610757f85fb01bd9b1dd212ddbea8f34f3ecd/recipes/doom-modeline";
+        sha256 = "0pscrhhgk4wpz1f2r94ficgan4f9blbhqzvav1wjahwp7fn5m29j";
+        name = "recipe";
+      };
+      packageRequires = [
+        all-the-icons
+        dash
+        eldoc-eval
+        emacs
+        projectile
+        (shrink-path epkgs)
+      ];
+      meta = {
+        homepage = "https://melpa.org/#/doom-modeline";
+        license = lib.licenses.free;
+      };
+    }) {};
 in
   pkgs.emacsWithPackages (epkgs: (with epkgs.elpaPackages; [
     (exwm epkgs)
@@ -58,6 +120,7 @@ in
     dimmer
     docker
     dockerfile-mode
+    (doom-modeline epkgs)
     emms
     expand-region
     exwm-edit

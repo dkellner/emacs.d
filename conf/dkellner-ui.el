@@ -38,22 +38,10 @@
       window-divider-default-right-width 1)
 (window-divider-mode)
 
-(use-package spaceline
+(use-package doom-modeline
+  :defer t
+  :hook (after-init . doom-modeline-init)
   :config
-  (spaceline-emacs-theme)
-
-  (setq spaceline-buffer-size-p nil
-        spaceline-buffer-modified-p nil
-        spaceline-buffer-encoding-p nil
-        spaceline-buffer-position-p nil
-        spaceline-buffer-encoding-abbrev-p nil
-        spaceline-hud-p nil
-        spaceline-version-control-p nil
-        spaceline-highlight-face-func #'spaceline-highlight-face-modified)
-
-  (spaceline-define-segment workspace-number
-    (propertize (int-to-string exwm-workspace-current-index) 'face 'bold))
-
-  (spaceline-compile))
+  (setq doom-modeline-icon t))
 
 (provide 'dkellner-ui)

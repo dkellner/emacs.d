@@ -20,7 +20,7 @@
   :config
   (require 'dired-x)
   (setq dired-listing-switches "-ahl"
-        dired-omit-files "^\\.?#\\|^\\.")
+        dired-omit-files "^\\.")
   (add-hook 'dired-mode-hook
             (lambda () (dired-omit-mode))))
 

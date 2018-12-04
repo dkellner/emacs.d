@@ -27,10 +27,10 @@ let
     elpaBuild {
       pname = "exwm";
       ename = "exwm";
-      version = "0.20";
+      version = "0.21";
       src = fetchurl {
-        url = "https://elpa.gnu.org/packages/exwm-0.20.tar";
-        sha256 = "0nhhzbkm0mkj7sd1dy2c19cmn56gyaj9nl8kgy86h4fp63hjaz04";
+        url = "https://elpa.gnu.org/packages/exwm-0.21.tar";
+        sha256 = "07ng1pgsnc3isfsyzh2gfc7391p9il8lb5xqf1z6yqn20w7k6xzj";
       };
       packageRequires = [ (xelb epkgs) ];
       meta = {

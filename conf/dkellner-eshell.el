@@ -18,7 +18,20 @@
           ("kubectl" "exec")))
   (setq eshell-where-to-jump 'begin
         eshell-review-quick-commands nil
-        eshell-smart-space-goes-to-end t))
+        eshell-smart-space-goes-to-end t
+        eshell-prompt-regexp "^.* λ "
+        eshell-prompt-function #'dkellner/eshell-prompt))
+
+;; see https://gitlab.com/bennya/shrink-path.el
+(defun dkellner/eshell-prompt ()
+  (let ((base-dir (shrink-path-prompt default-directory)))
+    (concat (propertize (car base-dir)
+                        'face 'font-lock-comment-face)
+            (propertize (cdr base-dir)
+                        'face 'font-lock-constant-face)
+            (propertize " λ" 'face 'eshell-prompt-face)
+            ;; needed for the input text to not have prompt face
+            (propertize " " 'face 'default))))
 
 (defun dkellner/add-eshell-keys ()
   (define-key eshell-mode-map (kbd "C-c C-l") #'counsel-esh-history)

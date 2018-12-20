@@ -78,9 +78,11 @@ let
       pname = "doom-modeline";
       ename = "doom-modeline";
       version = "20181204.0530";
-      src = fetchurl {
-        url = "https://github.com/seagle0128/doom-modeline/archive/ac1605a92c21cac43b16b2c4079b5f12290a9e4e.zip";
-        sha256 = "00gli6dj5qziyfrp9khf4bnciya46y9rpxkzgi2vq4lnh9qc7q20";
+      src = fetchFromGitHub {
+        owner = "seagle0128";
+        repo = "doom-modeline";
+        rev = "2e65c9d06b30cef156f7e74b773e67b487af9b24";
+        sha256 = "1g9vhslgagkdwccwcac5xlpc1n4bi5806fdrc6yy6wmdmij5q7ji";
       };
       recipe = fetchurl {
         url = "https://raw.githubusercontent.com/milkypostman/melpa/f4f610757f85fb01bd9b1dd212ddbea8f34f3ecd/recipes/doom-modeline";

@@ -4,24 +4,30 @@
 
 ;; Global keybindings to quickly view my agenda and capture thoughts.
 (bind-key "C-c a" #'org-agenda)
-(bind-key "C-c c" #'dkellner/org-capture)
+(bind-key "C-c c" #'org-capture)
 (bind-key "C-c l" #'org-store-link)
-
-(defun dkellner/org-capture ()
-  (interactive)
-  (org-capture nil "i"))
 
 ;; Basic configuration: set main org files for agenda/capturing and
 ;; TODO-keywords.
 (setq org-directory "~/org/")
-(setq org-agenda-files '("~/org/main.org" "~/org/tickler.org"))
+(setq org-agenda-files '("~/org/main.org" "~/org/pap.org" "~/org/tickler.org"))
 (setq org-refile-targets '(("main.org" :maxlevel . 2)
                            ("pap.org" :maxlevel . 1)
                            ("tickler.org" :maxlevel . 1)
                            ("bookmarks.org" :maxlevel . 1)
                            ("someday.org" :level . 1)))
 (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|"
-                                    "DONE(d)" "DEFERRED(f)")))
+                                    "DONE(d)")))
+
+;; This list contains tags I want to use in almost any file as they are tied to
+;; actionable items (e.g. GTD contexts).
+(setq org-tag-alist `((:startgroup)
+                      ("@laptop" . ,(string-to-char "l"))
+                      ("@phone" . ,(string-to-char "p"))
+                      ("@home" . ,(string-to-char "h"))
+                      ("@errands" . ,(string-to-char "e"))
+                      (:endgroup)))
+
 (setq org-startup-folded t)
 (setq org-log-into-drawer t)
 (setq org-agenda-todo-ignore-scheduled 'all)
@@ -34,11 +40,14 @@
       "%40ITEM(Task) %3Priority(Pr.) %16Effort(Estimated Effort){:} %CLOCKSUM{:}")
 (setq org-export-with-sub-superscripts nil)
 (setq org-export-allow-bind-keywords t)
+(setq org-default-priority ?C)
 
 ;; I mostly use the capture template for "Inbox" to put new ideas, todos etc.
 ;; in my `main.org' file for later processing (GTD-style).
 (setq org-capture-templates
       '(("i" "Inbox" entry (file "~/org/inbox.org")
+         "* %?")
+        ("I" "Inbox (with link)" entry (file "~/org/inbox.org")
          "* %?\n  %a")
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
          "* %?" :kill-buffer t)))
@@ -50,49 +59,12 @@
 (require 'org-drill)
 (require 'org-notmuch)
 
-;; My custom agenda command is tailored to suit my workflow.
 (setq org-agenda-custom-commands
-      '(("c" "Weekly overview"
-         ((agenda "" ((org-agenda-span 8)))
-          (todo "TODO")))
-        ("f" "Overview: fiedlbuehl"
-         ((agenda "" ((org-agenda-span 'day)
-                      (org-agenda-sorting-strategy '(habit-down time-up tag-up priority-down))))
-          (tags-todo "+fiedlbuehl-TODO=\"NEXT\"")
-          (tags-todo "+work-TODO=\"NEXT\"")
-          (tags-todo "+laptop-TODO=\"NEXT\"")
-          (tags-todo "+phone-TODO=\"NEXT\"")
-          (tags-todo "+internet-TODO=\"NEXT\"")
-          (tags-todo "+guitar-TODO=\"NEXT\"")
-          (tags-todo "+errands-TODO=\"NEXT\"")
-          (tags-todo "+shopping-TODO=\"NEXT\"")))
-        ("h" "Overview: danang"
-         ((agenda "" ((org-agenda-span 'day)
-                      (org-agenda-sorting-strategy '(habit-down time-up tag-up priority-down))))
-          (tags-todo "+danang-TODO=\"NEXT\"")
-          (tags-todo "+work-TODO=\"NEXT\"")
-          (tags-todo "+laptop-TODO=\"NEXT\"")
-          (tags-todo "+phone-TODO=\"NEXT\"")
-          (tags-todo "+internet-TODO=\"NEXT\"")
-          (tags-todo "+errands-TODO=\"NEXT\"")
-          (tags-todo "+shopping-TODO=\"NEXT\"")))
-        ("o" "Overview: office"
+      '(("d" "Daily agenda"
          ((agenda "" ((org-agenda-span 'day)))
-          (tags-todo "+office-TODO=\"NEXT\"")
-          (tags-todo "+work-TODO=\"NEXT\"")
-          (tags-todo "+laptop-TODO=\"NEXT\"")
-          (tags-todo "+phone-TODO=\"NEXT\"")
-          (tags-todo "+internet-TODO=\"NEXT\"")
-          (tags-todo "+errands-TODO=\"NEXT\"")
-          (tags-todo "+shopping-TODO=\"NEXT\"")))
-        ("." "Overview: elsewhere"
-         ((agenda "" ((org-agenda-span 'day)))
-          (tags-todo "+work-TODO=\"NEXT\"")
-          (tags-todo "+laptop-TODO=\"NEXT\"")
-          (tags-todo "+phone-TODO=\"NEXT\"")
-          (tags-todo "+internet-TODO=\"NEXT\"")
-          (tags-todo "+errands-TODO=\"NEXT\"")
-          (tags-todo "+shopping-TODO=\"NEXT\"")))))
+          (tags-todo "-PRIORITY=\"C\""
+                     ((org-agenda-sorting-strategy
+                       '(tag-up priority-down))))))))
 
 ;; Enable more languages for Babel, especially useful for
 ;; "Literate Devops", see https://www.youtube.com/watch?v=dljNabciEGg .
@@ -111,7 +83,7 @@
 (add-hook 'org-mode-hook (lambda () (auto-fill-mode 1)))
 
 (use-package org-pomodoro
-  :bind ("C-c p" . org-pomodoro)
+  :bind ("C-c P" . org-pomodoro)
   :config
   (setq org-pomodoro-format "● %s"
         org-pomodoro-short-break-format "◔ %s"

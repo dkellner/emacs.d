@@ -14,14 +14,13 @@
   :diminish ivy-mode)
 
 (use-package counsel
-  :bind (("M-x" . counsel-M-x)
-         ("M-y" . counsel-yank-pop)
-         ("C-x C-f" . counsel-find-file)
-         ("C-h a" . counsel-apropos))
+  :demand t
+  :bind (("C-s" . counsel-grep-or-swiper))
   :config
-  (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) ""))
+  (counsel-mode 1)
+  (setq counsel-grep-base-command
+        "rg -i -M 120 --no-heading --line-number --color never '%s' %s"))
 
-(use-package swiper
-  :bind ("C-s" . swiper))
+(use-package swiper)
 
 (provide 'dkellner-ivy)

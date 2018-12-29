@@ -130,6 +130,7 @@ in
     git-timemachine
     gpastel
     gruvbox-theme
+    helpful
     highlight-indentation
     hydra
     ibuffer-projectile

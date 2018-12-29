@@ -127,4 +127,9 @@
          ("C-c u" . crux-view-url)
          ("C-c D" . crux-delete-file-and-buffer)))
 
+(use-package helpful
+  :config
+  (setq counsel-describe-function-function #'helpful-callable
+        counsel-describe-variable-function #'helpful-variable))
+
 (provide 'dkellner-misc)

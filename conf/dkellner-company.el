@@ -3,12 +3,11 @@
 ;; See http://company-mode.github.io/ .
 
 (use-package company
+  :defer t
+  :hook (after-init . global-company-mode)
   :config
-  (global-company-mode)
   (setq company-idle-delay 0.5)
-  (setq company-dabbrev-downcase nil)
-  (use-package company-quickhelp
-    :config
-    (company-quickhelp-mode 1)))
+  (setq company-dabbrev-downcase nil
+        company-dabbrev-ignore-case nil))
 
 (provide 'dkellner-company)

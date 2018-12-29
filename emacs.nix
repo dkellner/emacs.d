@@ -117,6 +117,7 @@ in
     company-php
     company-quickhelp
     counsel
+    counsel-projectile
     crux
     diminish
     dimmer

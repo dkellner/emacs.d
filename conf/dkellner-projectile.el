@@ -4,11 +4,14 @@
 
 (use-package projectile
   :config
-  (define-key projectile-mode-map (kbd "C-p") #'projectile-command-map)
-  (setq projectile-completion-system 'ivy
-        projectile-switch-project-action #'projectile-vc)
-  (projectile-mode 1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   :diminish projectile-mode)
+
+(use-package counsel-projectile
+  :config
+  (setq counsel-projectile-switch-project-action
+        #'counsel-projectile-switch-project-action-vc)
+  (counsel-projectile-mode 1))
 
 (use-package ibuffer-projectile
   :config

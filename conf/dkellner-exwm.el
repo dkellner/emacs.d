@@ -180,8 +180,4 @@ Only works *before* exwm in initialized."
 (use-package gpastel
   :hook (exwm-init . gpastel-start-listening))
 
-(defun dkellner/autostart ()
-  "Automatically start some applications at boot."
-  (org-agenda nil "a"))
-
 (provide 'dkellner-exwm)

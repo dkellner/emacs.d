@@ -21,7 +21,6 @@ Only works *before* exwm in initialized."
          ("s-SPC" . #'exwm-layout-toggle-fullscreen)
          ("s-F" . #'exwm-floating-toggle-fullscreen)
          ("M-y" . #'dkellner/exwm-counsel-yank-pop))
-  :hook (exwm-init . dkellner/autostart)
   :config
 
   ;; Workspaces

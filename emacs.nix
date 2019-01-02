@@ -8,36 +8,6 @@ $ ./result/bin/emacs
 { pkgs ? import <nixpkgs> {} }:
 
 let
-  xelb = epkgs: epkgs.callPackage ({ cl-generic, elpaBuild, emacs, fetchurl, lib }:
-    elpaBuild {
-      pname = "xelb";
-      ename = "xelb";
-      version = "0.16";
-      src = fetchurl {
-        url = "https://elpa.gnu.org/packages/xelb-0.16.tar";
-        sha256 = "03wsr1jr7f7zfd80h864rd4makwh4widdnj1kjv2xyjwdgap9rl8";
-      };
-      packageRequires = [ cl-generic emacs ];
-      meta = {
-        homepage = "https://elpa.gnu.org/packages/xelb.html";
-        license = lib.licenses.free;
-      };
-    }) {};
-  exwm = epkgs: epkgs.callPackage ({ elpaBuild, fetchurl, lib }:
-    elpaBuild {
-      pname = "exwm";
-      ename = "exwm";
-      version = "0.21";
-      src = fetchurl {
-        url = "https://elpa.gnu.org/packages/exwm-0.21.tar";
-        sha256 = "07ng1pgsnc3isfsyzh2gfc7391p9il8lb5xqf1z6yqn20w7k6xzj";
-      };
-      packageRequires = [ (xelb epkgs) ];
-      meta = {
-        homepage = "https://elpa.gnu.org/packages/exwm.html";
-        license = lib.licenses.free;
-      };
-    }) {};
   shrink-path = epkgs: epkgs.callPackage ({ dash
                                           , emacs
                                           , f
@@ -103,7 +73,7 @@ let
     }) {};
 in
   pkgs.emacsWithPackages (epkgs: (with epkgs.elpaPackages; [
-    (exwm epkgs)
+    exwm
     undo-tree
   ]) ++ (with epkgs.melpaPackages; [
     anaconda-mode

@@ -41,7 +41,6 @@ let
   shrink-path = epkgs: epkgs.callPackage ({ dash
                                           , emacs
                                           , f
-                                          , fetchFromGitLab
                                           , fetchurl
                                           , lib
                                           , melpaBuild
@@ -77,12 +76,12 @@ let
     melpaBuild {
       pname = "doom-modeline";
       ename = "doom-modeline";
-      version = "20181204.0530";
+      version = "20181231.0000";
       src = fetchFromGitHub {
         owner = "seagle0128";
         repo = "doom-modeline";
-        rev = "2e65c9d06b30cef156f7e74b773e67b487af9b24";
-        sha256 = "1g9vhslgagkdwccwcac5xlpc1n4bi5806fdrc6yy6wmdmij5q7ji";
+        rev = "3d1490d6e6c3d07e89d62f44ce87617697dfdb55";
+        sha256 = "05n9g98nydgmxh9l717qc1q8w08g4p9gyk36fbzy7lwnzjlpf2ma";
       };
       recipe = fetchurl {
         url = "https://raw.githubusercontent.com/milkypostman/melpa/f4f610757f85fb01bd9b1dd212ddbea8f34f3ecd/recipes/doom-modeline";

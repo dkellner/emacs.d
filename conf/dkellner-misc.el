@@ -35,9 +35,9 @@
   :diminish global-whitespace-mode)
 
 (use-package flycheck
+  :hook (prog-mode . flycheck-mode)
   :config
-  (global-flycheck-mode)
-  :diminish flycheck-mode)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 
 (use-package iedit)
 

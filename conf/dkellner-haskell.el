@@ -2,12 +2,9 @@
 
 (use-package haskell-mode
   :config
-  (setq haskell-stylish-on-save t
-        haskell-mode-stylish-haskell-path "brittany"))
+  (setq haskell-mode-stylish-haskell-path "brittany"))
 
-;; See http://commercialhaskell.github.io/intero/
-(use-package intero
-  :config
-  (add-hook 'haskell-mode-hook #'intero-mode))
+(use-package dante
+  :hook (haskell-mode . dante-mode))
 
 (provide 'dkellner-haskell)

@@ -88,6 +88,7 @@ in
     counsel
     counsel-projectile
     crux
+    dante
     diminish
     dimmer
     docker
@@ -105,7 +106,6 @@ in
     hydra
     ibuffer-projectile
     iedit
-    intero
     ivy
     ivy-hydra
     iy-go-to-char

@@ -7,6 +7,9 @@
 (setq-default indent-tabs-mode nil)
 (setq-default fill-column 79)
 
+(setq password-cache t
+      password-cache-expiry 600)
+
 (use-package recentf
   :demand t
   :config

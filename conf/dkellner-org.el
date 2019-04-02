@@ -41,6 +41,7 @@
 (setq org-export-with-sub-superscripts nil)
 (setq org-export-allow-bind-keywords t)
 (setq org-default-priority ?C)
+(setq org-use-speed-commands t)
 
 ;; I mostly use the capture template for "Inbox" to put new ideas, todos etc.
 ;; in my `main.org' file for later processing (GTD-style).
@@ -64,7 +65,7 @@
          ((agenda "" ((org-agenda-span 'day)))
           (tags-todo "-PRIORITY=\"C\""
                      ((org-agenda-sorting-strategy
-                       '(tag-up priority-down))))))))
+                       '(priority-down tag-up))))))))
 
 ;; Enable more languages for Babel, especially useful for
 ;; "Literate Devops", see https://www.youtube.com/watch?v=dljNabciEGg .
@@ -79,7 +80,6 @@
 ;; Simple presentations inside Emacs.
 (use-package org-tree-slide)
 
-
 (add-hook 'org-mode-hook (lambda () (auto-fill-mode 1)))
 
 (use-package org-pomodoro
@@ -89,5 +89,17 @@
         org-pomodoro-short-break-format "◔ %s"
         org-pomodoro-long-break-format "◕ %s"
         org-pomodoro-audio-player "aplay"))
+
+(use-package org-super-agenda
+  :config
+  (setq org-super-agenda-groups
+        '(
+          (:name "#A"
+                 :and (:priority "A" :not (:tag "work")))
+          (:name "@laptop"
+                 :tag "@laptop")
+          (:name "work"
+                 :tag "work")))
+  (org-super-agenda-mode 1))
 
 (provide 'dkellner-org)

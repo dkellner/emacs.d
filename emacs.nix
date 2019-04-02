@@ -114,8 +114,8 @@ in
     markdown-mode
     nix-mode
     no-littering
-    org-bullets
     org-pomodoro
+    org-super-agenda
     org-tree-slide
     paredit
     php-mode

@@ -113,6 +113,7 @@ in
     magit
     markdown-mode
     nix-mode
+    nix-sandbox
     no-littering
     org-pomodoro
     org-super-agenda

@@ -24,6 +24,7 @@
 
 ;; see https://gitlab.com/bennya/shrink-path.el
 (defun dkellner/eshell-prompt ()
+  (require 'shrink-path)
   (let ((base-dir (shrink-path-prompt default-directory)))
     (concat (propertize (car base-dir)
                         'face 'font-lock-comment-face)

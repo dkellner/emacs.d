@@ -34,43 +34,6 @@ let
         license = lib.licenses.free;
       };
     }) {};
-  doom-modeline = epkgs: epkgs.callPackage ({ all-the-icons
-                                            , dash
-                                            , eldoc-eval
-                                            , emacs
-                                            , fetchFromGitHub
-                                            , fetchurl
-                                            , lib
-                                            , melpaBuild
-                                            , projectile }:
-    melpaBuild {
-      pname = "doom-modeline";
-      ename = "doom-modeline";
-      version = "20181231.0000";
-      src = fetchFromGitHub {
-        owner = "seagle0128";
-        repo = "doom-modeline";
-        rev = "3d1490d6e6c3d07e89d62f44ce87617697dfdb55";
-        sha256 = "05n9g98nydgmxh9l717qc1q8w08g4p9gyk36fbzy7lwnzjlpf2ma";
-      };
-      recipe = fetchurl {
-        url = "https://raw.githubusercontent.com/milkypostman/melpa/f4f610757f85fb01bd9b1dd212ddbea8f34f3ecd/recipes/doom-modeline";
-        sha256 = "0pscrhhgk4wpz1f2r94ficgan4f9blbhqzvav1wjahwp7fn5m29j";
-        name = "recipe";
-      };
-      packageRequires = [
-        all-the-icons
-        dash
-        eldoc-eval
-        emacs
-        projectile
-        (shrink-path epkgs)
-      ];
-      meta = {
-        homepage = "https://melpa.org/#/doom-modeline";
-        license = lib.licenses.free;
-      };
-    }) {};
 in
   pkgs.emacsWithPackages (epkgs: (with epkgs.elpaPackages; [
     exwm
@@ -93,7 +56,6 @@ in
     dimmer
     docker
     dockerfile-mode
-    (doom-modeline epkgs)
     emms
     expand-region
     exwm-edit
@@ -124,7 +86,7 @@ in
     purescript-mode
     restclient
     shackle
-    spaceline
+    (shrink-path epkgs)
     swiper
     use-package
     web-mode

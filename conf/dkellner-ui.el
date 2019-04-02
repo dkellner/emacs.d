@@ -2,12 +2,7 @@
 
 (use-package gruvbox-theme
   :config
-  (load-theme 'gruvbox-dark-hard t)
-  (custom-theme-set-faces
-   'gruvbox-dark-hard
-   '(spaceline-unmodified ((t (:background "#b8bb26" :foreground "#222222"))))
-   '(spaceline-modified ((t (:background "#fb4933" :foreground "#222222"))))
-   '(spaceline-read-only ((t (:background "#d3869b" :foreground "#222222"))))))
+  (load-theme 'gruvbox-dark-hard t))
 
 (use-package bar-cursor
   :config
@@ -37,11 +32,5 @@
 (setq window-divider-default-bottom-width 1
       window-divider-default-right-width 1)
 (window-divider-mode)
-
-(use-package doom-modeline
-  :defer t
-  :hook (after-init . doom-modeline-init)
-  :config
-  (setq doom-modeline-icon t))
 
 (provide 'dkellner-ui)

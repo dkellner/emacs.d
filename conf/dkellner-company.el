@@ -8,6 +8,7 @@
   :config
   (setq company-idle-delay 0.5)
   (setq company-dabbrev-downcase nil
-        company-dabbrev-ignore-case nil))
+        company-dabbrev-ignore-case nil)
+  :diminish company-mode)
 
 (provide 'dkellner-company)

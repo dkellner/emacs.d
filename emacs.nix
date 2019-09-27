@@ -56,7 +56,6 @@ in
     dimmer
     docker
     dockerfile-mode
-    emms
     expand-region
     exwm-edit
     flycheck

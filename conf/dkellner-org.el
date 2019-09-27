@@ -10,7 +10,7 @@
 ;; Basic configuration: set main org files for agenda/capturing and
 ;; TODO-keywords.
 (setq org-directory "~/org/")
-(setq org-agenda-files '("~/org/main.org" "~/org/pap.org" "~/org/tickler.org"))
+(setq org-agenda-files '("~/org/main.org" "~/org/tickler.org"))
 (setq org-refile-targets '(("main.org" :maxlevel . 2)
                            ("pap.org" :maxlevel . 1)
                            ("tickler.org" :maxlevel . 1)
@@ -25,6 +25,7 @@
                       ("@laptop" . ,(string-to-char "l"))
                       ("@phone" . ,(string-to-char "p"))
                       ("@home" . ,(string-to-char "h"))
+                      ("@fiedlbuehl" . ,(string-to-char "f"))
                       ("@errands" . ,(string-to-char "e"))
                       (:endgroup)))
 
@@ -61,11 +62,17 @@
 (require 'org-notmuch)
 
 (setq org-agenda-custom-commands
-      '(("d" "Daily agenda"
+      '(("h" "Home"
          ((agenda "" ((org-agenda-span 'day)))
-          (tags-todo "-PRIORITY=\"C\""
-                     ((org-agenda-sorting-strategy
-                       '(priority-down tag-up))))))))
+          (todo "TODO"
+                ((org-agenda-sorting-strategy
+                  '(priority-down tag-up))))))
+        ("w" "Work"
+         ((agenda "" ((org-agenda-span 'day)))
+          (todo "TODO"
+                ((org-agenda-sorting-strategy
+                  '(priority-down tag-up)))))
+         ((org-agenda-files (append org-agenda-files '("~/org/pap.org")))))))
 
 ;; Enable more languages for Babel, especially useful for
 ;; "Literate Devops", see https://www.youtube.com/watch?v=dljNabciEGg .
@@ -94,12 +101,16 @@
   :config
   (setq org-super-agenda-groups
         '(
-          (:name "#A"
-                 :and (:priority "A" :not (:tag "work")))
+          (:name "work"
+                 :tag "work")
           (:name "@laptop"
                  :tag "@laptop")
-          (:name "work"
-                 :tag "work")))
+          (:name "@home"
+                 :tag "@home")
+          (:name "@errands"
+                 :tag "@errands")
+          (:name "@fiedlbuehl"
+                 :tag "@fiedlbuehl")))
   (org-super-agenda-mode 1))
 
 (provide 'dkellner-org)

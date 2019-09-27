@@ -82,6 +82,7 @@ in
     php-mode
     projectile
     purescript-mode
+    rainbow-delimiters
     restclient
     shackle
     (shrink-path epkgs)

@@ -33,4 +33,7 @@
   :bind (:map emacs-lisp-mode-map
               ("C-c C-t" . buttercup-run-at-point)))
 
+(use-package rainbow-delimiters
+  :hook (emacs-lisp-mode . rainbow-delimiters-mode))
+
 (provide 'dkellner-elisp)

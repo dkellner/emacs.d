@@ -13,8 +13,9 @@
 ;; see https://emacs.stackexchange.com/a/37652
 
 (defun dkellner/shackle-smart-split-dir ()
-  (if (>= (window-pixel-height)
-          (window-pixel-width))
+  (if (< (/ (float (window-pixel-width))
+            (window-pixel-height))
+         1.3)
       'below
     'right))
 

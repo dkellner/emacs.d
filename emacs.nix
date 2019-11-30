@@ -42,6 +42,7 @@ in
     anaconda-mode
     avy
     bar-cursor
+    better-defaults
     buttercup
     company
     company-anaconda

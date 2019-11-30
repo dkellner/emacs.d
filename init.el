@@ -13,6 +13,8 @@
 (package-initialize)
 (require 'use-package)
 
+(use-package better-defaults)
+
 ;; Make sure the following packages are available as I use them in my configs.
 (use-package diminish)
 (use-package hydra)

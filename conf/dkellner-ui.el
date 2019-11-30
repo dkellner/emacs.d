@@ -13,11 +13,6 @@
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(show-paren-mode t)
-
 (diminish 'auto-revert-mode)
 
 (add-to-list 'default-frame-alist '(font . "Meslo LG M 13"))

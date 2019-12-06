@@ -55,6 +55,7 @@ in
     dante
     diminish
     dimmer
+    direnv
     docker
     dockerfile-mode
     expand-region

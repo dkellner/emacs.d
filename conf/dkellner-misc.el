@@ -133,4 +133,8 @@
   (setq counsel-describe-function-function #'helpful-callable
         counsel-describe-variable-function #'helpful-variable))
 
+(use-package direnv
+  :config
+  (direnv-mode))
+
 (provide 'dkellner-misc)

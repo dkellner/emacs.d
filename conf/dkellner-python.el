@@ -1,24 +1,4 @@
 ;; dkellner-python.el --- Python-specific configuration
-;;
-;; This mainly enables and configures Elpy:
-;; https://elpy.readthedocs.io/en/latest/index.html
-
-(use-package elpy
-  :config
-  (elpy-enable)
-  ;; Disable highlight-indentation-mode, because I don't like it.
-  (delete 'elpy-module-highlight-indentation elpy-modules))
-
-(defun dkellner/elpy-test-tox-runner (top file module test)
-  "Test the project using Tox.
-At the moment this just runs `tox` in the project-root and is not able to run a
-single test at point."
-  (interactive (elpy-test-at-point))
-  (apply #'elpy-test-run
-         top
-         "tox"
-         ()))
-(put 'dkellner/elpy-test-tox-runner 'elpy-test-runner-p t)
 
 ;; The following is not mature and well-tested yet, but first results are
 ;; pleasing. When running a test we try to detect "(Pdb)" in the process'

@@ -45,8 +45,10 @@ in
     bar-cursor
     better-defaults
     buttercup
+    cargo
     company
     company-anaconda
+    company-lsp
     company-nixos-options
     company-php
     company-quickhelp
@@ -62,6 +64,7 @@ in
     expand-region
     exwm-edit
     flycheck
+    flycheck-rust
     git-timemachine
     gpastel
     gruvbox-theme
@@ -73,6 +76,7 @@ in
     ivy
     ivy-hydra
     iy-go-to-char
+    lsp-mode
     macrostep
     magit
     markdown-mode
@@ -87,9 +91,11 @@ in
     purescript-mode
     rainbow-delimiters
     restclient
+    rust-mode
     shackle
     (shrink-path epkgs)
     swiper
+    toml-mode
     use-package
     web-mode
     which-key

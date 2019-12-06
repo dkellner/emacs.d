@@ -105,6 +105,8 @@
                  :tag "work")
           (:name "@laptop"
                  :tag "@laptop")
+          (:name "@phone"
+                 :tag "@phone")
           (:name "@home"
                  :tag "@home")
           (:name "@errands"

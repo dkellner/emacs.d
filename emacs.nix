@@ -39,6 +39,7 @@ in
     exwm
     undo-tree
   ]) ++ (with epkgs.melpaPackages; [
+    all-the-icons
     anaconda-mode
     avy
     bar-cursor

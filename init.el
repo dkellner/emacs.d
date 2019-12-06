@@ -5,6 +5,9 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
+(setq gc-cons-threshold (* 400 1000 1000)
+      gc-cons-percentage 0.6)
+
 ;; Disable the package manager and make sure `use-package' is installed. I use
 ;; it to tidy the rest of my configuration.
 (require 'package)
@@ -51,5 +54,8 @@
 (require 'dkellner-undo-tree)
 (require 'dkellner-web-mode)
 (require 'dkellner-windows-and-navigation)
+
+(setq gc-cons-threshold (* 16 1000 1000)
+      gc-cons-percentage 0.1)
 
 (provide 'init)

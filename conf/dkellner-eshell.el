@@ -11,11 +11,13 @@
 (defun dkellner/setup-eshell ()
   (setq eshell-visual-commands
         '("ssh" "mutt-puzzleandplay" "mutt-dkellner" "mplayer" "mysql" "vi"
-          "screen" "top" "less" "more"))
+          "screen" "top" "less" "more" "nix-shell"))
   (setq eshell-visual-subcommands
         '(("nixops" "ssh")
           ("nix" "repl")
-          ("docker" "exec")))
+          ("nix" "search")
+          ("docker" "exec")
+          ("stack" "repl")))
   (setq eshell-visual-options
         '(("gcloud" "connect" "ssh")
           ("kubectl" "exec")))

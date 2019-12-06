@@ -2,8 +2,11 @@
 
 (add-hook 'eshell-first-time-mode-hook #'dkellner/setup-eshell)
 (add-hook 'eshell-mode-hook #'dkellner/add-eshell-keys)
+(add-hook 'eshell-mode-hook #'dkellner/eshell-hist-use-global-history)
+(add-hook 'eshell-pre-command-hook #'eshell-save-some-history)
 
-(setq eshell-history-size 10000)
+(setq eshell-history-size 10000
+      eshell-hist-ignoredups t)
 
 (defun dkellner/setup-eshell ()
   (setq eshell-visual-commands
@@ -53,5 +56,17 @@ directory."
          (name (abbreviate-file-name dir)))
     (eshell t)
     (rename-buffer (concat "*eshell:" name "*"))))
+
+;;; Shared history, inspired by https://gitlab.com/ambrevar/dotfiles
+(defvar dkellner/eshell-history-global-ring nil)
+
+(defun dkellner/eshell-hist-use-global-history ()
+  "Make Eshell history shared across different buffers."
+  (unless dkellner/eshell-history-global-ring
+    (when eshell-history-file-name
+      (eshell-read-history nil t))
+    (setq dkellner/eshell-history-global-ring
+          (or eshell-history-ring (make-ring eshell-history-size))))
+  (setq eshell-history-ring dkellner/eshell-history-global-ring))
 
 (provide 'dkellner-eshell)

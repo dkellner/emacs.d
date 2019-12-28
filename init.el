@@ -20,7 +20,9 @@
 
 ;; Make sure the following packages are available as I use them in my configs.
 (use-package diminish)
-(use-package hydra)
+(use-package hydra
+  :config
+  (setq hydra-hint-display-type 'message))
 
 ;; `no-littering' needs to be loaded as early as possible, see
 ;; https://github.com/emacscollective/no-littering#usage for details.

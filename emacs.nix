@@ -74,7 +74,7 @@ in
     ibuffer-projectile
     iedit
     ivy
-    ivy-hydra
+    ivy-posframe
     iy-go-to-char
     lsp-mode
     macrostep

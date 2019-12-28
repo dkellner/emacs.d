@@ -25,4 +25,21 @@
 
 (use-package swiper)
 
+(use-package ivy-posframe
+  :config
+  (setq ivy-posframe-parameters '((parent-frame nil))
+        ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+  (ivy-posframe-mode 1)
+  :diminish)
+
+(setq posframe-arghandler #'dkellner/posframe-arghandler)
+
+(setq dkellner/default-posframe-show-params
+  '(:internal-border-width 1
+    :internal-border-color "#504945"
+    :background-color "#2b3c44"))
+
+(defun dkellner/posframe-arghandler (buffer-or-name arg-name value)
+  (or (plist-get dkellner/default-posframe-show-params arg-name) value))
+
 (provide 'dkellner-ivy)

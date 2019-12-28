@@ -4,8 +4,8 @@
   :config
   (setq shackle-rules
         '((("^\\*Capture\\*$"
-            "^CAPTURE.*\\.org$"
-            "^\\*eshell")
+            "^\\*Org Select\\*$"
+            "^CAPTURE.*\\.org$")
            :regexp t
            :custom dkellner/shackle-dynamic-split)))
   (shackle-mode 1))

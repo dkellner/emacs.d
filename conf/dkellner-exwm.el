@@ -17,7 +17,6 @@ Only works *before* exwm in initialized."
   :demand t
   :bind (:map exwm-mode-map
          ("C-q" . #'exwm-input-send-next-key)
-         ("s-i" . #'exwm-input-toggle-keyboard)
          ("s-SPC" . #'exwm-layout-toggle-fullscreen)
          ("s-F" . #'exwm-floating-toggle-fullscreen)
          ("M-y" . #'dkellner/exwm-counsel-yank-pop))
@@ -28,6 +27,7 @@ Only works *before* exwm in initialized."
   (setq exwm-workspace-number 10
         exwm-workspace-show-all-buffers t
         exwm-layout-show-all-buffers t)
+
   (dotimes (i 10)
     (exwm-input-set-key (kbd (format "s-%d" i))
                         `(lambda ()
@@ -35,9 +35,9 @@ Only works *before* exwm in initialized."
                            (exwm-workspace-switch-create ,i))))
 
   (require 'exwm-randr)
-  (setq exwm-randr-workspace-output-plist '(1 "HDMI1" 2 "HDMI1"
-                                            3 "HDMI1" 4 "HDMI1"
-                                            5 "HDMI1"))
+  (setq exwm-randr-workspace-output-plist '(1 "HDMI-1" 2 "HDMI-1"
+                                            3 "HDMI-1" 4 "HDMI-1"
+                                            5 "HDMI-1"))
   (exwm-randr-enable)
 
   ;; Global keybindings
@@ -49,6 +49,7 @@ Only works *before* exwm in initialized."
    '("s-x" . dkellner/run)
    '("s-<return>" . dkellner/new-eshell)
    '("s-f" . dkellner/browse/body)
+   '("s-i" . exwm-input-toggle-keyboard)
    '("s-p" . (lambda () (interactive)
                (dkellner/run "~/dev/passman/passman submitform")))
    '("s-P" . (lambda () (interactive)
@@ -58,6 +59,10 @@ Only works *before* exwm in initialized."
    '("s-t" . windmove-right)
    '("s-g" . windmove-up)
    '("s-r" . windmove-down)
+   '("s-." . split-window-right)
+   '("s-," . split-window-below)
+   '("s-m" . delete-other-windows)
+   '("s-j" . delete-window)
    '("s-N" . (lambda () (interactive) (shrink-window-horizontally 2)))
    '("s-T" . (lambda () (interactive) (enlarge-window-horizontally 2)))
    '("s-Q" . dkellner/shutdown-or-reboot/body)

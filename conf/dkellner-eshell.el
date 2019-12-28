@@ -41,7 +41,6 @@
 
 (defun dkellner/add-eshell-keys ()
   (define-key eshell-mode-map (kbd "C-c C-l") #'counsel-esh-history)
-  (define-key eshell-mode-map (kbd "C-x k") #'kill-buffer-and-window)
   (define-key eshell-mode-map (kbd "<up>") #'previous-line)
   (define-key eshell-mode-map (kbd "<down>") #'next-line))
 

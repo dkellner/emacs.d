@@ -184,4 +184,11 @@ Only works *before* exwm in initialized."
 (use-package gpastel
   :hook (exwm-init . gpastel-start-listening))
 
+(defun dkellner/autostart ()
+  "Run some applications on startup."
+  (start-process-shell-command "cbatticon" nil "cbatticon")
+  (start-process-shell-command "nm-applet" nil "nm-applet")
+  (start-process-shell-command "nextcloud" nil "nextcloud"))
+(add-hook 'exwm-init-hook #'dkellner/autostart)
+
 (provide 'dkellner-exwm)

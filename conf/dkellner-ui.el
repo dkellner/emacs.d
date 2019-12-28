@@ -22,9 +22,6 @@
 
 (add-to-list 'default-frame-alist '(font . "Meslo LG M 13"))
 
-;; Transparency
-(add-to-list 'default-frame-alist '(alpha . 93))
-
 (setq display-time-default-load-average nil
       display-time-24hr-format t)
 (display-time-mode 0)

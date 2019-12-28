@@ -1,42 +1,46 @@
 /*
 
 Building and linking the result in the current directory:
-$ nix-build emacs.nix
+$ nix build -f emacs.nix
 $ ./result/bin/emacs
 
 */
 { pkgs ? import <nixpkgs> {} }:
 
 let
-  shrink-path = epkgs: epkgs.callPackage ({ dash
-                                          , emacs
-                                          , f
-                                          , fetchurl
-                                          , lib
-                                          , melpaBuild
-                                          , s }:
-    melpaBuild {
-      pname = "shrink-path";
-      ename = "shrink-path";
-      version = "20170812.1947";
+  xelb = epkgs: epkgs.callPackage ({ cl-generic, elpaBuild, emacs, fetchurl, lib }:
+    elpaBuild {
+      pname = "xelb";
+      ename = "xelb";
+      version = "0.18";
       src = fetchurl {
-        url = "https://gitlab.com/bennya/shrink-path.el/-/archive/master/shrink-path.el-master.tar.gz";
-        sha256 = "089jd59b4y0bairnzfxla9jkxxmg86i8j851g7vjb0cp3msdhjg1";
+        url = "https://elpa.gnu.org/packages/xelb-0.18.tar";
+        sha256 = "1fp5mzl63sh0h3ws4l5p4qgvi7ny8a3fj6k4dhqa98xgw2bx03v7";
       };
-      recipe = fetchurl {
-        url = "https://raw.githubusercontent.com/milkypostman/melpa/86b0d105e8a57d5f0bcde779441dc80b85e170ea/recipes/shrink-path";
-        sha256 = "0fq13c6g7qbq6f2ry9dzdyg1f6p41wimkjcdaj177rnilz77alzb";
-        name = "recipe";
-      };
-      packageRequires = [ dash emacs f s ];
+      packageRequires = [ cl-generic emacs ];
       meta = {
-        homepage = "https://melpa.org/#/shrink-path";
+        homepage = "https://elpa.gnu.org/packages/xelb.html";
+        license = lib.licenses.free;
+      };
+    }) {};
+  exwm = epkgs: epkgs.callPackage ({ elpaBuild, fetchurl, lib }:
+    elpaBuild {
+      pname = "exwm";
+      ename = "exwm";
+      version = "0.23";
+      src = fetchurl {
+        url = "https://elpa.gnu.org/packages/exwm-0.23.tar";
+        sha256 = "05w1v3wrp1lzz20zd9lcvr5nhk809kgy6svvkbs15xhnr6x55ad5";
+      };
+      packageRequires = [ (xelb epkgs) ];
+      meta = {
+        homepage = "https://elpa.gnu.org/packages/exwm.html";
         license = lib.licenses.free;
       };
     }) {};
 in
   pkgs.emacsWithPackages (epkgs: (with epkgs.elpaPackages; [
-    exwm
+    (exwm epkgs)
     undo-tree
   ]) ++ (with epkgs.melpaPackages; [
     all-the-icons
@@ -93,7 +97,7 @@ in
     restclient
     rust-mode
     shackle
-    (shrink-path epkgs)
+    shrink-path
     swiper
     toml-mode
     use-package

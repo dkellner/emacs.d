@@ -132,4 +132,7 @@
   :config
   (direnv-mode))
 
+(use-package yasnippet)
+(use-package yasnippet-snippets)
+
 (provide 'dkellner-misc)

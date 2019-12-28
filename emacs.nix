@@ -100,6 +100,8 @@ in
     web-mode
     which-key
     yaml-mode
+    yasnippet
+    yasnippet-snippets
   ]) ++ (with epkgs.orgPackages; [
     org-plus-contrib
   ]) ++ [

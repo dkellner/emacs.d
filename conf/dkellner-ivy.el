@@ -16,14 +16,12 @@
 
 (use-package counsel
   :demand t
-  :bind (("C-s" . counsel-grep-or-swiper))
   :config
   (counsel-mode 1)
   (setq counsel-grep-base-command
         "rg -i -M 120 --no-heading --line-number --color never '%s' %s")
   :diminish counsel-mode)
 
-(use-package swiper)
 
 (use-package ivy-posframe
   :config

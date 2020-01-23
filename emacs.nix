@@ -98,7 +98,6 @@ in
     rust-mode
     shackle
     shrink-path
-    swiper
     toml-mode
     use-package
     web-mode

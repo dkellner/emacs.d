@@ -1,7 +1,3 @@
-# auto-generated files
-/custom.el
-/elpa
-/var
-
-*~
-\#*
+/*.el
+/private.org
+/var/

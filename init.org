@@ -2,47 +2,6 @@
 #+AUTHOR: Dominik Kellner
 #+PROPERTY: header-args :tangle yes
 
-* Introduction
-
-Simply put, this is my configuration file for Emacs. To a greater degree, it is
-an ongoing attempt to discover how my ideal computation environment should look
-like.
-
-There are many others like it (see [[*Inspirations][Inspirations]]). As one's editor configuration
-is naturally a matter of personal taste and expectations, don't try to use this
-one as it is. Read some sections, learn about /my/ way of doing things,
-cherry-pick the parts you enjoy, and keep hacking!
-
-In its current version, my configuration tries to achieve the following goals
-(in this order):
-
-** No distractions
-
-Very few things should be important enough to arbitrarily redirect your
-attention. That's the reason why there are no notifications, not even a
-clock. Yet all information I need is just one key binding or =M-x= away.
-
-** Ergonomic and consistent controls
-
-To improve typing ergonomics in general, I'm using an ergonomic keyboard layout
-called [[https://neo-layout.org/][Neo]]. This puts frequently used keys in the home row and adds more
-modifier keys, which make writing special characters easier.
-
-To reduce typing of key-chords, I'm using a modal editing mode called
-[[https://github.com/jyp/boon][Boon]]. Since very recently this provides idiomatic key bindings (e.g. you can
-use =n= and =p= for =next-line= and =previous-line=). This also plays nicely together
-with special Emacs modes who already use those keys for navigation,
-e.g. =org-agenda-mode=.
-
-** State-of-the-art development experience in selected languages
-
-Setting up Emacs to support the programming language of your choice is one of
-the most fun but also hardest tasks. Usually there are at least a dozen
-different packages to consider, try out and integrate into your workflow.
-
-I'm trying to unify different language-dependent solutions using [[https://nixos.org/nix/][Nix]], [[https://direnv.net/][direnv]],
-[[https://github.com/target/lorri][lorri]] and LSP. For Python and Rust this works reasonably well.
-
 * Initialization
 
 ** Lexical scope
@@ -1630,10 +1589,3 @@ again. Otherwise, I will move the entire section to a better place.
 
 (add-hook 'kill-emacs-query-functions #'dkellner/tangle-config)
 #+end_src
-
-* Inspirations
-
-- https://github.com/alhassy/emacs.d
-- https://github.com/dakra/dmacs
-- https://writequit.org/eos/eos.html
-- ... and many others

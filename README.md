@@ -1,7 +1,7 @@
 # My Emacs configuration
 
 Simply put, this is my configuration for Emacs. To a greater degree, it is an
-ongoing attempt to discover how my ideal computation environment should look
+ongoing attempt to discover how my ideal computing environment should look
 like.
 
 There are many others like it (see "Inspirations" at the end of this file). As

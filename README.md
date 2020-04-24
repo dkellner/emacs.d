@@ -13,6 +13,12 @@ hacking!
 To read the configuration, I recommend opening
 [init.org](https://git.sr.ht/~dkellner/emacs.d/tree/master/init.org) in Emacs.
 
+Here are some screenshots to give you an idea of how it looks like:
+
+![Dark theme (gruvbox-dark-hard)](screenshot-dark.png)
+
+![Light theme (gruvbox-light-hard)](screenshot-light.png)
+
 ## Goals
 
 In its current version, my configuration tries to achieve the following goals

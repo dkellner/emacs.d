@@ -771,7 +771,8 @@ Instead we rely on it also not honoring =:disabled=, so we will end up with
                       ("@home" . ,(string-to-char "h"))
                       ("@errands" . ,(string-to-char "e"))
                       (:endgroup)
-                      ("@nhi" . ,(string-to-char "n"))))
+                      ("@nhi" . ,(string-to-char "n"))
+                      ("@work" . ,(string-to-char "w"))))
 
 (setq org-startup-folded 'content
       org-log-into-drawer t
@@ -844,7 +845,10 @@ Instead we rely on it also not honoring =:disabled=, so we will end up with
           (todo "TODO"
                 ((org-agenda-sorting-strategy
                   '(priority-down tag-up)))))
-         ((org-agenda-files (append org-agenda-files '("~/org/pap.org" "~/org/calendars/puzzleandplay.org")))))))
+         ((org-agenda-files
+           (append org-agenda-files '("~/org/pap.org" "~/org/calendars/puzzleandplay.org")))
+          (org-super-agenda-groups
+           (append org-super-agenda-groups '((:name "@work" :tag "@work"))))))))
 
 (use-package org-super-agenda
   :config

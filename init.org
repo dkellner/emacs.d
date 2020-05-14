@@ -1029,7 +1029,8 @@ See `org-archive-all-old'."
 
 (use-package notmuch
   :config
-  (setq sendmail-program "msmtp"
+  (setq mail-host-address (system-name)
+        sendmail-program "msmtp"
         message-kill-buffer-on-exit t
         message-send-mail-function 'message-send-mail-with-sendmail
         message-sendmail-extra-arguments '("--read-envelope-from")

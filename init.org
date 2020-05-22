@@ -232,6 +232,7 @@ exec dbus-launch --exit-with-session emacsclient -c
    '("s-q" . exwm-reset)
    '("s-f" . dkellner/browse/body)
    '("s-i" . exwm-input-toggle-keyboard)
+   '("s-R" . (lambda () (interactive) (async-shell-command "autorandr -c")))
    '("s-Z" . (lambda () (interactive) (async-shell-command "dm-tool lock")))
    '("s-Q" . dkellner/shutdown-or-reboot/body))
 

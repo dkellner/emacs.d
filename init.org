@@ -803,7 +803,7 @@ Instead we rely on it also not honoring =:disabled=, so we will end up with
          "%(org-chef-get-recipe-from-url)"
          :empty-lines 1)))
 
-(use-local-package org-notmuch)
+(use-local-package ol-notmuch)
 #+end_src
 
 *** Use =pop-to-buffer=
@@ -947,7 +947,7 @@ See https://elmord.org/blog/?entry=20180214-exwm-org-capture .
         :link (dkellner/exwm-get-firefox-url)
         :description exwm-title)))
 
-(use-package org
+(use-local-package org
   :config
   (org-link-set-parameters "http" :store #'dkellner/org-firefox-store-link))
 #+end_src

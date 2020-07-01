@@ -801,9 +801,9 @@ Instead we rely on it also not honoring =:disabled=, so we will end up with
 #+begin_src emacs-lisp
 (setq org-capture-templates
       '(("i" "Inbox" entry (file "~/org/inbox.org")
-         "* %?")
+         "* %?\nCreated: %T")
         ("I" "Inbox (with link)" entry (file "~/org/inbox.org")
-         "* %?\n%a")
+         "* %?\n%a\nCreated: %T")
         ("c" "Cookbook" entry (file "~/org/cookbook.org")
          "%(org-chef-get-recipe-from-url)"
          :empty-lines 1)))

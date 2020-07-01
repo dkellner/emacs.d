@@ -1492,7 +1492,7 @@ Olivetti is a nice little mode if you want to focus on writing one document.
 ** GC-Tuning
 
 #+begin_src emacs-lisp
-(setq gc-cons-threshold 10000000)
+(setq gc-cons-threshold (* 100 1024 1024))
 #+end_src
 
 * Playground

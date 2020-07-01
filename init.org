@@ -355,6 +355,7 @@ basically just wrapping =light= and =pactl=.
 
 #+begin_src emacs-lisp
 (use-package gpastel
+  :load-path "~/dev/gpastel"
   :hook (exwm-init . gpastel-mode))
 #+end_src
 

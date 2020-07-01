@@ -214,7 +214,6 @@ exec dbus-launch --exit-with-session emacsclient -c
 
 #+begin_src emacs-lisp
 (use-package exwm
-  :load-path "~/dev/exwm"
   :demand t
   :config
   (setq exwm-workspace-number 10

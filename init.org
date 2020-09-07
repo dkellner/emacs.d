@@ -442,9 +442,9 @@ application I want to run directly in =M-x=.
   (interactive)
   (dkellner/vterm-command "mutt"))
 
-(defun dkellner/riot ()
+(defun dkellner/element ()
   (interactive)
-  (async-shell-command "riot-desktop"))
+  (async-shell-command "element-desktop"))
 #+end_src
 
 *** TODO Write a macro

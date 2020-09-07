@@ -72,17 +72,6 @@ missing dependencies."
     (add-to-list 'load-path path)))
 #+end_src
 
-** Workaround for using =emacsWithPackagesFromUsePackage=
-
-I like to use =use-package= even for packages that cannot be installed with
-=emacsWithPackagesFromUsePackage=. Until
-https://github.com/nix-community/emacs-overlay/issues/6 is resolved, the
-following workaround is needed:
-
-#+begin_src emacs-lisp
-(defalias 'use-local-package 'use-package)
-#+end_src
-
 * Common
 
 These packages and functions are used by various other subsections.
@@ -99,19 +88,22 @@ These packages and functions are used by various other subsections.
 https://github.com/emacscollective/no-littering#usage for details.
 
 #+begin_src emacs-lisp
-(use-package no-littering)
+(use-package no-littering
+  :ensure t)
 #+end_src
 
 ** diminish
 
 #+begin_src emacs-lisp
-(use-package diminish)
+(use-package diminish
+  :ensure t)
 #+end_src
 
 ** hydra
 
 #+begin_src emacs-lisp
-(use-package hydra)
+(use-package hydra
+  :ensure t)
 #+end_src
 
 ** Defining global keybindings for EXWM
@@ -136,6 +128,7 @@ that nearly everyone can agree upon."
 
 #+begin_src emacs-lisp
 (use-package better-defaults
+  :ensure t
   :config
   (ido-mode -1))  ; I prefer ivy-mode
 #+end_src
@@ -214,6 +207,7 @@ exec dbus-launch --exit-with-session emacsclient -c
 
 #+begin_src emacs-lisp
 (use-package exwm
+  :ensure t
   :demand t
   :config
   (setq exwm-workspace-number 10
@@ -399,7 +393,7 @@ saving recently used files, bookmarks, places etc."
 ** Shutdown on critical battery level
 
 #+begin_src emacs-lisp
-(use-local-package battery
+(use-package battery
   :defer 10
   :config
   (defun dkellner/shutdown-on-critical-battery ()
@@ -461,6 +455,7 @@ application I want to run directly in =M-x=.
 
 #+begin_src emacs-lisp
 (use-package boon
+  :ensure t
   :load-path "~/dev/boon"
   :demand t
   :hook ((vterm-mode) . boon-set-insert-like-state)
@@ -475,6 +470,7 @@ application I want to run directly in =M-x=.
 
 #+begin_src emacs-lisp
 (use-package avy
+  :ensure t
   :bind (("M-g g" . avy-goto-line)
          ("M-g M-g" . avy-goto-line)
          ("M-g M-s" . avy-goto-word-1)
@@ -485,6 +481,7 @@ application I want to run directly in =M-x=.
 
 #+begin_src emacs-lisp
 (use-package ivy
+  :ensure t
   :demand t
   :bind ("C-c C-r" . ivy-resume)
   :config
@@ -501,6 +498,7 @@ application I want to run directly in =M-x=.
 
 #+begin_src emacs-lisp
 (use-package counsel
+  :ensure t
   :demand t
   :bind (("C-x d" . counsel-dired))
   :config
@@ -551,7 +549,8 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 ** AMX
 
 #+begin_src emacs-lisp
-(use-package amx)
+(use-package amx
+  :ensure t)
 #+end_src
 
 ** Company
@@ -561,6 +560,7 @@ auto-completion framework for Emacs.
 
 #+begin_src emacs-lisp
 (use-package company
+  :ensure t
   :bind (("C-c t" . company-complete))
   :config
   (setq company-dabbrev-downcase nil
@@ -570,6 +570,7 @@ auto-completion framework for Emacs.
   :diminish)
 
 (use-package company-lsp
+  :ensure t
   :config
   (setq company-lsp-cache-candidates 'auto))
 #+end_src
@@ -578,17 +579,20 @@ auto-completion framework for Emacs.
 
 #+begin_src emacs-lisp
 (use-package yasnippet
+  :ensure t
   :config
   (yas-global-mode)
   :diminish yas-minor-mode)
 
-(use-package yasnippet-snippets)
+(use-package yasnippet-snippets
+  :ensure t)
 #+end_src
 
 ** undo-tree
 
 #+begin_src emacs-lisp
 (use-package undo-tree
+  :ensure t
   :config
   (global-undo-tree-mode)
   (setq undo-tree-visualizer-diff t)
@@ -616,6 +620,7 @@ auto-completion framework for Emacs.
   :diminish projectile-mode)
 
 (use-package counsel-projectile
+  :ensure t
   :config
   (setq counsel-projectile-switch-project-action
         #'counsel-projectile-switch-project-action-vc)
@@ -626,6 +631,7 @@ auto-completion framework for Emacs.
 
 #+begin_src emacs-lisp
 (use-package ibuffer-projectile
+  :ensure t
   :config
   (add-hook 'ibuffer-hook
             (lambda ()
@@ -638,6 +644,7 @@ auto-completion framework for Emacs.
 
 #+begin_src emacs-lisp
 (use-package direnv
+  :ensure t
   :config
   (setq direnv-always-show-summary nil)
   (direnv-mode))
@@ -662,6 +669,7 @@ Bash, with virtually no custom configuration.
 
 #+begin_src emacs-lisp
 (use-package vterm
+  :ensure t
   :load-path "~/dev/emacs-libvterm"
   :config
   (setq vterm-kill-buffer-on-exit t
@@ -733,22 +741,11 @@ set show-all-if-ambiguous on
 
 * Org
 
-** TODO Properly install =org-plus-contrib= without hacks
-
-Using =org-plus-contrib= requires some hackery at the moment, as
-=emacsWithPackagesFromUsePackage= does not handle the following code correctly:
-
-#+begin_src emacs-lisp :tangle no
-(use-package org
-  :ensure org-plus-contrib)
-#+end_src
-
-Instead we rely on it also not honoring =:disabled=, so we will end up with
-=org-plus-contrib= in our =load-path= but without loading it:
+** Use =org-plus-contrib=
 
 #+begin_src emacs-lisp
-(use-package org-plus-contrib
-  :disabled t)
+(use-package org
+  :ensure org-plus-contrib)
 #+end_src
 
 ** Basic configuration
@@ -808,7 +805,7 @@ Instead we rely on it also not honoring =:disabled=, so we will end up with
          "%(org-chef-get-recipe-from-url)"
          :empty-lines 1)))
 
-(use-local-package ol-notmuch)
+(use-package ol-notmuch)
 #+end_src
 
 *** Use =pop-to-buffer=
@@ -829,7 +826,7 @@ Instead we rely on it also not honoring =:disabled=, so we will end up with
 *** Capture buffers should start in insert state
 
 #+begin_src emacs-lisp
-(use-local-package org
+(use-package org
   :after boon
   :hook (org-capture-mode . boon-set-insert-like-state))
 #+end_src
@@ -856,6 +853,7 @@ Instead we rely on it also not honoring =:disabled=, so we will end up with
            (append org-super-agenda-groups '((:name "@work" :tag "@work"))))))))
 
 (use-package org-super-agenda
+  :ensure t
   :config
   (setq org-super-agenda-groups
         '((:name "@laptop"
@@ -910,6 +908,7 @@ Instead we rely on it also not honoring =:disabled=, so we will end up with
       org-ellipsis " ⤵")
 
 (use-package org-bullets
+  :ensure t
   :hook (org-mode . org-bullets-mode)
   :config
   (setq org-bullets-bullet-list '("◉" "❃" "✿" "✤")))
@@ -925,7 +924,7 @@ Instead we rely on it also not honoring =:disabled=, so we will end up with
 ** Visual indentation instead of actual spaces
 
 #+begin_src emacs-lisp
-(use-local-package org-indent
+(use-package org-indent
   :hook (org-mode . org-indent-mode)
   :diminish)
 #+end_src
@@ -952,7 +951,7 @@ See https://elmord.org/blog/?entry=20180214-exwm-org-capture .
         :link (dkellner/exwm-get-firefox-url)
         :description exwm-title)))
 
-(use-local-package org
+(use-package org
   :config
   (org-link-set-parameters "http" :store #'dkellner/org-firefox-store-link))
 #+end_src
@@ -961,6 +960,7 @@ See https://elmord.org/blog/?entry=20180214-exwm-org-capture .
 
 #+begin_src emacs-lisp
 (use-package org-caldav
+  :ensure t
   :config
   (setq org-caldav-url "https://nextcloud.noidea.info/remote.php/dav/calendars/dkellner"
         org-caldav-calendars '((:calendar-id "emacs"
@@ -1011,13 +1011,15 @@ See `org-archive-all-old'."
 ** org-chef
 
 #+begin_src emacs-lisp
-(use-package org-chef)
+(use-package org-chef
+  :ensure t)
 #+end_src
 
 * Magit
 
 #+begin_src emacs-lisp
 (use-package magit
+  :ensure t
   :config
   (setq magit-display-buffer-function
         #'magit-display-buffer-same-window-except-diff-v1)
@@ -1033,6 +1035,7 @@ See `org-archive-all-old'."
   (async-shell-command "~/hacks/fetch-and-index-mail.sh"))
 
 (use-package notmuch
+  :ensure t
   :config
   (setq mail-host-address (system-name)
         sendmail-program "msmtp"
@@ -1060,6 +1063,7 @@ theme will conveniently affect *all* of your computing.
 (setq custom--inhibit-theme-enable nil)
 
 (use-package gruvbox-theme
+  :ensure t
   :config
   (defun dkellner/load-dark-theme ()
     (interactive)
@@ -1099,7 +1103,8 @@ theme will conveniently affect *all* of your computing.
 ** Mode-line
 
 #+begin_src emacs-lisp
-(use-package all-the-icons)
+(use-package all-the-icons
+  :ensure t)
 
 (column-number-mode 1)
 (setq mode-line-position
@@ -1151,7 +1156,7 @@ keep highlighting the line the now invisible pointer is on.
 ** window-divider
 
 #+begin_src emacs-lisp
-(use-local-package frame
+(use-package frame
   :config
    (setq window-divider-default-bottom-width 1
          window-divider-default-right-width 1)
@@ -1161,14 +1166,14 @@ keep highlighting the line the now invisible pointer is on.
 ** Highlight the current line
 
 #+begin_src emacs-lisp
-(use-local-package hl-line
+(use-package hl-line
   :hook ((prog-mode text-mode) . hl-line-mode))
 #+end_src
 
 ** Fringe
 
 #+begin_src emacs-lisp
-(use-local-package fringe
+(use-package fringe
   :config
   (fringe-mode '(7 . 1)))
 #+end_src
@@ -1259,6 +1264,7 @@ browser."
 
 #+begin_src emacs-lisp
 (use-package lsp-mode
+  :ensure t
   :after boon
   :demand t
   :hook (((python-mode rust-mode) . lsp))
@@ -1281,7 +1287,8 @@ browser."
 ** Flycheck
 
 #+begin_src emacs-lisp
-(use-package flycheck)
+(use-package flycheck
+  :ensure t)
 #+end_src
 
 * Language support
@@ -1289,16 +1296,18 @@ browser."
 ** Docker
 
 #+begin_src emacs-lisp
-(use-package dockerfile-mode)
+(use-package dockerfile-mode
+  :ensure t)
 #+end_src
 
 ** Emacs Lisp
 
 #+begin_src emacs-lisp
-(use-local-package eldoc
+(use-package eldoc
   :hook (emacs-lisp-mode . eldoc-mode))
 
 (use-package paredit
+  :ensure t
   :config
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   ;; I'm used to <C-left> and <C-right> for `left-word' and `right-word' so I
@@ -1309,6 +1318,7 @@ browser."
   :diminish paredit-mode)
 
 (use-package macrostep
+  :ensure t
   :bind (:map emacs-lisp-mode-map
               ("C-c e" . macrostep-expand)))
 
@@ -1326,19 +1336,22 @@ browser."
 (bind-key "#" #'endless/sharp emacs-lisp-mode-map)
 
 (use-package rainbow-delimiters
+  :ensure t
   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 #+end_src
 
 ** Markdown
 
 #+begin_src emacs-lisp
-(use-package markdown-mode)
+(use-package markdown-mode
+  :ensure t)
 #+end_src
 
 ** Nix
 
 #+begin_src emacs-lisp
 (use-package nix-mode
+  :ensure t
   :mode ("\\.nix\\'" . nix-mode))
 #+end_src
 
@@ -1346,6 +1359,7 @@ browser."
 
 #+begin_src emacs-lisp
 (use-package web-mode
+  :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
@@ -1365,6 +1379,7 @@ browser."
 
 #+begin_src emacs-lisp
 (use-package rust-mode
+  :ensure t
   :config
   (setq lsp-rust-clippy-preference "on"))
 #+end_src
@@ -1372,9 +1387,11 @@ browser."
 ** YAML
 
 #+begin_src emacs-lisp
-(use-package yaml-mode)
+(use-package yaml-mode
+  :ensure t)
 
 (use-package highlight-indentation
+  :ensure t
   :hook (yaml-mode . highlight-indentation-current-column-mode)
   :diminish highlight-indentation-current-column-mode)
 #+end_src
@@ -1385,6 +1402,7 @@ browser."
 
 #+begin_src emacs-lisp
 (use-package helpful
+  :ensure t
   :config
   (setq counsel-describe-function-function #'helpful-callable
         counsel-describe-variable-function #'helpful-variable))
@@ -1394,6 +1412,7 @@ browser."
 
 #+begin_src emacs-lisp
 (use-package pdf-tools
+  :ensure t
   :config
   (require 'pdf-occur)
   (pdf-tools-install-noverify))
@@ -1403,6 +1422,7 @@ browser."
 
 #+begin_src emacs-lisp
 (use-package password-store
+  :ensure t
   :config
   (dkellner/exwm-bind-keys
    '("s-p" . password-store-copy)
@@ -1427,6 +1447,7 @@ Username/password is cleared after
 
 #+begin_src emacs-lisp
 (use-package diff-hl
+  :ensure t
   :hook (((prog-mode conf-mode) . turn-on-diff-hl-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :config
@@ -1439,7 +1460,7 @@ Auto-cleanup of recently used files is disabled, because it causes freezes when
 remote files are not accessible anymore.
 
 #+begin_src emacs-lisp
-(use-local-package recentf
+(use-package recentf
   :demand t
   :config
   (setq recentf-max-saved-items 250
@@ -1456,6 +1477,7 @@ Olivetti is a nice little mode if you want to focus on writing one document.
 
 #+begin_src emacs-lisp
 (use-package olivetti
+  :ensure t
   :custom
   (olivetti-body-width 90))
 #+end_src
@@ -1463,7 +1485,7 @@ Olivetti is a nice little mode if you want to focus on writing one document.
 ** Dired
 
 #+begin_src emacs-lisp
-(use-local-package dired
+(use-package dired
   :bind (("C-x C-d" . counsel-dired))
   :config
   (require 'dired-x)
@@ -1519,13 +1541,14 @@ again. Otherwise, I will move the entire section to a better place.
 ** vlf
 
 #+begin_src emacs-lisp
-(use-package vlf)
+(use-package vlf
+  :ensure t)
 #+end_src
 
 ** winner-mode
 
 #+begin_src emacs-lisp
-(use-local-package winner
+(use-package winner
   :config
   (winner-mode 1)
   (bind-key* "C-c <left>" #'dkellner/winner-undo/body))
@@ -1539,6 +1562,7 @@ again. Otherwise, I will move the entire section to a better place.
 
 #+begin_src emacs-lisp
 (use-package which-key
+  :ensure t
   :diminish
   :config
   (which-key-mode))
@@ -1548,6 +1572,7 @@ again. Otherwise, I will move the entire section to a better place.
 
 #+begin_src emacs-lisp
 (use-package hledger-mode
+  :ensure t
   :demand t
   :mode ("\\.journal\\'" "\\.hledger\\'")
   :hook (hledger-mode . (lambda () (setq-local tab-width 4)))
@@ -1558,7 +1583,7 @@ again. Otherwise, I will move the entire section to a better place.
 ** TODO outline-regexp for rust-mode
 
 #+begin_src emacs-lisp
-(use-local-package outline
+(use-package outline
   :hook (rust-mode . dkellner/setup-rust-mode))
 
 (defun dkellner/setup-rust-mode ()
@@ -1568,7 +1593,8 @@ again. Otherwise, I will move the entire section to a better place.
 ** Network manager
 
 #+begin_src emacs-lisp
-(use-package gnomenm)
+(use-package gnomenm
+  :ensure t)
 #+end_src
 
 * Meta

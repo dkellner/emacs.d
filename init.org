@@ -1621,6 +1621,14 @@ again. Otherwise, I will move the entire section to a better place.
   :ensure t)
 #+end_src
 
+** Customize startup
+
+#+begin_src emacs-lisp
+(setq inhibit-startup-screen t
+      inhibit-startup-echo-area-message t
+      inhibit-startup-message t)
+#+end_src
+
 * Meta
 
 ** Private configuration

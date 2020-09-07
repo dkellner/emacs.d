@@ -1073,8 +1073,12 @@ theme will conveniently affect *all* of your computing.
      '(hl-line ((t (:background "#333333"))))
      '(ivy-posframe ((t (:background "#333333"))))
      '(mode-line ((t (:foreground "#ebdbb2" :background "#2b3c44"))))
-     '(mode-line-inactive ((t (:foreground "#3a3a3a" :background "#3a3a3a"))))
+     '(mode-line-inactive ((t (:foreground "#1d2021" :background "#1d2021"))))
      '(mode-line-buffer-id ((t (:foreground "#ffffc8" :weight bold))))
+     '(internal-border ((t (:background "#303030"))))
+     '(window-divider ((t (:foreground "#303030"))))
+     '(window-divider-first-pixel ((t (:foreground "#303030"))))
+     '(window-divider-last-pixel ((t (:foreground "#303030"))))
      '(org-block ((t (:background nil))))
      '(org-block-begin-line ((t (:foreground "#777777" :background nil))))
      '(org-block-end-line ((t (:foreground "#777777" :background nil))))))
@@ -1085,6 +1089,13 @@ theme will conveniently affect *all* of your computing.
     (custom-theme-set-faces
      'gruvbox-light-hard
      '(ivy-posframe ((t (:background "#e3e3e3"))))
+     '(mode-line ((t (:background "#87afaf" :foreground "#ffffff"))))
+     '(mode-line-inactive ((t (:foreground "#f9f5d7" :background "#f9f5d7"))))
+     '(mode-line-buffer-id ((t (:foreground "#ffffc8" :weight bold))))
+     '(internal-border ((t (:background "#d5c4a1"))))
+     '(window-divider ((t (:foreground "#d5c4a1"))))
+     '(window-divider-first-pixel ((t (:foreground "#d5c4a1"))))
+     '(window-divider-last-pixel ((t (:foreground "#d5c4a1"))))
      '(org-block ((t (:background nil))))
      '(org-block-begin-line ((t (:foreground "#777777" :background nil))))
      '(org-block-end-line ((t (:foreground "#777777" :background nil))))))
@@ -1153,13 +1164,26 @@ keep highlighting the line the now invisible pointer is on.
       ring-bell-function 'ignore)
 #+end_src
 
+** Gaps between and around windows
+
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(internal-border-width . 12))
+
+(defun dkellner/exwm-set-workspace-border ()
+  (loop for frame in exwm-workspace--list do
+        (set-frame-parameter frame 'internal-border-width 12)))
+
+(add-hook 'exwm-init-hook #'dkellner/exwm-set-workspace-border)
+#+end_src
+
 ** window-divider
 
 #+begin_src emacs-lisp
 (use-package frame
   :config
-   (setq window-divider-default-bottom-width 1
-         window-divider-default-right-width 1)
+   (setq window-divider-default-right-width 12
+         window-divider-default-bottom-width 12
+         window-divider-default-places t)
    (window-divider-mode))
 #+end_src
 

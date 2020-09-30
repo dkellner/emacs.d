@@ -11,7 +11,7 @@ about _my_ way of doing things, cherry-pick the parts you enjoy, and keep
 hacking!
 
 To read the configuration, I recommend opening
-[init.org](https://git.sr.ht/~dkellner/emacs.d/tree/master/init.org) in Emacs.
+[init.org](https://git.sr.ht/~dkellner/emacs.d/tree/main/init.org) in Emacs.
 
 Here are some screenshots to give you an idea of how it looks like:
 

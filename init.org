@@ -1553,15 +1553,6 @@ etc. here for the purpose of reevaluating their usefulness after some time. If
 I don't use it as often as I thought I would, I just discard it
 again. Otherwise, I will move the entire section to a better place.
 
-** Verb
-
-#+begin_src emacs-lisp
-(use-package verb
-  :after org
-  :load-path "~/dev/verb/"
-  :config (define-key org-mode-map (kbd "C-c r") verb-command-map))
-#+end_src
-
 ** vlf
 
 #+begin_src emacs-lisp
@@ -1602,16 +1593,6 @@ again. Otherwise, I will move the entire section to a better place.
   :hook (hledger-mode . (lambda () (setq-local tab-width 4)))
   :config
   (setq hledger-currency-string "EUR"))
-#+end_src
-
-** TODO outline-regexp for rust-mode
-
-#+begin_src emacs-lisp
-(use-package outline
-  :hook (rust-mode . dkellner/setup-rust-mode))
-
-(defun dkellner/setup-rust-mode ()
-  (setq-local outline-regexp "[[:space:]]*\\(impl\\|fn\\|struct\\|enum\\)[[:space:]]+"))
 #+end_src
 
 ** Network manager

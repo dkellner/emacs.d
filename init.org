@@ -568,11 +568,6 @@ auto-completion framework for Emacs.
         company-idle-delay nil)
   (global-company-mode 1)
   :diminish)
-
-(use-package company-lsp
-  :ensure t
-  :config
-  (setq company-lsp-cache-candidates 'auto))
 #+end_src
 
 ** yasnippet

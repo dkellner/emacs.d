@@ -1182,13 +1182,6 @@ keep highlighting the line the now invisible pointer is on.
    (window-divider-mode))
 #+end_src
 
-** Highlight the current line
-
-#+begin_src emacs-lisp
-(use-package hl-line
-  :hook ((prog-mode text-mode) . hl-line-mode))
-#+end_src
-
 ** Fringe
 
 #+begin_src emacs-lisp

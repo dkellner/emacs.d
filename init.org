@@ -1604,6 +1604,15 @@ again. Otherwise, I will move the entire section to a better place.
       inhibit-startup-message t)
 #+end_src
 
+** Go to next char (like "t" in vi)
+
+#+begin_src emacs-lisp
+(use-package iy-go-to-char
+  :ensure t
+  :after boon
+  :bind (:map boon-command-map ("h" . iy-go-up-to-char)))
+#+end_src
+
 * Meta
 
 ** Private configuration

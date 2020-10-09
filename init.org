@@ -1541,6 +1541,12 @@ Olivetti is a nice little mode if you want to focus on writing one document.
 (setq gc-cons-threshold (* 100 1024 1024))
 #+end_src
 
+** Read bigger chunks from external processes
+
+#+begin_src emacs-lisp
+(setq read-process-output-max (* 1024 1024))
+#+end_src
+
 * Playground
 
 Often I get quite excited about all the great new packages out there and try

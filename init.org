@@ -561,7 +561,7 @@ auto-completion framework for Emacs.
 #+begin_src emacs-lisp
 (use-package company
   :ensure t
-  :bind (("C-c t" . company-complete))
+  :bind (("C-." . company-complete))
   :config
   (setq company-dabbrev-downcase nil
         company-dabbrev-ignore-case nil

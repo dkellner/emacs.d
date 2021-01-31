@@ -1297,6 +1297,13 @@ browser."
 
 * Programming
 
+** Clojure
+
+#+begin_src emacs-lisp
+(use-package cider
+  :ensure t)
+#+end_src
+
 ** LSP
 
 #+begin_src emacs-lisp
@@ -1337,22 +1344,32 @@ browser."
   :ensure t)
 #+end_src
 
-** Emacs Lisp
+** Lisp
 
 #+begin_src emacs-lisp
-(use-package eldoc
-  :hook (emacs-lisp-mode . eldoc-mode))
-
 (use-package paredit
   :ensure t
+  :hook ((emacs-lisp-mode . paredit-mode)
+         (clojure-mode . paredit-mode))
   :config
-  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   ;; I'm used to <C-left> and <C-right> for `left-word' and `right-word' so I
   ;; find it rather annoying that `paredit-mode' overwrites these with
   ;; `paredit-forward-barf-sexp' and `paredit-forward-slurp-sexp'.
   (define-key paredit-mode-map (kbd "<C-left>") nil)
   (define-key paredit-mode-map (kbd "<C-right>") nil)
   :diminish paredit-mode)
+
+(use-package rainbow-delimiters
+  :ensure t
+  :hook ((emacs-lisp-mode . rainbow-delimiters-mode)
+         (clojure-mode . rainbow-delimiters-mode)))
+#+end_src
+
+** Emacs Lisp
+
+#+begin_src emacs-lisp
+(use-package eldoc
+  :hook (emacs-lisp-mode . eldoc-mode))
 
 (use-package macrostep
   :ensure t
@@ -1371,10 +1388,6 @@ browser."
                 (eq (char-after) ?'))
       (insert "'"))))
 (bind-key "#" #'endless/sharp emacs-lisp-mode-map)
-
-(use-package rainbow-delimiters
-  :ensure t
-  :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 #+end_src
 
 ** Markdown

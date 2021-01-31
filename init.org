@@ -1229,13 +1229,26 @@ keep highlighting the line the now invisible pointer is on.
 #+begin_src emacs-lisp
 (setq browse-url-browser-function #'dkellner/browse-url-qutebrowser)
 
+(defun dkellner/browse-url-interactive-arg (prompt)
+  (let ((url-at-point (lambda () (thing-at-point 'url t))))
+    (advice-add 'browse-url-url-at-point :override url-at-point)
+    (prog1
+        (browse-url-interactive-arg prompt)
+      (advice-remove 'browse-url-url-at-point url-at-point))))
+
 (defun dkellner/browse-url (url &rest args)
   "Ask a WWW browser to load URL.
 
-This behaves like `browse-url', but sets `default-directory' of
-the browser buffer to \"~/\". This way the browser buffers will
-not be associated with any projects by Projectile."
-  (interactive (browse-url-interactive-arg "URL: "))
+This behaves like `browse-url', with two differences:
+
+1. It sets `default-directory' of the browser buffer to
+\"~/\". This way the browser buffers will not be associated with
+any projects by Projectile.
+
+2. It overrides `browse-url-url-at-point' so that it only uses
+real URLs as default, not prefixing any possible filename with
+\"http://\"."
+  (interactive (dkellner/browse-url-interactive-arg "URL: "))
   (let ((default-directory "~/"))
     (apply #'browse-url url args)))
 

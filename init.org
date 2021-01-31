@@ -247,9 +247,9 @@ exec dbus-launch --exit-with-session emacsclient -c
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
   (require 'exwm-randr)
-  (setq exwm-randr-workspace-output-plist '(6 "HDMI-1" 7 "HDMI-1"
-                                            8 "HDMI-1" 9 "HDMI-1"
-                                            0 "HDMI-1"))
+  (setq exwm-randr-workspace-monitor-plist '(6 "HDMI-2" 7 "HDMI-2"
+                                             8 "HDMI-2" 9 "HDMI-2"
+                                             0 "HDMI-2"))
   (exwm-randr-enable)
 
   (require 'exwm-systemtray)
@@ -333,9 +333,9 @@ basically just wrapping =light= and =pactl=.
 #+begin_src emacs-lisp
 (dkellner/exwm-bind-keys
  '("<XF86MonBrightnessUp>" . (lambda () (interactive)
-                               (async-shell-command "~/hacks/backlightctl.sh inc")))
+                               (async-shell-command "~/hacks/brightnessctl.sh inc")))
  '("<XF86MonBrightnessDown>" . (lambda () (interactive)
-                                 (async-shell-command "~/hacks/backlightctl.sh dec")))
+                                 (async-shell-command "~/hacks/brightnessctl.sh dec")))
  '("<XF86AudioRaiseVolume>" . (lambda () (interactive)
                                 (async-shell-command "~/hacks/volumectl.sh inc")))
  '("<XF86AudioLowerVolume>" . (lambda () (interactive)
@@ -403,7 +403,7 @@ saving recently used files, bookmarks, places etc."
            (ac-line-status (cdr (assq ?L battery-status)))
            (load-percentage (string-to-number (cdr (assq ?p battery-status)))))
       (when (and (string-equal ac-line-status "BAT")
-                 (< load-percentage 20.0)
+                 (< load-percentage 10.0)
                  (y-or-n-p-with-timeout "Battery level critical. Shutdown?" 30 t))
         (dkellner/shutdown))))
 
@@ -1106,7 +1106,7 @@ theme will conveniently affect *all* of your computing.
 ** Font
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Meslo LG M 13"))
+(add-to-list 'default-frame-alist '(font . "Meslo LG M 12"))
 #+end_src
 
 ** Mode-line
@@ -1179,8 +1179,8 @@ keep highlighting the line the now invisible pointer is on.
 #+begin_src emacs-lisp
 (use-package frame
   :config
-   (setq window-divider-default-right-width 12
-         window-divider-default-bottom-width 12
+   (setq window-divider-default-right-width 10
+         window-divider-default-bottom-width 10
          window-divider-default-places t)
    (window-divider-mode))
 #+end_src

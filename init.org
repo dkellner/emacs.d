@@ -1170,18 +1170,6 @@ keep highlighting the line the now invisible pointer is on.
       ring-bell-function 'ignore)
 #+end_src
 
-** Gaps between and around windows
-
-#+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(internal-border-width . 12))
-
-(defun dkellner/exwm-set-workspace-border ()
-  (loop for frame in exwm-workspace--list do
-        (set-frame-parameter frame 'internal-border-width 12)))
-
-(add-hook 'exwm-init-hook #'dkellner/exwm-set-workspace-border)
-#+end_src
-
 ** window-divider
 
 #+begin_src emacs-lisp

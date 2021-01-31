@@ -267,6 +267,7 @@ exec dbus-launch --exit-with-session emacsclient -c
 (defun dkellner/exwm-use-title-for-buffer-name ()
   (or (string-prefix-p "sun-awt-X11-" exwm-instance-name)
       (string= "gimp" exwm-instance-name)
+      (string= "qutebrowser" exwm-instance-name)
       (string= "Navigator" exwm-instance-name)))
 #+end_src
 
@@ -421,6 +422,10 @@ application I want to run directly in =M-x=.
 (defun dkellner/tor-browser ()
   (interactive)
   (async-shell-command "tor-browser"))
+
+(defun dkellner/firefox ()
+  (interactive)
+  (async-shell-command "firefox"))
 
 (defun dkellner/chromium ()
   (interactive)
@@ -924,31 +929,29 @@ set show-all-if-ambiguous on
   :diminish)
 #+end_src
 
-** org-store-link for Firefox
-
-See https://elmord.org/blog/?entry=20180214-exwm-org-capture .
+** org-store-link für qutebrowser
 
 #+begin_src emacs-lisp
-(defun dkellner/exwm-get-firefox-url ()
-  "Rather crude way of extracting the current URL in Firefox."
-  (exwm-input--fake-key ?\C-l)
-  (sleep-for 0.05)
-  (exwm-input--fake-key ?\C-c)
+(defun dkellner/exwm-get-qutebrowser-url ()
+  "Rather crude way of extracting the current URL in qutebrowser.
+
+In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
+  (exwm-input--fake-key 'u)
   (sleep-for 0.05)
   (gui-backend-get-selection 'CLIPBOARD 'STRING))
 
-(defun dkellner/org-firefox-store-link ()
-  "Store a link to the url of a Firefox buffer."
+(defun dkellner/org-store-link-qutebrowser ()
+  "Store a link to the url of a qutebrowser buffer."
   (when (and (equal major-mode 'exwm-mode)
-             (member exwm-class-name '("Firefox" "Firefox-esr")))
-     (org-store-link-props
-        :type "http"
-        :link (dkellner/exwm-get-firefox-url)
-        :description exwm-title)))
+             (string= exwm-instance-name "qutebrowser"))
+    (org-store-link-props
+     :type "http"
+     :link (dkellner/exwm-get-qutebrowser-url)
+     :description exwm-title)))
 
 (use-package org
   :config
-  (org-link-set-parameters "http" :store #'dkellner/org-firefox-store-link))
+  (org-link-set-parameters "http" :store #'dkellner/org-store-link-qutebrowser))
 #+end_src
 
 ** org-caldav
@@ -1192,11 +1195,25 @@ keep highlighting the line the now invisible pointer is on.
 
 * Browsing the web
 
+** Qutebrowser
+
+#+begin_src emacs-lisp
+(defun dkellner/browse-url-qutebrowser (url &optional new-window)
+  "Ask qutebrowser to load URL."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (let* ((url (browse-url-encode-url url))
+         (process-environment (browse-url-process-environment)))
+    (apply 'start-process
+           (concat "qutebrowser " url)
+           nil
+           "qutebrowser"
+           (list "--override-restore" "--target" "window" url))))
+#+end_src
+
 ** Set up a Hydra
 
 #+begin_src emacs-lisp
-(setq browse-url-browser-function #'browse-url-firefox
-      browse-url-firefox-arguments '("-p" "default"))
+(setq browse-url-browser-function #'dkellner/browse-url-qutebrowser)
 
 (defun dkellner/browse-url (url &rest args)
   "Ask a WWW browser to load URL.
@@ -1266,7 +1283,7 @@ browser."
       `(,(concat section-prefix raw-value) . ,raw-value))))
 
 (defun dkellner/search-online (search-engine-url)
-  (let ((query (read-string "Query: ")))
+  (let ((query (url-encode-url (read-string "Query: "))))
   (dkellner/browse-url (format search-engine-url query))))
 #+end_src
 

@@ -469,13 +469,25 @@ application I want to run directly in =M-x=.
 #+begin_src emacs-lisp
 (use-package boon
   :ensure t
-  :load-path "~/dev/boon"
   :demand t
-  :hook ((vterm-mode) . boon-set-insert-like-state)
+  :load-path "~/dev/boon"
+  :diminish boon-local-mode
   :config
   (require 'boon-emacs)
+
+  (bind-key "H" #'avy-goto-word-1 boon-command-map)
+  (bind-key "v" #'scroll-up-command boon-command-map)
+  (bind-key "V" #'scroll-down-command boon-command-map)
+  (bind-key "/" #'occur boon-command-map)
+  (bind-key "\\" #'indent-region boon-command-map)
+  (bind-key "@" #'boon-switch-mark boon-command-map)
+
+  (bind-key "i" #'counsel-imenu boon-goto-map)
   (bind-key "o" #'counsel-outline boon-goto-map)
   (bind-key "w" #'avy-goto-word-1 boon-goto-map)
+
+  (setq boon-insert-cursor-type 'box)
+
   (boon-mode))
 #+end_src
 

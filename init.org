@@ -450,6 +450,14 @@ application I want to run directly in =M-x=.
 (defun dkellner/element ()
   (interactive)
   (async-shell-command "element-desktop"))
+
+(defun dkellner/signal ()
+  (interactive)
+  (async-shell-command "signal-desktop"))
+
+(defun dkellner/slack ()
+  (interactive)
+  (async-shell-command "slack"))
 #+end_src
 
 *** TODO Write a macro

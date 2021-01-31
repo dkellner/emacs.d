@@ -1070,6 +1070,7 @@ theme will conveniently affect *all* of your computing.
 
 (use-package gruvbox-theme
   :ensure t
+  :after boon
   :config
   (defun dkellner/load-dark-theme ()
     (interactive)
@@ -1087,7 +1088,11 @@ theme will conveniently affect *all* of your computing.
      '(window-divider-last-pixel ((t (:foreground "#303030"))))
      '(org-block ((t (:background nil))))
      '(org-block-begin-line ((t (:foreground "#777777" :background nil))))
-     '(org-block-end-line ((t (:foreground "#777777" :background nil))))))
+     '(org-block-end-line ((t (:foreground "#777777" :background nil)))))
+
+    (setq boon-insert-cursor-color "#fb4933"
+          boon-command-cursor-color "#b8bb26"
+          boon-default-cursor-color "#83a598"))
 
   (defun dkellner/load-light-theme ()
     (interactive)
@@ -1104,7 +1109,11 @@ theme will conveniently affect *all* of your computing.
      '(window-divider-last-pixel ((t (:foreground "#d5c4a1"))))
      '(org-block ((t (:background nil))))
      '(org-block-begin-line ((t (:foreground "#777777" :background nil))))
-     '(org-block-end-line ((t (:foreground "#777777" :background nil))))))
+     '(org-block-end-line ((t (:foreground "#777777" :background nil)))))
+
+    (setq boon-insert-cursor-color "#9d0006"
+          boon-command-cursor-color "#79740e"
+          boon-default-cursor-color "#076678"))
 
   (dkellner/load-dark-theme))
 #+end_src

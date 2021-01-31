@@ -1201,6 +1201,12 @@ keep highlighting the line the now invisible pointer is on.
   (fringe-mode '(7 . 1)))
 #+end_src
 
+** Transparency
+
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(alpha . 90))
+#+end_src
+
 * Browsing the web
 
 ** Qutebrowser

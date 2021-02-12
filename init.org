@@ -928,8 +928,7 @@ set show-all-if-ambiguous on
 ** Prettification
 
 #+begin_src emacs-lisp
-(setq org-hide-emphasis-markers t
-      org-ellipsis " ⤵")
+(setq org-ellipsis " ⤵")
 
 (use-package org-bullets
   :ensure t

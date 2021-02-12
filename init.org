@@ -458,6 +458,10 @@ application I want to run directly in =M-x=.
 (defun dkellner/slack ()
   (interactive)
   (async-shell-command "slack"))
+
+(defun dkellner/discord ()
+  (interactive)
+  (async-shell-command "Discord"))
 #+end_src
 
 *** TODO Write a macro

@@ -182,25 +182,39 @@ integrate nicely with EXWM I disabled tabs in my browser, so each open website
 will have its own buffer that I can conveniently switch to by fuzzy finding in
 =ivy-switch-buffer=.
 
-** Start EXWM via .xsession
+** Start EXWM via .xinitrc
 
-#+begin_src sh :tangle ~/.xsession :shebang #!/bin/sh
-source $HOME/.profile
+#+begin_src sh :tangle ~/.xinitrc :shebang #!/bin/sh
+xhost +SI:localuser:$USER
 
+if [[ $(xrandr | grep "HDMI-2 connected") ]]; then
+    xrandr --dpi 96
+else
+    xrandr --dpi 192
+fi
 autorandr -c
+
 xset b off
 xset s off
 xset -dpms
+xsetroot -cursor_name left_ptr
+xrdb -merge ~/.Xresources
 
 setxkbmap de neo
 
-light-locker &
+xscreensaver -no-splash &
+picom &
+dunst &
+cbatticon &
 nm-applet &
 
 $HOME/hacks/git-autocommit.sh "$HOME/org/"
 
-emacs --daemon -f exwm-enable
-exec dbus-launch --exit-with-session emacsclient -c
+feh --bg-fill "/home/dkellner/Pictures/wallpapers/Penrose1920x1080.jpg"
+
+# emacs --daemon
+exec emacsclient -c
+# exec dbus-launch --exit-with-session emacs
 #+end_src
 
 ** Configuration
@@ -226,7 +240,7 @@ exec dbus-launch --exit-with-session emacsclient -c
    '("s-f" . dkellner/browse/body)
    '("s-i" . exwm-input-toggle-keyboard)
    '("s-R" . (lambda () (interactive) (async-shell-command "autorandr -c")))
-   '("s-Z" . (lambda () (interactive) (async-shell-command "dm-tool lock")))
+   '("s-Z" . (lambda () (interactive) (async-shell-command "xscreensaver-command -lock")))
    '("s-Q" . dkellner/shutdown-or-reboot/body))
 
   (setq exwm-input-simulation-keys
@@ -253,7 +267,9 @@ exec dbus-launch --exit-with-session emacsclient -c
   (exwm-randr-enable)
 
   (require 'exwm-systemtray)
-  (exwm-systemtray-enable))
+  (exwm-systemtray-enable)
+
+  (exwm-enable))
 
 (defun dkellner/exwm-update-class-hook ()
   (unless (dkellner/exwm-use-title-for-buffer-name)

@@ -283,6 +283,7 @@ exec emacsclient -c
 (defun dkellner/exwm-use-title-for-buffer-name ()
   (or (string-prefix-p "sun-awt-X11-" exwm-instance-name)
       (string= "gimp" exwm-instance-name)
+      (string-prefix-p "puzzleandplay.whereby.com" exwm-instance-name)
       (string= "qutebrowser" exwm-instance-name)
       (string= "Navigator" exwm-instance-name)))
 #+end_src
@@ -316,10 +317,8 @@ Source: https://github.com/DamienCassou/gpastel"
  '("s-t" . windmove-right)
  '("s-g" . windmove-up)
  '("s-r" . windmove-down)
- '("s-." . (lambda() (interactive)
-             (split-window-right) (windmove-right)))
- '("s-," . (lambda() (interactive)
-             (split-window-below) (windmove-down)))
+ '("s-." . split-window-right)
+ '("s-," . split-window-below)
  '("s-m" . delete-other-windows)
  '("s-j" . delete-window)
  '("s-N" . (lambda () (interactive) (shrink-window-horizontally 2)))
@@ -796,6 +795,7 @@ set show-all-if-ambiguous on
       org-refile-use-outline-path 'file
       org-outline-path-complete-in-steps nil
       org-refile-targets '((nil :maxlevel . 2)
+                           ("~/org/inbox.org" :level . 0)
                            ("~/org/main.org" :maxlevel . 2)
                            ("~/org/calendars/personal.org" :level . 0)
                            ("~/org/pap.org" :maxlevel . 1)
@@ -1000,10 +1000,7 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
   :ensure t
   :config
   (setq org-caldav-url "https://nextcloud.noidea.info/remote.php/dav/calendars/dkellner"
-        org-caldav-calendars '((:calendar-id "emacs"
-                                :files ("~/org/calendar.org")
-                                :inbox "~/org/calendar.org")
-                               (:calendar-id "personal"
+        org-caldav-calendars '((:calendar-id "personal"
                                 :files ("~/org/calendars/personal.org" "~/org/calendars/personal.org_archive")
                                 :inbox "~/org/calendars/personal.org")
                                (:calendar-id "contact_birthdays"
@@ -1215,8 +1212,8 @@ keep highlighting the line the now invisible pointer is on.
 #+begin_src emacs-lisp
 (use-package frame
   :config
-   (setq window-divider-default-right-width 10
-         window-divider-default-bottom-width 10
+   (setq window-divider-default-right-width 15
+         window-divider-default-bottom-width 15
          window-divider-default-places t)
    (window-divider-mode))
 #+end_src

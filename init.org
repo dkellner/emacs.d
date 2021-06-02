@@ -848,19 +848,29 @@ set show-all-if-ambiguous on
 (use-package ol-notmuch)
 #+end_src
 
-*** Use =pop-to-buffer=
+*** Use the same window
 
 #+begin_src emacs-lisp
-(defun dkellner/org-pop-to-buffer (&rest args)
-  "Use `pop-to-buffer' instead of `switch-to-buffer' to open buffer.'"
-  (let ((buf (car args)))
-    (pop-to-buffer
-     (cond ((stringp buf) (get-buffer-create buf))
-           ((bufferp buf) buf)
-           (t (error "Invalid buffer %s" buf))))))
+(use-package org-capture
+  :config
+  (defun dkellner/org-pop-to-buffer (&rest args)
+    "Use `pop-to-buffer' instead of `switch-to-buffer' to open buffer.'"
+    (let ((buf (car args)))
+      (pop-to-buffer
+       (cond ((stringp buf) (get-buffer-create buf))
+             ((bufferp buf) buf)
+             (t (error "Invalid buffer %s" buf))))))
 
-(advice-add #'org-switch-to-buffer-other-window
-            :override #'dkellner/org-pop-to-buffer)
+  (advice-add #'org-switch-to-buffer-other-window
+              :override #'dkellner/org-pop-to-buffer)
+
+  (defun dkellner/org-capture-place-template (oldfun &rest args)
+    "Don't delete other windows in `org-capture-place-template'."
+    (cl-letf (((symbol-function #'delete-other-windows) #'ignore))
+      (apply oldfun args)))
+
+  (advice-add #'org-capture-place-template
+              :around #'dkellner/org-capture-place-template))
 #+end_src
 
 *** Capture buffers should start in insert state

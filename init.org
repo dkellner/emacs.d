@@ -1271,10 +1271,10 @@ keep highlighting the line the now invisible pointer is on.
         (browse-url-interactive-arg prompt)
       (advice-remove 'browse-url-url-at-point url-at-point))))
 
-(defun dkellner/browse-url (url &rest args)
-  "Ask a WWW browser to load URL.
+(defun dkellner/browse-url (url-or-query &rest args)
+  "Ask a WWW browser to load URL-OR-QUERY.
 
-This behaves like `browse-url', with two differences:
+This behaves like `browse-url', with some differences:
 
 1. It sets `default-directory' of the browser buffer to
 \"~/\". This way the browser buffers will not be associated with
@@ -1282,18 +1282,26 @@ any projects by Projectile.
 
 2. It overrides `browse-url-url-at-point' so that it only uses
 real URLs as default, not prefixing any possible filename with
-\"http://\"."
+\"http://\".
+
+3. If URL-OR-QUERY contains spaces, it is considered a search
+query and opened with a search engine."
   (interactive (dkellner/browse-url-interactive-arg "URL: "))
-  (let ((default-directory "~/"))
+  (let ((default-directory "~/")
+        (url (if (cl-search " " url-or-query)
+                 (format "https://duckduckgo.com/?q=%s" (url-encode-url url-or-query))
+               url-or-query)))
     (apply #'browse-url url args)))
 
 (defhydra dkellner/browse (:exit t)
   "Browse"
-  ("o" #'dkellner/browse-url "url")
+  ("o" #'dkellner/browse-url "url or query")
   ("b" #'dkellner/open-browser-bookmark "bookmark")
-  ("d" (dkellner/search-online "https://duckduckgo.com/?q=%s") "duckduckgo")
-  ("w" (dkellner/search-online
-        "https://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s")
+  ("we" (dkellner/search-online
+         "https://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s")
+   "wikipedia")
+  ("wd" (dkellner/search-online
+         "https://www.wikipedia.org/search-redirect.php?language=de&go=Go&search=%s")
    "wikipedia"))
 #+end_src
 

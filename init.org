@@ -1373,9 +1373,9 @@ browser."
   :ensure t
   :after boon
   :demand t
-  :hook (((python-mode rust-mode) . lsp))
-  :init
-  (bind-key "l" lsp-command-map boon-command-map))
+  :hook (((python-mode rustic-mode) . lsp))
+  :config
+  (setq lsp-enable-symbol-highlighting nil))
 #+end_src
 
 ** Keep LSP active when following xrefs outside the project
@@ -1490,10 +1490,10 @@ browser."
 ** Rust
 
 #+begin_src emacs-lisp
-(use-package rust-mode
+(use-package rustic
   :ensure t
   :config
-  (setq lsp-rust-clippy-preference "on"))
+  (setq rustic-format-on-save nil))
 #+end_src
 
 ** YAML

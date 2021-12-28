@@ -1733,7 +1733,21 @@ again. Otherwise, I will move the entire section to a better place.
   (popper-mode +1))
 #+end_src
 
+** Pomidor
+
+#+begin_src emacs-lisp
+(use-package alert
   :ensure t
+  :config
+  (setq alert-default-style 'notifications))
+
+(use-package pomidor
+  :ensure t
+  :bind (("<XF86Favorites>" . pomidor))
+  :config
+  (setq pomidor-play-sound-file nil))
+#+end_src
+
 #+end_src
 
 * Meta

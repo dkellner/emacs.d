@@ -649,7 +649,6 @@ auto-completion framework for Emacs.
 
 #+begin_src emacs-lisp
 (use-package projectile
-  :load-path "~/dev/projectile"
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (dkellner/exwm-bind-keys '("s-<return>" . projectile-run-vterm))

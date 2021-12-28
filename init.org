@@ -1270,7 +1270,7 @@ keep highlighting the line the now invisible pointer is on.
 ** Set up a Hydra
 
 #+begin_src emacs-lisp
-(setq browse-url-browser-function #'dkellner/browse-url-qutebrowser)
+(setq browse-url-browser-function #'browse-url-firefox)
 
 (defun dkellner/browse-url-interactive-arg (prompt)
   (let ((url-at-point (lambda () (thing-at-point 'url t))))

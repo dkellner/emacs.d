@@ -493,7 +493,7 @@ application I want to run directly in =M-x=.
   :config
   (require 'boon-emacs)
 
-  (bind-key "H" #'avy-goto-word-1 boon-command-map)
+  (bind-key "h" #'avy-goto-subword-1 boon-command-map)
   (bind-key "v" #'scroll-up-command boon-command-map)
   (bind-key "V" #'scroll-down-command boon-command-map)
   (bind-key "/" #'occur boon-command-map)
@@ -502,7 +502,6 @@ application I want to run directly in =M-x=.
 
   (bind-key "i" #'counsel-imenu boon-goto-map)
   (bind-key "o" #'counsel-outline boon-goto-map)
-  (bind-key "w" #'avy-goto-word-1 boon-goto-map)
 
   (setq boon-insert-cursor-type 'box)
 
@@ -515,9 +514,7 @@ application I want to run directly in =M-x=.
 (use-package avy
   :ensure t
   :bind (("M-g g" . avy-goto-line)
-         ("M-g M-g" . avy-goto-line)
-         ("M-g M-s" . avy-goto-word-1)
-         ("M-g M-r" . avy-copy-region)))
+         ("M-g M-g" . avy-goto-line)))
 #+end_src
 
 ** Ivy

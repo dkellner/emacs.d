@@ -212,9 +212,7 @@ $HOME/hacks/git-autocommit.sh "$HOME/org/"
 
 feh --bg-fill "/home/dkellner/Pictures/wallpapers/F1920x1080 Pantograph Wallpaper.jpg"
 
-# emacs --daemon
 exec emacsclient -c
-# exec dbus-launch --exit-with-session emacs
 #+end_src
 
 ** Configuration
@@ -1386,18 +1384,6 @@ browser."
   (setq lsp-enable-symbol-highlighting nil))
 #+end_src
 
-** Keep LSP active when following xrefs outside the project
-
-#+begin_src emacs-lisp
-(defun xref-show-definitions-function (xrefs display-action)
-  (let ((cw lsp--cur-workspace)
-        (bw lsp--buffer-workspaces))
-    (xref--show-xrefs xrefs display-action)
-    (setq-local lsp--cur-workspace cw)
-    (setq-local lsp--buffer-workspaces bw)
-    (lsp-mode 1)))
-#+end_src
-
 ** Flycheck
 
 #+begin_src emacs-lisp
@@ -1712,13 +1698,9 @@ again. Otherwise, I will move the entire section to a better place.
       inhibit-startup-message t)
 #+end_src
 
-** Go to next char (like "t" in vi)
 
 #+begin_src emacs-lisp
-(use-package iy-go-to-char
   :ensure t
-  :after boon
-  :bind (:map boon-command-map ("h" . iy-go-up-to-char)))
 #+end_src
 
 * Meta

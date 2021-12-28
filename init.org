@@ -210,7 +210,7 @@ nm-applet &
 
 $HOME/hacks/git-autocommit.sh "$HOME/org/"
 
-feh --bg-fill "/home/dkellner/Pictures/wallpapers/Penrose1920x1080.jpg"
+feh --bg-fill "/home/dkellner/Pictures/wallpapers/F1920x1080 Pantograph Wallpaper.jpg"
 
 # emacs --daemon
 exec emacsclient -c

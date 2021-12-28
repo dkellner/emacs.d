@@ -1693,6 +1693,32 @@ again. Otherwise, I will move the entire section to a better place.
       inhibit-startup-message t)
 #+end_src
 
+** org-roam
+
+#+begin_src emacs-lisp
+(use-package org-roam
+  :ensure t
+  :hook (after-init . org-roam-setup)
+  :diminish
+  :init (setq org-roam-v2-ack t)
+  :config
+  (setq org-roam-directory "~/org/roam"
+        emacsql-sqlite3-executable (executable-find "sqlite3")
+        org-roam-capture-templates
+        '(("d" "default" plain "%?" :if-new
+           (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t
+           :immediate-finish t)))
+
+  (defhydra dkellner/org-roam (:exit t)
+    "org-roam"
+    ("f" #'org-roam-node-find "find")
+    ("i" #'org-roam-node-insert "insert")
+    ("b" #'org-roam-buffer-toggle "backlinks"))
+
+  (bind-key* "C-c r" #'dkellner/org-roam/body))
+#+end_src
+
 ** Popper.el
 
 #+begin_src emacs-lisp

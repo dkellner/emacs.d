@@ -789,19 +789,18 @@ set show-all-if-ambiguous on
 
 #+begin_src emacs-lisp
 (setq org-directory "~/org/"
-      org-agenda-files '("~/org/main.org" "~/org/tickler.org" "~/org/calendars/personal.org" "~/org/calendars/birthdays.org")
+      org-agenda-files '("~/org/main.org" "~/org/tickler.org" "~/org/areas/")
       org-refile-use-outline-path 'file
       org-outline-path-complete-in-steps nil
-      org-refile-targets '((nil :maxlevel . 2)
-                           ("~/org/inbox.org" :level . 0)
-                           ("~/org/main.org" :maxlevel . 2)
-                           ("~/org/calendars/personal.org" :level . 0)
-                           ("~/org/pap.org" :maxlevel . 1)
-                           ("~/org/calendars/puzzleandplay.org" :level . 0)
-                           ("~/org/tickler.org" :maxlevel . 1)
-                           ("~/org/bookmarks.org" :maxlevel . 1)
-                           ("~/org/someday.org" :maxlevel . 2))
-      org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)")))
+      org-refile-targets '((nil . (:maxlevel . 2))
+                           ("~/org/inbox.org" . (:level . 0))
+                           ("~/org/cookbook.org" . (:level . 0))
+                           ("~/org/pap.org" . (:maxlevel . 1))
+                           (org-agenda-files . (:maxlevel . 2))
+                           ("~/org/calendars/personal.org" . (:level . 0))
+                           ("~/org/calendars/puzzleandplay.org" . (:level . 0))
+                           ("~/org/bookmarks.org" . (:maxlevel . 1)))
+      org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
 ;; This list contains tags I want to use in almost any file as they are tied to
 ;; actionable items (e.g. GTD contexts).
@@ -810,9 +809,7 @@ set show-all-if-ambiguous on
                       ("@phone" . ,(string-to-char "p"))
                       ("@home" . ,(string-to-char "h"))
                       ("@errands" . ,(string-to-char "e"))
-                      (:endgroup)
-                      ("@nhi" . ,(string-to-char "n"))
-                      ("@work" . ,(string-to-char "w"))))
+                      (:endgroup)))
 
 (setq org-startup-folded 'content
       org-log-into-drawer t
@@ -884,7 +881,8 @@ set show-all-if-ambiguous on
 *** Customizing the agenda view
 
 #+begin_src emacs-lisp
-(setq org-agenda-custom-commands
+(setq org-agenda-use-time-grid nil
+      org-agenda-custom-commands
       '(("h" "Home"
          ((agenda "" ((org-agenda-span 'day)))
           (todo "TODO"

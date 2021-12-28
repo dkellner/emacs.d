@@ -236,6 +236,7 @@ exec emacsclient -c
    '("s-b" . ivy-switch-buffer)
    '("s-q" . exwm-reset)
    '("s-f" . dkellner/browse/body)
+   '("s-h" . popper-toggle-latest)
    '("s-i" . exwm-input-toggle-keyboard)
    '("s-R" . (lambda () (interactive) (async-shell-command "autorandr -c")))
    '("s-Z" . (lambda () (interactive) (async-shell-command "xscreensaver-command -lock")))
@@ -1696,8 +1697,20 @@ again. Otherwise, I will move the entire section to a better place.
       inhibit-startup-message t)
 #+end_src
 
+** Popper.el
 
 #+begin_src emacs-lisp
+(use-package popper
+  :ensure t
+  :demand t
+  :init
+  (setq popper-reference-buffers
+        '(compilation-mode))
+  (setq popper-group-function #'popper-group-by-projectile)
+  (setq popper-display-control nil)
+  (popper-mode +1))
+#+end_src
+
   :ensure t
 #+end_src
 

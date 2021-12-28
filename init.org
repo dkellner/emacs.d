@@ -1059,6 +1059,14 @@ See `org-archive-all-old'."
   :ensure t)
 #+end_src
 
+** Save org-mode buffers after refiling
+
+#+begin_src emacs-lisp
+(use-package org
+  :config
+  (advice-add #'org-refile :after #'org-save-all-org-buffers))
+#+end_src
+
 * Magit
 
 #+begin_src emacs-lisp

@@ -186,9 +186,10 @@ Emacs would exit normally.
 
 #+begin_src emacs-lisp
 (defhydra dkellner/shutdown-or-reboot (:exit t)
-  "Shutdown/reboot?"
+  "Shutdown/reboot/exit?"
   ("s" #'dkellner/shutdown "shutdown")
-  ("r" #'dkellner/reboot "reboot"))
+  ("r" #'dkellner/reboot "reboot")
+  ("x" #'dkellner/exit-sway "exit sway"))
 
 (defun dkellner/shutdown ()
   "Kills emacs properly and shutdown."
@@ -199,6 +200,11 @@ Emacs would exit normally.
   "Kill emacs properly and reboot."
   (interactive)
   (dkellner/prepare-kill-and-run "shutdown -r now"))
+
+(defun dkellner/exit-sway ()
+  "Kill emacs properly and exit sway."
+  (interactive)
+  (dkellner/prepare-kill-and-run "swaymsg exit"))
 
 (defun dkellner/prepare-kill-and-run (command)
   "Prepare to kill Emacs properly and execute COMMAND.

@@ -1091,6 +1091,13 @@ browser."
 (bind-key "#" #'endless/sharp emacs-lisp-mode-map)
 #+end_src
 
+** Go
+See https://emacs.blog/2022/02/20/golang-ide-setup-in-emacs/
+
+#+begin_src emacs-lisp
+(use-package go-mode
+  :ensure t)
+#+end_src
 ** Markdown
 
 #+begin_src emacs-lisp

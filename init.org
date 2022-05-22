@@ -1382,6 +1382,18 @@ again. Otherwise, I will move the entire section to a better place.
   (setq pomidor-play-sound-file nil))
 #+end_src
 
+** dict
+
+I've recently set up a `dictd` instance backed by wordnet on my machine and am
+still figuring out how best to use it. For starters, a function for calling the
+`dict` binary:
+
+#+begin_src emacs-lisp
+(defun dkellner/dict-lookup-word (word)
+  (interactive (list
+                (read-string (format "Word (%s): " (thing-at-point 'word))
+                             nil nil (thing-at-point 'word))))
+  (shell-command (format "dict -h localhost %s" word)))
 #+end_src
 
 * Meta

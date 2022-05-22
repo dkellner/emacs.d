@@ -420,19 +420,20 @@ auto-completion framework for Emacs.
   (direnv-mode))
 #+end_src
 
-
-
-#+begin_src emacs-lisp
-#+end_src
-
-
 * Org
 
-** Use =org-plus-contrib=
+** Use =org-contrib=
+
+#+begin_src emacs-lisp
+(use-package org-contrib
+  :ensure t)
+#+end_src
+
+** Use current version of =org=
 
 #+begin_src emacs-lisp
 (use-package org
-  :ensure org-plus-contrib)
+  :ensure t)
 #+end_src
 
 ** Basic configuration
@@ -469,6 +470,7 @@ auto-completion framework for Emacs.
       org-agenda-window-setup 'current-window
       org-agenda-restore-windows-after-quit nil
       org-time-clocksum-format "%d:%02d"
+      org-duration-format 'h:mm
       org-enforce-todo-dependencies t
       org-columns-default-format "%40ITEM(Task) %3Priority(Pr.) %16Effort(Estimated Effort){:} %CLOCKSUM{:}"
       org-export-with-sub-superscripts nil

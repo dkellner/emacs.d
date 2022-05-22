@@ -106,18 +106,6 @@ https://github.com/emacscollective/no-littering#usage for details.
   :ensure t)
 #+end_src
 
-** Defining global keybindings for EXWM
-
-#+begin_src emacs-lisp
-(defun dkellner/exwm-bind-keys (&rest bindings)
-  "Like exwm-input-set-key but syntax similar to bind-keys.
-
-Define keybindings that work in exwm and non-exwm buffers.
-Only works *before* exwm in initialized."
-(pcase-dolist (`(,key . ,fun) bindings)
-  (add-to-list 'exwm-input-global-keys `(,(kbd key) . ,fun))))
-#+end_src
-
 * Sensible defaults
 
 ** A good starting point: `better-defaults`
@@ -172,158 +160,6 @@ that nearly everyone can agree upon."
 (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-* EXWM
-
-[[https://github.com/ch11ng/exwm][EXWM]] is a tiling window manager for Emacs. Each X window will get its own Emacs
-buffer that you can switch to, split, close etc. like any other buffer.
-
-The only X program I run often enough to care about efficiency is Firefox. To
-integrate nicely with EXWM I disabled tabs in my browser, so each open website
-will have its own buffer that I can conveniently switch to by fuzzy finding in
-=ivy-switch-buffer=.
-
-** Start EXWM via .xinitrc
-
-#+begin_src sh :tangle ~/.xinitrc :shebang #!/bin/sh
-xhost +SI:localuser:$USER
-
-if [[ $(xrandr | grep "DP-1-8 connected") ]]; then
-    xrandr --dpi 96
-else
-    xrandr --dpi 192
-fi
-autorandr -c
-
-xset b off
-xset s off
-xset -dpms
-xsetroot -cursor_name left_ptr
-xrdb -merge ~/.Xresources
-
-setxkbmap de neo
-
-xscreensaver -no-splash &
-picom &
-dunst &
-cbatticon &
-nm-applet &
-
-$HOME/hacks/git-autocommit.sh "$HOME/org/"
-
-feh --bg-fill "/home/dkellner/Pictures/wallpapers/F1920x1080 Pantograph Wallpaper.jpg"
-
-exec emacsclient -c
-#+end_src
-
-** Configuration
-
-#+begin_src emacs-lisp
-(use-package exwm
-  :ensure t
-  :demand t
-  :config
-  (setq exwm-workspace-number 10
-        exwm-workspace-show-all-buffers t
-        exwm-layout-show-all-buffers t)
-
-  (dotimes (i 10)
-    (exwm-input-set-key (kbd (format "s-%d" i))
-                        `(lambda ()
-                           (interactive)
-                           (exwm-workspace-switch-create ,i))))
-
-  (dkellner/exwm-bind-keys
-   '("s-b" . ivy-switch-buffer)
-   '("s-q" . exwm-reset)
-   '("s-f" . dkellner/browse/body)
-   '("s-h" . popper-toggle-latest)
-   '("s-i" . exwm-input-toggle-keyboard)
-   '("s-R" . (lambda () (interactive) (async-shell-command "autorandr -c")))
-   '("s-Z" . (lambda () (interactive) (async-shell-command "xscreensaver-command -lock")))
-   '("s-Q" . dkellner/shutdown-or-reboot/body))
-
-  (setq exwm-input-simulation-keys
-        '(([?\M-<] . [home])
-          ([?\M->] . [end])
-          ([?\C-k] . [S-end ?\C-x])
-          ([?\C-w] . [?\C-x])
-          ([?\C-s] . [?\C-f])
-          ([?\C-g] . [esc])
-          ([?\C-x ?\C-s] . [?\C-s])
-          ([?\M-w] . [?\C-c])
-          ([?\C-y] . [?\C-v])))
-
-  (add-hook 'exwm-update-class-hook #'dkellner/exwm-update-class-hook)
-  (add-hook 'exwm-update-title-hook #'dkellner/exwm-update-title-hook)
-
-  ;; see https://github.com/ch11ng/exwm/wiki/EXWM-User-Guide#an-issue-with-ediff
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
-  (require 'exwm-randr)
-  (setq exwm-randr-workspace-monitor-plist '(6 "HDMI-2" 7 "HDMI-2"
-                                             8 "HDMI-2" 9 "HDMI-2"
-                                             0 "HDMI-2"))
-  (exwm-randr-enable)
-
-  (require 'exwm-systemtray)
-  (exwm-systemtray-enable)
-
-  (exwm-enable))
-
-(defun dkellner/exwm-update-class-hook ()
-  (unless (dkellner/exwm-use-title-for-buffer-name)
-    (exwm-workspace-rename-buffer exwm-class-name)))
-
-(defun dkellner/exwm-update-title-hook ()
-  (when (or (not exwm-instance-name)
-            (dkellner/exwm-use-title-for-buffer-name))
-    (exwm-workspace-rename-buffer exwm-title)))
-
-(defun dkellner/exwm-use-title-for-buffer-name ()
-  (or (string-prefix-p "sun-awt-X11-" exwm-instance-name)
-      (string= "gimp" exwm-instance-name)
-      (string-prefix-p "puzzleandplay.whereby.com" exwm-instance-name)
-      (string= "qutebrowser" exwm-instance-name)
-      (string= "Navigator" exwm-instance-name)))
-#+end_src
-
-** Use M-y in EXWM buffers
-
-#+begin_src emacs-lisp
-(defun dkellner/exwm-counsel-yank-pop ()
-  "Same as `counsel-yank-pop' and paste into exwm buffer.
-
-Source: https://github.com/DamienCassou/gpastel"
-  (interactive)
-  (let ((inhibit-read-only t)
-        ;; Make sure we send selected yank-pop candidate to
-        ;; clipboard:
-        (yank-pop-change-selection t))
-    (call-interactively #'counsel-yank-pop))
-  (when (derived-mode-p 'exwm-mode)
-    ;; https://github.com/ch11ng/exwm/issues/413#issuecomment-386858496
-    (exwm-input--set-focus (exwm--buffer->id (window-buffer (selected-window))))
-    (exwm-input--fake-key ?\C-v)))
-
-(bind-key "M-y" #'dkellner/exwm-counsel-yank-pop exwm-mode-map)
-#+end_src
-
-** Window navigation
-
-#+begin_src emacs-lisp
-(dkellner/exwm-bind-keys
- '("s-n" . windmove-left)
- '("s-t" . windmove-right)
- '("s-g" . windmove-up)
- '("s-r" . windmove-down)
- '("s-." . split-window-right)
- '("s-," . split-window-below)
- '("s-m" . delete-other-windows)
- '("s-j" . delete-window)
- '("s-N" . (lambda () (interactive) (shrink-window-horizontally 2)))
- '("s-T" . (lambda () (interactive) (enlarge-window-horizontally 2))))
-#+end_src
-
 ** Prevent suspending
 
 Suspending Emacs causes EXWM to freeze. You can recover by sending =SIGUSR2= to
@@ -338,35 +174,6 @@ the running emacsclient process, but that is rather cumbersome.
 
 These are typical responsibilities of a desktop environment. We'll teach Emacs
 how to handle those.
-
-** Brightness and volume control
-
-At the moment these shell out to some simple scripts I've been using for years,
-basically just wrapping =light= and =pactl=.
-
-#+begin_src emacs-lisp
-(dkellner/exwm-bind-keys
- '("<XF86MonBrightnessUp>" . (lambda () (interactive)
-                               (async-shell-command "~/hacks/brightnessctl.sh inc")))
- '("<XF86MonBrightnessDown>" . (lambda () (interactive)
-                                 (async-shell-command "~/hacks/brightnessctl.sh dec")))
- '("<XF86AudioRaiseVolume>" . (lambda () (interactive)
-                                (async-shell-command "~/hacks/volumectl.sh inc")))
- '("<XF86AudioLowerVolume>" . (lambda () (interactive)
-                                (async-shell-command "~/hacks/volumectl.sh dec")))
- '("<XF86AudioMute>" . (lambda () (interactive)
-                         (async-shell-command "~/hacks/volumectl.sh toggle")))
- '("<XF86AudioMicMute>" . (lambda () (interactive)
-                            (async-shell-command "~/hacks/volumectl.sh mic_toggle"))))
-#+end_src
-
-** Clipboard management
-
-#+begin_src emacs-lisp
-(use-package gpastel
-  :load-path "~/dev/gpastel"
-  :hook (exwm-init . gpastel-mode))
-#+end_src
 
 ** Shutdown and reboot
 
@@ -404,81 +211,6 @@ saving recently used files, bookmarks, places etc."
                                  (list (lambda () (shell-command command))))))
     (save-buffers-kill-emacs)))
 #+end_src
-
-** Shutdown on critical battery level
-
-#+begin_src emacs-lisp
-(use-package battery
-  :defer 10
-  :config
-  (defun dkellner/shutdown-on-critical-battery ()
-    "Ask to call `dkellner/shutdown' if the battery level is below 10%."
-    (let* ((battery-status (funcall battery-status-function))
-           (ac-line-status (cdr (assq ?L battery-status)))
-           (load-percentage (string-to-number (cdr (assq ?p battery-status)))))
-      (when (and (string-equal ac-line-status "BAT")
-                 (< load-percentage 10.0)
-                 (y-or-n-p-with-timeout "Battery level critical. Shutdown?" 30 t))
-        (dkellner/shutdown))))
-
-  (defvar dkellner/shutdown-on-critical-battery-timer nil)
-  (unless (timerp dkellner/shutdown-on-critical-battery-timer)
-    (setq dkellner/shutdown-on-critical-battery-timer
-          (run-at-time t 60 #'dkellner/shutdown-on-critical-battery))))
-#+end_src
-
-** Running certain applications directly from =M-x=
-
-These are basically just "shortcut functions" so I can type the name of the
-application I want to run directly in =M-x=.
-
-#+begin_src emacs-lisp
-(defun dkellner/tor-browser ()
-  (interactive)
-  (async-shell-command "tor-browser"))
-
-(defun dkellner/firefox ()
-  (interactive)
-  (async-shell-command "firefox"))
-
-(defun dkellner/chromium ()
-  (interactive)
-  (async-shell-command "chromium"))
-
-(defun dkellner/profanity ()
-  (interactive)
-  (dkellner/vterm-command "profanity"))
-
-(defun dkellner/alsamixer ()
-  (interactive)
-  (dkellner/vterm-command "alsamixer"))
-
-(defun dkellner/pavucontrol ()
-  (interactive)
-  (async-shell-command "pavucontrol"))
-
-(defun dkellner/mutt ()
-  (interactive)
-  (dkellner/vterm-command "mutt"))
-
-(defun dkellner/element ()
-  (interactive)
-  (async-shell-command "element-desktop"))
-
-(defun dkellner/signal ()
-  (interactive)
-  (async-shell-command "signal-desktop"))
-
-(defun dkellner/slack ()
-  (interactive)
-  (async-shell-command "slack"))
-
-(defun dkellner/discord ()
-  (interactive)
-  (async-shell-command "Discord"))
-#+end_src
-
-*** TODO Write a macro
 
 * Navigation and editing
 
@@ -557,8 +289,6 @@ application I want to run directly in =M-x=.
                                    (Man-completion-table . "")
                                    (woman . "^")))
   :diminish counsel-mode)
-
-(dkellner/exwm-bind-keys '("s-x" . counsel-M-x))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -648,7 +378,6 @@ auto-completion framework for Emacs.
 (use-package projectile
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (dkellner/exwm-bind-keys '("s-<return>" . projectile-run-vterm))
 
   (setq projectile-require-project-root nil)
   :diminish projectile-mode)
@@ -684,94 +413,11 @@ auto-completion framework for Emacs.
   (direnv-mode))
 #+end_src
 
-* Terminal Emulation and shell
 
-Even if we try to control most functions of our computing environment directly
-from Emacs, the command line as an input paradigm is a useful one. It's simple
-to understand, composable and widely supported.
-
-Emacs actually offers a wide range of ways to interact with a shell, but I find
-=libvterm= to be the best solution so far. All others suffer from idiosyncrasies
-when it comes to running CLI programs (especially curses-based ones), but that
-is the reason I use a terminal emulator in the first place.
-
-I don't spend much time in the shell, except for running certain
-applications. For that reason, I'm not getting too fancy here - I just use
-Bash, with virtually no custom configuration.
-
-** libvterm
 
 #+begin_src emacs-lisp
-(use-package vterm
-  :ensure t
-  :load-path "~/dev/emacs-libvterm"
-  :config
-  (setq vterm-kill-buffer-on-exit t
-        vterm-max-scrollback 10000
-        vterm-timer-delay 0.05)
-
-  (defun dkellner/vterm-command (command)
-    "Run COMMAND in a new vterm buffer named *vterm COMMAND*."
-    (interactive (list (read-shell-command "Shell command: ")))
-    (let ((vterm-shell command))
-      (vterm (format "*vterm %s*" command)))))
 #+end_src
 
-** Bash
-
-Enable [[https://github.com/akermu/emacs-libvterm#directory-tracking][directory tracking]] and some basic configuration for searching the
-history.
-
-#+begin_src conf :tangle ~/.bashrc
-function vterm_printf() {
-    if [ -n "$TMUX" ]; then
-        # tell tmux to pass the escape sequences through
-        # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
-        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-        # GNU screen (screen, screen-256color, screen-256color-bce)
-        printf "\eP\e]%s\007\e\\" "$1"
-    else
-        printf "\e]%s\e\\" "$1"
-    fi
-}
-
-if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-    function clear() {
-        vterm_printf "51;Evterm-clear-scrollback";
-        tput clear;
-    }
-fi
-
-vterm_prompt_end() {
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
-}
-
-PS1='\$ \[$(vterm_prompt_end)\]'
-#+end_src
-
-#+begin_src conf :tangle ~/.inputrc
-set show-all-if-ambiguous on
-
-"\e[A": history-search-backward
-"\e[B": history-search-forward
-#+end_src
-
-*** TODO Investigate bug with colored prompt
-
-- using PS1="\e[1m\e[32m\$\e[0m "
-- prompt sometimes containes the first characters of previous command, which
-  cannot be deleted (as if they were part of the prompt)
-- Maybe there is code calculating the length of PS1 also counting the color
-  codes?
-- Create an issue upstream as soon as I can reproduce it with a minimal config.
-
-** Shell commands
-
-#+begin_src emacs-lisp
-(setq async-shell-command-buffer 'new-buffer
-      async-shell-command-display-buffer nil)
-#+end_src
 
 * Org
 
@@ -1218,29 +864,12 @@ keep highlighting the line the now invisible pointer is on.
       ring-bell-function 'ignore)
 #+end_src
 
-** window-divider
-
-#+begin_src emacs-lisp
-(use-package frame
-  :config
-   (setq window-divider-default-right-width 15
-         window-divider-default-bottom-width 15
-         window-divider-default-places t)
-   (window-divider-mode))
-#+end_src
-
 ** Fringe
 
 #+begin_src emacs-lisp
 (use-package fringe
   :config
   (fringe-mode '(7 . 1)))
-#+end_src
-
-** Transparency
-
-#+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(alpha . 95))
 #+end_src
 
 * Browsing the web
@@ -1517,31 +1146,6 @@ browser."
   :config
   (require 'pdf-occur)
   (pdf-tools-install-noverify))
-#+end_src
-
-** password-store
-
-#+begin_src emacs-lisp
-(use-package password-store
-  :ensure t
-  :config
-  (dkellner/exwm-bind-keys
-   '("s-p" . password-store-copy)
-   '("s-P" . dkellner/password-store-copy-username)))
-
-(defun dkellner/password-store-copy-username (entry)
-  "Add username for ENTRY into the kill ring.
-
-Clear previous username/password from the kill ring.  Pointer to
-the kill ring is stored in `password-store-kill-ring-pointer'.
-Username/password is cleared after
-`password-store-time-before-clipboard-restore' seconds."
-  (interactive (list (password-store--completing-read)))
-  (password-store-get-field
-   entry
-   "username"
-   (lambda (username)
-     (password-store--save-field-in-kill-ring entry username "username"))))
 #+end_src
 
 ** diff-hl

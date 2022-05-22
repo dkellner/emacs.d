@@ -332,10 +332,11 @@ auto-completion framework for Emacs.
 (use-package company
   :ensure t
   :bind (("C-." . company-complete))
+  :custom
+  (company-idle-delay 0.5)
+  (company-dabbrev-downcase nil)
+  (company-dabbrev-ignore-case nil)
   :config
-  (setq company-dabbrev-downcase nil
-        company-dabbrev-ignore-case nil
-        company-idle-delay nil)
   (global-company-mode 1)
   :diminish)
 #+end_src

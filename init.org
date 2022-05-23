@@ -303,6 +303,26 @@ saving recently used files, bookmarks, places etc."
   (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 
+** Completion
+
+#+begin_src emacs-lisp
+(use-package emacs
+  :config
+  (setq tab-always-indent 'complete))
+
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+
+(use-package corfu
+  :ensure t
+  :custom
+  (corfu-auto t)
+  :init
+  (global-corfu-mode))
+#+end_src
+
 * Project management
 
 ** Projectile

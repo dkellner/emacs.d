@@ -954,13 +954,6 @@ browser."
 
 * Programming
 
-** Clojure
-
-#+begin_src emacs-lisp
-(use-package cider
-  :ensure t)
-#+end_src
-
 ** LSP
 
 #+begin_src emacs-lisp
@@ -988,6 +981,13 @@ browser."
 #+end_src
 
 * Language support
+
+** Clojure
+
+#+begin_src emacs-lisp
+(use-package cider
+  :ensure t)
+#+end_src
 
 ** Docker
 

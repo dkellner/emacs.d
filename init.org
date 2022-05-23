@@ -970,13 +970,6 @@ browser."
   (lsp-ui-sideline-enable nil))
 #+end_src
 
-** Flycheck
-
-#+begin_src emacs-lisp
-(use-package flycheck
-  :ensure t)
-#+end_src
-
 * Language support
 
 ** Docker

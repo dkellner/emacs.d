@@ -237,9 +237,6 @@ saving recently used files, bookmarks, places etc."
   (bind-key "\\" #'indent-region boon-command-map)
   (bind-key "@" #'boon-switch-mark boon-command-map)
 
-  (bind-key "i" #'counsel-imenu boon-goto-map)
-  (bind-key "o" #'counsel-outline boon-goto-map)
-
   (setq boon-insert-cursor-type 'box)
 
   (boon-mode))
@@ -252,98 +249,6 @@ saving recently used files, bookmarks, places etc."
   :ensure t
   :bind (("M-g g" . avy-goto-line)
          ("M-g M-g" . avy-goto-line)))
-#+end_src
-
-** Ivy
-
-#+begin_src emacs-lisp
-(use-package ivy
-  :ensure t
-  :demand t
-  :bind ("C-c C-r" . ivy-resume)
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t
-        ivy-count-format "(%d/%d) "
-        ivy-height 10
-        ivy-re-builders-alist '((t . ivy--regex-ignore-order))
-        magit-completing-read-function 'ivy-completing-read)
-  :diminish ivy-mode)
-#+end_src
-
-** Counsel
-
-#+begin_src emacs-lisp
-(use-package counsel
-  :ensure t
-  :demand t
-  :bind (("C-x d" . counsel-dired))
-  :config
-  (counsel-mode 1)
-  (setq counsel-grep-base-command
-        "rg -i -M 120 --no-heading --line-number --color never '%s' %s"
-        ivy-initial-inputs-alist '((counsel-minor . "^+")
-                                   (counsel-package . "^+")
-                                   (counsel-org-capture . "^")
-                                   (counsel-M-x . "\\b")
-                                   (counsel-describe-function . "\\b")
-                                   (counsel-describe-variable . "\\b")
-                                   (org-refile . "\\b")
-                                   (org-agenda-refile . "\\b")
-                                   (org-capture-refile . "\\b")
-                                   (Man-completion-table . "")
-                                   (woman . "^")))
-  :diminish counsel-mode)
-#+end_src
-
-#+begin_src emacs-lisp
-(defun dkellner/counsel-ssh-term (&optional initial-input)
-  "Run `ssh` for a hosts configured in ~/.ssh/config.
-INITIAL-INPUT can be given as the initial minibuffer input."
-  (interactive)
-  (ivy-read "ssh " (dkellner/list-ssh-hosts)
-            :initial-input initial-input
-            :action #'dkellner/counsel-ssh-term-action
-            :caller 'dkellner/counsel-ssh-term))
-
-(defun dkellner/list-ssh-hosts ()
-  "Return all hosts defined in `~/.ssh/config` as list."
-  (with-temp-buffer
-    (insert-file-contents (s-concat (getenv "HOME") "/.ssh/config"))
-    (keep-lines "^Host [^*]")
-    (-map (lambda (line)
-            (s-chop-prefix "Host " line))
-          (s-split "\n" (buffer-string) t))))
-
-(defun dkellner/counsel-ssh-term-action (x)
-  "Run `ssh X` in a new vterm buffer."
-  (with-ivy-window
-    (dkellner/vterm-command (format "ssh %s" x))))
-#+end_src
-
-** AMX
-
-#+begin_src emacs-lisp
-(use-package amx
-  :ensure t)
-#+end_src
-
-** Company
-
-"Company" stands for "complete anything" is the name of an advanced
-auto-completion framework for Emacs.
-
-#+begin_src emacs-lisp
-(use-package company
-  :ensure t
-  :bind (("C-." . company-complete))
-  :custom
-  (company-idle-delay 0.5)
-  (company-dabbrev-downcase nil)
-  (company-dabbrev-ignore-case nil)
-  :config
-  (global-company-mode 1)
-  :diminish)
 #+end_src
 
 ** yasnippet
@@ -376,6 +281,28 @@ auto-completion framework for Emacs.
 (setq-default fill-column 79)
 #+end_src
 
+** Vertico and friends
+
+#+begin_src emacs-lisp
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode)
+  :config
+  (setq vertico-cycle t))
+
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
 * Project management
 
 ** Projectile
@@ -387,13 +314,6 @@ auto-completion framework for Emacs.
 
   (setq projectile-require-project-root nil)
   :diminish projectile-mode)
-
-(use-package counsel-projectile
-  :ensure t
-  :config
-  (setq counsel-projectile-switch-project-action
-        #'counsel-projectile-switch-project-action-vc)
-  (counsel-projectile-mode 1))
 #+end_src
 
 ** ibuffer-projectile
@@ -1165,8 +1085,11 @@ See https://robert.kra.hn/posts/2021-02-07_rust-with-emacs/
 (use-package helpful
   :ensure t
   :config
-  (setq counsel-describe-function-function #'helpful-callable
-        counsel-describe-variable-function #'helpful-variable))
+  (global-set-key (kbd "C-h f") #'helpful-callable)
+  (global-set-key (kbd "C-h F") #'helpful-function)
+  (global-set-key (kbd "C-h v") #'helpful-variable)
+  (global-set-key (kbd "C-h k") #'helpful-key)
+  (global-set-key (kbd "C-h C") #'helpful-command))
 #+end_src
 
 ** pdf-tools
@@ -1222,13 +1145,20 @@ Olivetti is a nice little mode if you want to focus on writing one document.
 
 #+begin_src emacs-lisp
 (use-package dired
-  :bind (("C-x C-d" . counsel-dired))
   :config
   (require 'dired-x)
   (setq dired-listing-switches "-ahl"
         dired-omit-files "^\\.")
   (add-hook 'dired-mode-hook
             (lambda () (dired-omit-mode))))
+#+end_src
+
+** savehist
+
+#+begin_src emacs-lisp
+(use-package savehist
+  :init
+  (savehist-mode))
 #+end_src
 
 * Performance shenanigans

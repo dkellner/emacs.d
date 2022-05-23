@@ -431,7 +431,8 @@ saving recently used files, bookmarks, places etc."
       org-columns-default-format "%40ITEM(Task) %3Priority(Pr.) %16Effort(Estimated Effort){:} %CLOCKSUM{:}"
       org-export-with-sub-superscripts nil
       org-export-allow-bind-keywords t
-      org-default-priority ?C)
+      org-default-priority ?C
+      org-insert-heading-respect-content t)
 #+end_src
 
 ** Capturing
@@ -558,7 +559,9 @@ saving recently used files, bookmarks, places etc."
 ** Prettification
 
 #+begin_src emacs-lisp
-(setq org-ellipsis " ⤵")
+(setq
+ org-ellipsis " ⤵"
+ org-agenda-block-separator 9472)
 
 (use-package org-bullets
   :ensure t

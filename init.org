@@ -237,6 +237,8 @@ saving recently used files, bookmarks, places etc."
   (bind-key "\\" #'indent-region boon-command-map)
   (bind-key "@" #'boon-switch-mark boon-command-map)
 
+  (bind-key "f" #'consult-flymake boon-goto-map)
+
   (setq boon-insert-cursor-type 'box)
 
   (boon-mode))
@@ -301,6 +303,21 @@ saving recently used files, bookmarks, places etc."
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
+** Consult
+
+#+begin_src emacs-lisp
+(use-package consult
+  :ensure t
+  :bind (("C-x b" . consult-buffer)
+         ("C-x p b" . consult-project-buffer)
+         ("M-y" . consult-yank-pop)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ("M-g o" . consult-outline)
+         ("M-g f" . consult-flymake)
+         ("M-s g" . consult-ripgrep)))
 #+end_src
 
 ** Completion

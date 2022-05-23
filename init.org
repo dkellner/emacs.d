@@ -342,28 +342,17 @@ saving recently used files, bookmarks, places etc."
 
 * Project management
 
-** Projectile
+** project.el
 
 #+begin_src emacs-lisp
-(use-package projectile
-  :config
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-
-  (setq projectile-require-project-root nil)
-  :diminish projectile-mode)
-#+end_src
-
-** ibuffer-projectile
-
-#+begin_src emacs-lisp
-(use-package ibuffer-projectile
-  :ensure t
-  :config
-  (add-hook 'ibuffer-hook
-            (lambda ()
-              (ibuffer-projectile-set-filter-groups)
-              (unless (eq ibuffer-sorting-mode 'alphabetic)
-                (ibuffer-do-sort-by-alphabetic)))))
+(use-package project
+  :init
+  (setq project-switch-commands
+        '((project-find-file "Find file")
+          (project-find-regexp "Find regexp")
+          (project-find-dir "Find directory")
+          (project-eshell "Eshell")
+          (magit-project-status "Magit" ?m))))
 #+end_src
 
 ** direnv

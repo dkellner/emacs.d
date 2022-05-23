@@ -1238,19 +1238,6 @@ again. Otherwise, I will move the entire section to a better place.
   :ensure t)
 #+end_src
 
-** winner-mode
-
-#+begin_src emacs-lisp
-(use-package winner
-  :config
-  (winner-mode 1)
-  (bind-key* "C-c <left>" #'dkellner/winner-undo/body))
-
-(defhydra dkellner/winner-undo (:body-pre (winner-undo))
-  ("<left>" winner-undo)
-  ("<right>" winner-redo))
-#+end_src
-
 ** which-key
 
 #+begin_src emacs-lisp
@@ -1271,13 +1258,6 @@ again. Otherwise, I will move the entire section to a better place.
   :hook (hledger-mode . (lambda () (setq-local tab-width 4)))
   :config
   (setq hledger-currency-string "EUR"))
-#+end_src
-
-** Network manager
-
-#+begin_src emacs-lisp
-(use-package gnomenm
-  :ensure t)
 #+end_src
 
 ** Customize startup
@@ -1314,18 +1294,6 @@ again. Otherwise, I will move the entire section to a better place.
   (bind-key* "C-c r" #'dkellner/org-roam/body))
 #+end_src
 
-** Popper.el
-
-#+begin_src emacs-lisp
-(use-package popper
-  :ensure t
-  :demand t
-  :init
-  (setq popper-reference-buffers
-        '(compilation-mode))
-  (setq popper-group-function #'popper-group-by-projectile)
-  (setq popper-display-control nil)
-  (popper-mode +1))
 #+end_src
 
 ** Pomidor

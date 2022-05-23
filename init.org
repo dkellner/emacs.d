@@ -226,7 +226,6 @@ saving recently used files, bookmarks, places etc."
 (use-package boon
   :ensure t
   :demand t
-  :load-path "~/dev/boon"
   :diminish boon-local-mode
   :config
   (require 'boon-emacs)

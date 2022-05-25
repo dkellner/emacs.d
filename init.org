@@ -319,17 +319,13 @@ the running emacsclient process, but that is rather cumbersome.
 
 * Org
 
-** Use =org-contrib=
-
-#+begin_src emacs-lisp
-(use-package org-contrib
-  :ensure t)
-#+end_src
-
-** Use current version of =org=
+** Use current version of =org= and =org-contrib=
 
 #+begin_src emacs-lisp
 (use-package org
+  :ensure t)
+
+(use-package org-contrib
   :ensure t)
 #+end_src
 
@@ -385,10 +381,7 @@ the running emacsclient process, but that is rather cumbersome.
       '(("i" "Inbox" entry (file "~/org/inbox.org")
          "* %?\nCreated: %U")
         ("I" "Inbox (with link)" entry (file "~/org/inbox.org")
-         "* %?\n%a\nCreated: %U")
-        ("c" "Cookbook" entry (file "~/org/cookbook.org")
-         "%(org-chef-get-recipe-from-url)"
-         :empty-lines 1)))
+         "* %?\n%a\nCreated: %U")))
 
 (use-package ol-notmuch)
 #+end_src
@@ -549,62 +542,6 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
 (use-package org
   :config
   (org-link-set-parameters "http" :store #'dkellner/org-store-link-qutebrowser))
-#+end_src
-
-** org-caldav
-
-#+begin_src emacs-lisp
-(use-package org-caldav
-  :ensure t
-  :config
-  (setq org-caldav-url "https://nextcloud.noidea.info/remote.php/dav/calendars/dkellner"
-        org-caldav-calendars '((:calendar-id "personal"
-                                :files ("~/org/calendars/personal.org" "~/org/calendars/personal.org_archive")
-                                :inbox "~/org/calendars/personal.org")
-                               (:calendar-id "contact_birthdays"
-                                :files ("~/org/calendars/birthdays.org")
-                                :inbox "~/org/calendars/birthdays.org")
-                               (:calendar-id "puzzle-play"
-                                :files ("~/org/calendars/puzzleandplay.org" "~/org/calendars/puzzleandplay.org_archive")
-                                :inbox "~/org/calendars/puzzleandplay.org"))))
-#+end_src
-
-#+begin_src emacs-lisp
-(defun dkellner/archive-old-calendar-entries ()
-  "Archive all entries older than 30 days in all calendar files.
-
-Calendar files are all *.org files in `org-caldav-calendars',
-this excludes *.org_archive files."
-  (interactive)
-    (dkellner/org-archive-all-older 30))
-
-(defun dkellner/org-archive-all-older (days &optional tag)
-  "Archive sublevels of the current tree with timestamps older than DAYS.
-If the cursor is not on a headline, try all level 1 trees.  If
-it is on a headline, try all direct children.
-When TAG is non-nil, don't move trees, but mark them with the ARCHIVE tag.
-
-See `org-archive-all-old'."
-  (org-archive-all-matches
-   (lambda (_beg end)
-     (let (ts)
-       (and (re-search-forward org-ts-regexp end t)
-            (setq ts (match-string 0))
-            (< (org-time-stamp-to-now ts) (- days))
-            (if (not (looking-at
-                      (concat "--\\(" org-ts-regexp "\\)")))
-                (concat "old timestamp " ts)
-              (setq ts (concat "old timestamp " ts (match-string 0)))
-              (and (< (org-time-stamp-to-now (match-string 1)) (- days))
-                   ts)))))
-   tag))
-#+end_src
-
-** org-chef
-
-#+begin_src emacs-lisp
-(use-package org-chef
-  :ensure t)
 #+end_src
 
 ** Save org-mode buffers after refiling

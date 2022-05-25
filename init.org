@@ -170,54 +170,6 @@ the running emacsclient process, but that is rather cumbersome.
 (global-unset-key (kbd "C-x C-z"))
 #+end_src
 
-* Desktop environment
-
-These are typical responsibilities of a desktop environment. We'll teach Emacs
-how to handle those.
-
-** Shutdown and reboot
-
-Simply running =shutdown -h now= in a terminal will cause Emacs to not shutdown
-properly. For example, the list of recently used files will not be persisted.
-
-=dkellner/prepare-kill-and-run= solves this by placing the actual shutdown
-command at the end of =kill-emacs-hook=. This way it is executed just before
-Emacs would exit normally.
-
-#+begin_src emacs-lisp
-(defhydra dkellner/shutdown-or-reboot (:exit t)
-  "Shutdown/reboot/exit?"
-  ("s" #'dkellner/shutdown "shutdown")
-  ("r" #'dkellner/reboot "reboot")
-  ("x" #'dkellner/exit-sway "exit sway"))
-
-(defun dkellner/shutdown ()
-  "Kills emacs properly and shutdown."
-  (interactive)
-  (dkellner/prepare-kill-and-run "shutdown -h now"))
-
-(defun dkellner/reboot ()
-  "Kill emacs properly and reboot."
-  (interactive)
-  (dkellner/prepare-kill-and-run "shutdown -r now"))
-
-(defun dkellner/exit-sway ()
-  "Kill emacs properly and exit sway."
-  (interactive)
-  (dkellner/prepare-kill-and-run "swaymsg exit"))
-
-(defun dkellner/prepare-kill-and-run (command)
-  "Prepare to kill Emacs properly and execute COMMAND.
-
-This allows us to shutting down or rebooting the whole system and still
-saving recently used files, bookmarks, places etc."
-  (when (org-clock-is-active)
-    (org-clock-out))
-  (let ((kill-emacs-hook (append (remove #'server-force-stop kill-emacs-hook)
-                                 (list (lambda () (shell-command command))))))
-    (save-buffers-kill-emacs)))
-#+end_src
-
 * Navigation and editing
 
 ** Boon: modal editing
@@ -1100,6 +1052,49 @@ See https://robert.kra.hn/posts/2021-02-07_rust-with-emacs/
 #+end_src
 
 * Misc
+
+** Shutdown and reboot
+
+Simply running =shutdown -h now= in a terminal will cause Emacs to not shutdown
+properly. For example, the list of recently used files will not be persisted.
+
+=dkellner/prepare-kill-and-run= solves this by placing the actual shutdown
+command at the end of =kill-emacs-hook=. This way it is executed just before
+Emacs would exit normally.
+
+#+begin_src emacs-lisp
+(defhydra dkellner/shutdown-or-reboot (:exit t)
+  "Shutdown/reboot/exit?"
+  ("s" #'dkellner/shutdown "shutdown")
+  ("r" #'dkellner/reboot "reboot")
+  ("x" #'dkellner/exit-sway "exit sway"))
+
+(defun dkellner/shutdown ()
+  "Kills emacs properly and shutdown."
+  (interactive)
+  (dkellner/prepare-kill-and-run "shutdown -h now"))
+
+(defun dkellner/reboot ()
+  "Kill emacs properly and reboot."
+  (interactive)
+  (dkellner/prepare-kill-and-run "shutdown -r now"))
+
+(defun dkellner/exit-sway ()
+  "Kill emacs properly and exit sway."
+  (interactive)
+  (dkellner/prepare-kill-and-run "swaymsg exit"))
+
+(defun dkellner/prepare-kill-and-run (command)
+  "Prepare to kill Emacs properly and execute COMMAND.
+
+This allows us to shutting down or rebooting the whole system and still
+saving recently used files, bookmarks, places etc."
+  (when (org-clock-is-active)
+    (org-clock-out))
+  (let ((kill-emacs-hook (append (remove #'server-force-stop kill-emacs-hook)
+                                 (list (lambda () (shell-command command))))))
+    (save-buffers-kill-emacs)))
+#+end_src
 
 ** Helpful
 

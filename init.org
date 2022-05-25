@@ -138,12 +138,7 @@ that nearly everyone can agree upon."
 ** Kill the current buffer without confirmation
 
 #+begin_src emacs-lisp
-(bind-key "C-x k" #'dkellner/kill-current-buffer)
-
-(defun dkellner/kill-current-buffer ()
-  "Kill the current buffer."
-  (interactive)
-  (kill-buffer (current-buffer)))
+(bind-key "C-x k" #'kill-current-buffer)
 #+end_src
 
 ** Enable some commands that are disabled by default

@@ -106,6 +106,22 @@ https://github.com/emacscollective/no-littering#usage for details.
   :ensure t)
 #+end_src
 
+** Run commands in an external terminal
+#+begin_src emacs-lisp
+(defun dkellner/term-command (cmd &rest args)
+  (let* ((cmd-with-args (s-join " " (cons cmd args)))
+         (name (format "alacritty: %s" cmd-with-args)))
+  (apply #'start-process
+         name
+         (format "*%s*" name)
+         "alacritty"
+         "--title"
+         cmd-with-args
+         "--command"
+         cmd
+         args)))
+#+end_src
+
 * Sensible defaults
 
 ** A good starting point: `better-defaults`
@@ -1096,6 +1112,25 @@ Olivetti is a nice little mode if you want to focus on writing one document.
 (use-package savehist
   :init
   (savehist-mode))
+#+end_src
+
+** consult-ssh
+#+begin_src emacs-lisp
+(defun dkellner/open-ssh-term (&optional initial-input)
+  "Run `ssh` for a hosts configured in ~/.ssh/config.
+INITIAL-INPUT can be given as the initial minibuffer input."
+  (interactive)
+  (let ((host (completing-read "ssh " (dkellner/list-ssh-hosts))))
+    (dkellner/term-command "ssh" host)))
+
+(defun dkellner/list-ssh-hosts ()
+  "Return all hosts defined in `~/.ssh/config` as list."
+  (with-temp-buffer
+    (insert-file-contents (s-concat (getenv "HOME") "/.ssh/config"))
+    (keep-lines "^Host [^*]")
+    (-map (lambda (line)
+            (s-chop-prefix "Host " line))
+          (s-split "\n" (buffer-string) t))))
 #+end_src
 
 * Performance shenanigans

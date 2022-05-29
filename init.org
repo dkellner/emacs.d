@@ -122,6 +122,28 @@ https://github.com/emacscollective/no-littering#usage for details.
          args)))
 #+end_src
 
+** Run functions in dedicated frames
+We set the title to "emacs-floating", so we can distinguish them from regular
+emacs frames in our sway configuration.
+
+#+begin_src emacs-lisp
+(defun dkellner/run-in-dedicated-frame (fn)
+  (let ((frame (make-frame '((title . "emacs-floating")))))
+    (select-frame frame)
+    (funcall fn)))
+
+(defun dkellner/run-in-minibuffer-frame (fn)
+  (let ((frame (make-frame '((minibuffer . only)
+                             (title . "emacs-floating")))))
+    (select-frame frame)
+    (unwind-protect
+        (funcall fn)
+      (delete-frame frame))))
+
+(defun dkellner/dedicated-frame-p ()
+  (equal "emacs-floating" (frame-parameter nil 'title)))
+#+end_src
+
 * Sensible defaults
 
 ** A good starting point: `better-defaults`
@@ -943,6 +965,34 @@ See https://robert.kra.hn/posts/2021-02-07_rust-with-emacs/
 
 * Misc
 
+** Select and run action
+=~/hacks/run-action.py= is a simple Python script I use as a command
+runner. Without arguments, it prints a list of available actions, e.g.:
+
+#+begin_example
+Firefox
+org-agenda
+Write new mail
+#+end_example
+
+If called with one of those actions as first argument, it will execute
+it. =dkellner/select-and-run-action= allows me to select one action using
+=completing-read=.
+
+#+begin_src emacs-lisp
+(defun dkellner/select-and-run-action ()
+  (interactive)
+  (let* ((action (dkellner/run-in-minibuffer-frame #'dkellner/select-action))
+         (cmd (format "~/hacks/run-action.py '%s'" action)))
+    (when (stringp action)
+      (start-process action nil "swaymsg" "exec" cmd))))
+
+(defun dkellner/select-action ()
+  (with-temp-buffer
+    (call-process-shell-command "~/hacks/run-action.py" nil t)
+    (let ((actions (s-lines (s-trim (buffer-string)))))
+      (completing-read "run " actions))))
+#+end_src
 ** Shutdown and reboot
 
 Simply running =shutdown -h now= in a terminal will cause Emacs to not shutdown

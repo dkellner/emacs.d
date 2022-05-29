@@ -424,7 +424,7 @@ the running emacsclient process, but that is rather cumbersome.
   (defun dkellner/org-pop-to-buffer (&rest args)
     "Use `pop-to-buffer' instead of `switch-to-buffer' to open buffer.'"
     (let ((buf (car args)))
-      (pop-to-buffer
+      (switch-to-buffer
        (cond ((stringp buf) (get-buffer-create buf))
              ((bufferp buf) buf)
              (t (error "Invalid buffer %s" buf))))))
@@ -439,6 +439,21 @@ the running emacsclient process, but that is rather cumbersome.
 
   (advice-add #'org-capture-place-template
               :around #'dkellner/org-capture-place-template))
+#+end_src
+
+*** Delete dedicated frame after capture
+See https://www.reddit.com/r/orgmode/comments/uycc8m/comment/ia422x6/ .
+
+#+begin_src emacs-lisp
+(defun dkellner/delete-frame-after-org-capture (&optional oldfun &rest args)
+  (when (and (dkellner/dedicated-frame-p)
+             (not (eq this-command #'org-capture-refile)))
+    (delete-frame)))
+
+(advice-add #'org-capture-finalize
+            :after #'dkellner/delete-frame-after-org-capture)
+(advice-add #'org-capture-refile
+            :after #'dkellner/delete-frame-after-org-capture)
 #+end_src
 
 *** Capture buffers should start in insert state

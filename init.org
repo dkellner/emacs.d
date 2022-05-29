@@ -285,8 +285,7 @@ the running emacsclient process, but that is rather cumbersome.
 
 #+begin_src emacs-lisp
 (use-package emacs
-  :config
-  (setq tab-always-indent 'complete))
+  :bind ("C-." . completion-at-point))
 
 (use-package cape
   :ensure t

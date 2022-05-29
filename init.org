@@ -1112,7 +1112,7 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 ** Read bigger chunks from external processes
 
 #+begin_src emacs-lisp
-(setq read-process-output-max (* 1024 1024))
+(setq read-process-output-max (* 4 1024 1024))
 #+end_src
 
 * Playground

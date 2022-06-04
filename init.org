@@ -166,6 +166,13 @@ that nearly everyone can agree upon."
   (load custom-file))
 #+end_src
 
+** Revert buffers when files on disk change
+
+#+begin_src emacs-lisp
+(setq global-auto-revert-non-file-buffers t)
+(global-auto-revert-mode 1)
+#+end_src
+
 ** Remove trailing whitespace on save
 
 #+begin_src emacs-lisp
@@ -189,17 +196,38 @@ that nearly everyone can agree upon."
 ** Unify the way Emacs is asking for confirmation
 
 #+begin_src emacs-lisp
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
+#+end_src
+
+** recentf
+
+Auto-cleanup of recently used files is disabled, because it causes freezes when
+remote files are not accessible anymore. Call =recentf-cleanup= for manual
+cleanup.
+
+#+begin_src emacs-lisp
+(use-package recentf
+  :demand t
+  :config
+  (setq recentf-max-saved-items 250
+        recentf-auto-cleanup 'never)
+  (add-to-list 'recentf-exclude no-littering-etc-directory)
+  (add-to-list 'recentf-exclude no-littering-var-directory)
+  (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:")
+  (recentf-mode 1))
 #+end_src
 
 ** Prevent suspending
 
-Suspending Emacs causes EXWM to freeze. You can recover by sending =SIGUSR2= to
-the running emacsclient process, but that is rather cumbersome.
-
 #+begin_src emacs-lisp
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
+#+end_src
+
+** Don't save duplicates in kill-ring
+
+#+begin_src emacs-lisp
+(setq kill-do-not-save-duplicates t)
 #+end_src
 
 * Navigation and editing
@@ -620,8 +648,7 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
   :ensure t
   :config
   (setq magit-display-buffer-function
-        #'magit-display-buffer-same-window-except-diff-v1)
-  (magit-auto-revert-mode 1))
+        #'magit-display-buffer-same-window-except-diff-v1))
 #+end_src
 
 * E-Mail
@@ -737,6 +764,16 @@ keep highlighting the line the now invisible pointer is on.
 (use-package fringe
   :config
   (fringe-mode '(7 . 1)))
+#+end_src
+
+** Scrolling
+
+#+begin_src emacs-lisp
+(setq auto-window-vscroll nil
+      fast-but-imprecise-scrolling t
+      scroll-conservatively 101
+      scroll-margin 0
+      scroll-preserve-screen-position t)
 #+end_src
 
 * Browsing the web
@@ -1101,23 +1138,6 @@ saving recently used files, bookmarks, places etc."
   (setq diff-hl-draw-borders t))
 #+end_src
 
-** recentf
-
-Auto-cleanup of recently used files is disabled, because it causes freezes when
-remote files are not accessible anymore.
-
-#+begin_src emacs-lisp
-(use-package recentf
-  :demand t
-  :config
-  (setq recentf-max-saved-items 250
-        recentf-auto-cleanup 'never)
-  (add-to-list 'recentf-exclude no-littering-etc-directory)
-  (add-to-list 'recentf-exclude no-littering-var-directory)
-  (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:")
-  (recentf-mode 1))
-#+end_src
-
 ** olivetti-mode
 
 Olivetti is a nice little mode if you want to focus on writing one document.
@@ -1160,6 +1180,12 @@ INITIAL-INPUT can be given as the initial minibuffer input."
           (s-split "\n" (buffer-string) t))))
 #+end_src
 
+** Make shebang (#!) file executable when saved
+
+#+begin_src emacs-lisp
+(add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
+#+end_src
+
 * Performance shenanigans
 
 ** Startup
@@ -1170,10 +1196,12 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 (setq frame-inhibit-implied-resize t)
 #+end_src
 
-** Always use left-to-right text
+** Better support for files with long lines
 
 #+begin_src emacs-lisp
-(setq-default bidi-paragraph-direction 'left-to-right)
+(setq-default bidi-paragraph-direction 'left-to-right
+              bidi-inhibit-bpa t)
+(global-so-long-mode 1)
 #+end_src
 
 ** GC-Tuning

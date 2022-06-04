@@ -386,6 +386,7 @@ the running emacsclient process, but that is rather cumbersome.
                       (:endgroup)))
 
 (setq org-startup-folded 'content
+      org-log-done 'time
       org-log-into-drawer t
       org-agenda-todo-ignore-scheduled 'all
       org-agenda-todo-ignore-deadlines 'all
@@ -470,6 +471,7 @@ See https://www.reddit.com/r/orgmode/comments/uycc8m/comment/ia422x6/ .
 
 #+begin_src emacs-lisp
 (setq org-agenda-use-time-grid nil
+      org-agenda-skip-scheduled-if-done t
       org-agenda-custom-commands
       '(("h" "Home"
          ((agenda "" ((org-agenda-span 'day)))
@@ -595,6 +597,21 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
 (use-package org
   :config
   (advice-add #'org-refile :after #'org-save-all-org-buffers))
+#+end_src
+
+** org-ql
+
+#+begin_src emacs-lisp
+(use-package org-ql
+  :ensure t)
+
+(defun dkellner/list-tasks-done-today ()
+  (interactive)
+  (let* ((today-str (format-time-string "%Y-%m-%d"))
+         (pattern (concat "- State \"DONE\" *from \"TODO\" *\\[" today-str)))
+    (org-ql-search (org-agenda-files)
+      `(or (closed :on today)
+           (regexp ,pattern)))))
 #+end_src
 
 * Magit

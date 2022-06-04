@@ -1172,27 +1172,25 @@ Olivetti is a nice little mode if you want to focus on writing one document.
 
 ** consult-ssh
 #+begin_src emacs-lisp
-(defun dkellner/open-ssh-term (&optional initial-input)
+(defun dkellner/open-ssh-term ()
   "Run `ssh` for a hosts configured in ~/.ssh/config.
 INITIAL-INPUT can be given as the initial minibuffer input."
   (interactive)
-  (let ((host (completing-read "ssh " (dkellner/list-ssh-hosts))))
+  (let ((host (completing-read "ssh " (pcmpl-ssh-hosts))))
     (dkellner/term-command "ssh" host)))
-
-(defun dkellner/list-ssh-hosts ()
-  "Return all hosts defined in `~/.ssh/config` as list."
-  (with-temp-buffer
-    (insert-file-contents (s-concat (getenv "HOME") "/.ssh/config"))
-    (keep-lines "^Host [^*]")
-    (-map (lambda (line)
-            (s-chop-prefix "Host " line))
-          (s-split "\n" (buffer-string) t))))
 #+end_src
 
 ** Make shebang (#!) file executable when saved
 
 #+begin_src emacs-lisp
 (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
+#+end_src
+
+** Better completions for Eshell
+
+#+begin_src emacs-lisp
+(use-package pcmpl-args
+  :ensure t)
 #+end_src
 
 * Performance shenanigans

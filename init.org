@@ -148,7 +148,7 @@ emacs frames in our sway configuration.
 
 ** A good starting point: `better-defaults`
 
-From https://github.com/technomancy/better-defaults : "[...] this package
+From https://git.sr.ht/~technomancy/better-defaults: "[...] this package
 attempts to address the most obvious of deficiencies in uncontroversial ways
 that nearly everyone can agree upon."
 
@@ -156,13 +156,12 @@ that nearly everyone can agree upon."
 (use-package better-defaults
   :ensure t
   :config
-  (ido-mode -1))  ; I prefer ivy-mode
+  (ido-mode -1))  ; I prefer vertico
 #+end_src
 
-** Store customizations in a separate file
+** Load custom.el
 
 #+begin_src emacs-lisp
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
 #+end_src
@@ -1140,14 +1139,6 @@ Olivetti is a nice little mode if you want to focus on writing one document.
         dired-omit-files "^\\.")
   (add-hook 'dired-mode-hook
             (lambda () (dired-omit-mode))))
-#+end_src
-
-** savehist
-
-#+begin_src emacs-lisp
-(use-package savehist
-  :init
-  (savehist-mode))
 #+end_src
 
 ** consult-ssh

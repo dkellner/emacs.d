@@ -240,15 +240,17 @@ cleanup.
   :demand t
   :diminish boon-local-mode
   :config
-  (require 'boon-emacs)
+  (setq boon-insert-conditions
+        '((eq major-mode 'message-mode)
+          (eq major-mode 'eshell-mode)))
 
+  (require 'boon-emacs)
   (bind-key "h" #'avy-goto-subword-1 boon-command-map)
   (bind-key "v" #'scroll-up-command boon-command-map)
   (bind-key "V" #'scroll-down-command boon-command-map)
   (bind-key "/" #'occur boon-command-map)
   (bind-key "\\" #'indent-region boon-command-map)
   (bind-key "@" #'boon-switch-mark boon-command-map)
-
   (bind-key "f" #'consult-flymake boon-goto-map)
 
   (boon-mode))

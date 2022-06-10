@@ -84,7 +84,7 @@ These packages and functions are used by various other subsections.
 (require 'use-package)
 #+end_src
 
-** no-littering
+** Keep ~/.emacs.d/ clean
 
 =no-littering= needs to be loaded as early as possible, see
 https://github.com/emacscollective/no-littering#usage for details.
@@ -92,6 +92,13 @@ https://github.com/emacscollective/no-littering#usage for details.
 #+begin_src emacs-lisp
 (use-package no-littering
   :ensure t)
+#+end_src
+
+#+begin_src emacs-lisp :tangle early-init.el
+(when (fboundp 'startup-redirect-eln-cache)
+  (startup-redirect-eln-cache
+   (convert-standard-filename
+    (expand-file-name  "var/eln-cache/" user-emacs-directory))))
 #+end_src
 
 ** diminish

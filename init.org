@@ -193,6 +193,8 @@ that nearly everyone can agree upon."
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
+(put 'narrow-to-defun 'disabled nil)
 #+end_src
 
 ** Unify the way Emacs is asking for confirmation

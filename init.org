@@ -253,6 +253,8 @@ cleanup.
   (bind-key "/" #'occur boon-command-map)
   (bind-key "\\" #'indent-region boon-command-map)
   (bind-key "@" #'boon-switch-mark boon-command-map)
+  (bind-key "^" #'join-line boon-command-map)
+
   (bind-key "f" #'consult-flymake boon-goto-map)
 
   (boon-mode))

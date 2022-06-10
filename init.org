@@ -909,26 +909,23 @@ browser."
 
 * Programming
 
+** Common
+
+#+begin_src emacs-lisp
+(use-package eldoc
+  :diminish
+  :config
+  (setq eldoc-echo-area-use-multiline-p nil))
+#+end_src
+
 ** LSP
 
 #+begin_src emacs-lisp
-(use-package lsp-mode
-  :ensure t
-  :after boon
-  :config
-  (bind-key "l" lsp-command-map boon-command-map)
-  :custom
-  (lsp-enable-suggest-server-download nil)
-  (lsp-enable-symbol-highlighting nil)
-  (lsp-signature-auto-activate nil)
-  (lsp-eldoc-render-all nil)
-  (lsp-idle-delay 0.6)
-  (lsp-modeline-diagnostics-scope :workspace)
-  (lsp-headerline-breadcrumb-enable nil)
-  (lsp-lens-enable nil)
-  (lsp-rust-analyzer-cargo-watch-command "clippy")
-  (lsp-rust-analyzer-server-display-inlay-hints nil)
-  (lsp-rust-analyzer-proc-macro-enable t))
+(use-package eglot
+  :ensure t)
+
+(use-package consult-eglot
+  :ensure t)
 #+end_src
 
 * Language support
@@ -959,10 +956,6 @@ browser."
 ** Emacs Lisp
 
 #+begin_src emacs-lisp
-(use-package eldoc
-  :hook (emacs-lisp-mode . eldoc-mode)
-  :diminish)
-
 (use-package macrostep
   :ensure t
   :bind (:map emacs-lisp-mode-map

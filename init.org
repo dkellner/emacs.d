@@ -45,9 +45,7 @@ This does install dependencies but does not (yet) add them to
 `load-path'. You need to call this function manually for any
 missing dependencies."
   (interactive "sPackage: ")
-  (dkellner/add-package-to-load-path
-   "nixpkgs.emacsPackages.elpaPackages"
-   package))
+  (dkellner/add-package-to-load-path "elpaPackages" package))
 
 (defun dkellner/add-melpa-package-to-load-path (package)
   "Install PACKAGE from MELPA and add Nix' store path to `load-path'.
@@ -56,13 +54,11 @@ This does install dependencies but does not (yet) add them to
 `load-path'. You need to call this function manually for any
 missing dependencies."
   (interactive "sPackage: ")
-  (dkellner/add-package-to-load-path
-   "nixpkgs.emacsPackages.melpaPackages"
-   package))
+  (dkellner/add-package-to-load-path "melpaPackages" package))
 
 ;; TODO: error handling
 (defun dkellner/add-package-to-load-path (packageSet package)
-  (let* ((nix-expr (format "%s.%s" packageSet package))
+  (let* ((nix-expr (format "nixpkgs#emacsPackages.%s.%s" packageSet package))
          (build-output (shell-command-to-string
                         (format "nix build --no-link %s" nix-expr)))
          (root (shell-command-to-string

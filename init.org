@@ -948,6 +948,13 @@ browser."
   :ensure t)
 #+end_src
 
+** Justfile
+
+#+begin_src emacs-lisp
+(use-package just-mode
+  :ensure t)
+#+end_src
+
 ** Lisp
 
 #+begin_src emacs-lisp

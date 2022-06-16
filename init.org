@@ -1,6 +1,7 @@
-#+TITLE: Emacs Configuration
-#+AUTHOR: Dominik Kellner
-#+PROPERTY: header-args :tangle yes
+#+title: Emacs Configuration
+#+author: Dominik Kellner
+#+property: header-args :tangle yes
+#+auto_tangle: t
 
 * Initialization
 
@@ -1346,6 +1347,15 @@ still figuring out how best to use it. For starters, a function for calling the
 (use-package emacs
   :config
   (delete-selection-mode 1))
+#+end_src
+
+** org-auto-tangle
+
+#+begin_src emacs-lisp
+(use-package org-auto-tangle
+  :ensure t
+  :hook (org-mode . org-auto-tangle-mode)
+  :diminish)
 #+end_src
 
 * Meta

@@ -519,6 +519,7 @@ See https://www.reddit.com/r/orgmode/comments/uycc8m/comment/ia422x6/ .
 #+begin_src emacs-lisp
 (setq org-agenda-use-time-grid nil
       org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
       org-agenda-custom-commands
       '(("h" "Home"
          ((agenda "" ((org-agenda-span 'day)))

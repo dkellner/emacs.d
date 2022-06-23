@@ -711,11 +711,31 @@ theme will conveniently affect *all* of your computing.
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
   :config
-  (load-theme 'sanityinc-tomorrow-night t)
-  (custom-theme-set-faces
-   'sanityinc-tomorrow-night
-   '(fringe ((t (:background nil))))
-   '(org-block ((t (:background nil))))))
+  (defun dkellner/load-light-theme ()
+    (interactive)
+    (disable-theme 'sanityinc-tomorrow-night)
+    (load-theme 'sanityinc-tomorrow-day t)
+    (custom-theme-set-faces
+     'sanityinc-tomorrow-night
+     '(fringe ((t (:background nil))))
+     '(org-block ((t (:background nil))))))
+
+  (defun dkellner/load-dark-theme ()
+    (interactive)
+    (disable-theme 'sanityinc-tomorrow-day)
+    (load-theme 'sanityinc-tomorrow-night t)
+    (custom-theme-set-faces
+     'sanityinc-tomorrow-night
+     '(fringe ((t (:background nil))))
+     '(org-block ((t (:background nil))))))
+
+  (defun dkellner/toggle-theme ()
+    (interactive)
+    (if (-contains? custom-enabled-themes 'sanityinc-tomorrow-night)
+        (dkellner/load-light-theme)
+      (dkellner/load-dark-theme)))
+
+  (dkellner/load-dark-theme))
 #+end_src
 
 ** Font

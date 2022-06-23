@@ -793,7 +793,7 @@ keep highlighting the line the now invisible pointer is on.
 (setq auto-window-vscroll nil
       fast-but-imprecise-scrolling t
       scroll-conservatively 101
-      scroll-margin 0
+      scroll-margin 3
       scroll-preserve-screen-position t)
 #+end_src
 

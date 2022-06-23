@@ -384,14 +384,13 @@ cleanup.
           (magit-project-status "Magit" ?m))))
 #+end_src
 
-** direnv
+** direnv integration
 
 #+begin_src emacs-lisp
-(use-package direnv
+(use-package envrc
   :ensure t
   :config
-  (setq direnv-always-show-summary nil)
-  (direnv-mode))
+  (envrc-global-mode 1))
 #+end_src
 
 * Org

@@ -460,7 +460,8 @@ cleanup.
         ("I" "Inbox (with link)" entry (file "~/org/inbox.org")
          "* %?\n%a\nCreated: %U")))
 
-(use-package ol-notmuch)
+(use-package ol-notmuch
+  :ensure t)
 #+end_src
 
 *** Use the same window

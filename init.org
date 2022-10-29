@@ -356,7 +356,6 @@ cleanup.
 (use-package corfu
   :ensure t
   :custom
-  (corfu-auto t)
   (corfu-cycle t)
   :config
   ;; Silence the pcomplete capf, no errors or messages!

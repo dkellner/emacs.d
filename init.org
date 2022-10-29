@@ -1001,10 +1001,9 @@ See https://emacs.blog/2022/02/20/golang-ide-setup-in-emacs/
 See https://robert.kra.hn/posts/2021-02-07_rust-with-emacs/
 
 #+begin_src emacs-lisp
-(use-package rustic
+(use-package rust-mode
   :ensure t
-  :config
-  (setq rustic-format-on-save nil))
+  :hook (rust-mode . eglot-ensure))
 #+end_src
 
 ** YAML
@@ -1193,13 +1192,13 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 ** GC-Tuning
 
 #+begin_src emacs-lisp
-(setq gc-cons-threshold (* 100 1024 1024))
+(setq gc-cons-threshold (* 16 1024 1024))
 #+end_src
 
 ** Read bigger chunks from external processes
 
 #+begin_src emacs-lisp
-(setq read-process-output-max (* 4 1024 1024))
+(setq read-process-output-max (* 1024 1024))
 #+end_src
 
 * Playground

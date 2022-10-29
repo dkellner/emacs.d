@@ -688,7 +688,7 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
         message-send-mail-function 'message-send-mail-with-sendmail
         message-sendmail-extra-arguments '("--read-envelope-from")
         message-sendmail-f-is-evil t
-        notmuch-fcc-dirs '(("dominik.kellner@fotopuzzle.de"
+        notmuch-fcc-dirs '(("dominik.kellner@puzzleyou.de"
                             . "puzzleandplay/.sent")
                            (".*" . "dkellner/.sent"))))
 #+end_src

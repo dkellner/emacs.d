@@ -1316,12 +1316,13 @@ still figuring out how best to use it. For starters, a function for calling the
   :bind ("M-q" . unfill-toggle))
 #+end_src
 
-** delete-selection-mode
+** multiple-cursors
 
 #+begin_src emacs-lisp
-(use-package emacs
-  :config
-  (delete-selection-mode 1))
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-<" . mc/mark-all-like-this)
+         ("C->" . mc/mark-next-like-this)))
 #+end_src
 
 ** org-auto-tangle

@@ -11,13 +11,14 @@ about _my_ way of doing things, cherry-pick the parts you enjoy, and keep
 hacking!
 
 To read the configuration, I recommend opening
-[init.org](https://git.sr.ht/~dkellner/emacs.d/tree/main/init.org) in Emacs.
+[init.org](https://codeberg.org/dkellner/emacs.d/src/branch/main/init.org) in
+Emacs.
 
 Here are some screenshots to give you an idea of how it looks like:
 
-![Dark theme (gruvbox-dark-hard)](screenshot-dark.png)
+![Dark theme (sanityinc-tomorrow-night)](screenshot-dark.png)
 
-![Light theme (gruvbox-light-hard)](screenshot-light.png)
+![Light theme (sanityinc-tomorrow-day)](screenshot-light.png)
 
 ## Goals
 
@@ -34,14 +35,9 @@ clock. Yet all information I need is just one key binding or `M-x` away.
 
 To improve typing ergonomics in general, I'm using an ergonomic keyboard layout
 called [Neo](https://neo-layout.org/). This puts frequently used keys in the
-home row and adds more modifier keys, which make writing special characters
-easier.
-
-To reduce typing of key-chords, I'm using a modal editing mode called
-[Boon](https://github.com/jyp/boon). Since very recently this provides
-idiomatic key bindings (e.g. you can use `n` and `p` for `next-line` and
-`previous-line`). This also plays nicely together with special Emacs modes who
-already use those keys for navigation, e.g. `org-agenda-mode`.
+home row and adds more modifier keys, which make typing special characters
+easier. In addition there is [Boon](https://github.com/jyp/boon), a modal
+editing package reducing the need to type key-chords.
 
 ### State-of-the-art development experience in selected languages
 
@@ -50,9 +46,8 @@ the most fun but also hardest tasks. Usually there are at least a dozen
 different packages to consider, try out and integrate into your workflow.
 
 I'm trying to unify different language-dependent solutions using
-[Nix](https://nixos.org/nix/), [direnv](https://direnv.net/),
-[lorri](https://github.com/target/lorri) and LSP. For Python and Rust this
-works reasonably well.
+[Nix](https://nixos.org/nix/), [direnv](https://direnv.net/) and LSP. For
+Python and Rust this works reasonably well.
 
 ## Inspirations
 

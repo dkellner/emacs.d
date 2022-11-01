@@ -447,6 +447,7 @@ cleanup.
 #+begin_src emacs-lisp
 (use-package envrc
   :ensure t
+  :diminish
   :config
   (envrc-global-mode 1))
 #+end_src

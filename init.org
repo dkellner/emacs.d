@@ -427,6 +427,23 @@ cleanup.
   (global-corfu-mode 1))
 #+end_src
 
+** multiple-cursors
+
+#+begin_src emacs-lisp
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-<" . mc/mark-all-like-this)
+         ("C->" . mc/mark-next-like-this)))
+#+end_src
+
+** unfill
+
+#+begin_src emacs-lisp
+(use-package unfill
+  :ensure t
+  :bind ("M-q" . unfill-toggle))
+#+end_src
+
 * Project management
 
 ** project.el
@@ -721,6 +738,15 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
            (regexp ,pattern)))))
 #+end_src
 
+** org-auto-tangle
+
+#+begin_src emacs-lisp
+(use-package org-auto-tangle
+  :ensure t
+  :hook (org-mode . org-auto-tangle-mode)
+  :diminish)
+#+end_src
+
 * Magit
 
 #+begin_src emacs-lisp
@@ -874,6 +900,24 @@ keep highlighting the line the now invisible pointer is on.
       scroll-conservatively 101
       scroll-margin 3
       scroll-preserve-screen-position t)
+#+end_src
+
+** Customize startup
+
+#+begin_src emacs-lisp
+(setq inhibit-startup-screen t
+      inhibit-startup-echo-area-message t
+      inhibit-startup-message t)
+#+end_src
+
+** which-key
+
+#+begin_src emacs-lisp
+(use-package which-key
+  :ensure t
+  :diminish
+  :config
+  (which-key-mode))
 #+end_src
 
 * Browsing the web
@@ -1280,16 +1324,6 @@ again. Otherwise, I will move the entire section to a better place.
   :ensure t)
 #+end_src
 
-** which-key
-
-#+begin_src emacs-lisp
-(use-package which-key
-  :ensure t
-  :diminish
-  :config
-  (which-key-mode))
-#+end_src
-
 ** hledger-mode
 
 #+begin_src emacs-lisp
@@ -1300,14 +1334,6 @@ again. Otherwise, I will move the entire section to a better place.
   :hook (hledger-mode . (lambda () (setq-local tab-width 4)))
   :config
   (setq hledger-currency-string "EUR"))
-#+end_src
-
-** Customize startup
-
-#+begin_src emacs-lisp
-(setq inhibit-startup-screen t
-      inhibit-startup-echo-area-message t
-      inhibit-startup-message t)
 #+end_src
 
 ** org-roam
@@ -1365,32 +1391,6 @@ still figuring out how best to use it. For starters, a function for calling the
                 (read-string (format "Word (%s): " (thing-at-point 'word))
                              nil nil (thing-at-point 'word))))
   (shell-command (format "dict -h localhost %s" word)))
-#+end_src
-
-** unfill
-
-#+begin_src emacs-lisp
-(use-package unfill
-  :ensure t
-  :bind ("M-q" . unfill-toggle))
-#+end_src
-
-** multiple-cursors
-
-#+begin_src emacs-lisp
-(use-package multiple-cursors
-  :ensure t
-  :bind (("C-<" . mc/mark-all-like-this)
-         ("C->" . mc/mark-next-like-this)))
-#+end_src
-
-** org-auto-tangle
-
-#+begin_src emacs-lisp
-(use-package org-auto-tangle
-  :ensure t
-  :hook (org-mode . org-auto-tangle-mode)
-  :diminish)
 #+end_src
 
 * Meta

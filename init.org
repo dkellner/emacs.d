@@ -757,7 +757,9 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
   :ensure t
   :config
   (setq magit-display-buffer-function
-        #'magit-display-buffer-same-window-except-diff-v1))
+        #'magit-display-buffer-same-window-except-diff-v1
+        magit-section-initial-visibility-alist '((stashes . hide)
+                                                 (unpushed . show))))
 #+end_src
 
 * E-Mail

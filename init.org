@@ -322,6 +322,9 @@ cleanup.
   ;; Extensions of the goto map
   (define-key boon-goto-map "w" 'avy-goto-subword-1)
 
+  (define-key boon-forward-search-map "m" 'dkellner/flymake-goto-next-error)
+  (define-key boon-backward-search-map "m" 'dkellner/flymake-goto-prev-error)
+
   (boon-mode))
 #+end_src
 
@@ -986,12 +989,31 @@ query and opened with a search engine."
 * Programming
 
 ** Common
-
 #+begin_src emacs-lisp
 (use-package eldoc
   :diminish
   :config
   (setq eldoc-echo-area-use-multiline-p nil))
+#+end_src
+
+** Flymake
+#+begin_src emacs-lisp
+(use-package flymake-diagnostic-at-point
+  :ensure t
+  :after flymake
+  :hook (flymake-mode . flymake-diagnostic-at-point-mode))
+
+(defun dkellner/flymake-goto-next-error ()
+  "Call `flymake-goto-next-error' non-interactively to suppress
+printing the error."
+  (interactive)
+  (flymake-goto-next-error))
+
+(defun dkellner/flymake-goto-prev-error ()
+  "Call `flymake-goto-prev-error' non-interactively to suppress
+printing the error."
+  (interactive)
+  (flymake-goto-prev-error))
 #+end_src
 
 ** LSP

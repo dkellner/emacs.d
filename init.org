@@ -269,6 +269,7 @@ cleanup.
   (define-key boon-command-map "q" '("quit" . quit-window))
   (define-key boon-command-map "\\" 'indent-region)
   (define-key boon-command-map "^" 'join-line)
+  (define-key boon-command-map "." 'dkellner/eglot-actions/body)
 
   ;; Neo2-like movement
   (define-key boon-moves-map "l" '("previous" . previous-line))
@@ -331,10 +332,10 @@ cleanup.
 #+end_src
 
 ** yasnippet
-
 #+begin_src emacs-lisp
 (use-package yasnippet
   :ensure t
+  :demand t
   :config
   (yas-global-mode)
   :diminish yas-minor-mode)
@@ -1017,6 +1018,12 @@ printing the error."
   :after yasnippet
   :config
   (add-to-list 'eglot-server-programs '(rust-ts-mode "rust-analyzer"))
+
+  (defhydra dkellner/eglot-actions (:exit t)
+    "Eglot"
+    ("a" #'eglot-code-actions "code actions")
+    ("f" #'eglot-format "format")
+    ("r" #'eglot-rename "rename")))
 
 (use-package consult-eglot
   :ensure t)

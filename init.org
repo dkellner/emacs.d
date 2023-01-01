@@ -1383,23 +1383,6 @@ again. Otherwise, I will move the entire section to a better place.
   (bind-key* "C-c r" #'dkellner/org-roam/body))
 #+end_src
 
-#+end_src
-
-** Pomidor
-
-#+begin_src emacs-lisp
-(use-package alert
-  :ensure t
-  :config
-  (setq alert-default-style 'notifications))
-
-(use-package pomidor
-  :ensure t
-  :bind (("<XF86Favorites>" . pomidor))
-  :config
-  (setq pomidor-play-sound-file nil))
-#+end_src
-
 ** dict
 
 I've recently set up a `dictd` instance backed by wordnet on my machine and am

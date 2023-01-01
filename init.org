@@ -1410,24 +1410,3 @@ still figuring out how best to use it. For starters, a function for calling the
 #+begin_src emacs-lisp
 (load "~/.emacs.d/private.el")
 #+end_src
-
-** Remind about tangling configuration on exit
-
-#+begin_src emacs-lisp
-(defun dkellner/tangle-if-outdated (filename)
-  "Ask to tangle FILENAME if it its corresponding `.el` file is older."
-  (let ((el-file (concat (file-name-sans-extension filename) ".el")))
-    (when (and (file-newer-than-file-p filename el-file)
-               (y-or-n-p (format "%s is outdated. Tangle %s?" el-file filename)))
-      (save-excursion
-        (find-file filename)
-        (org-babel-tangle))))
-  t)
-
-(defun dkellner/tangle-config ()
-  "Ask to tangle init.org and private.org, if necessary."
-  (dkellner/tangle-if-outdated "~/.emacs.d/init.org")
-  (dkellner/tangle-if-outdated "~/.emacs.d/private.org"))
-
-(add-hook 'kill-emacs-query-functions #'dkellner/tangle-config)
-#+end_src

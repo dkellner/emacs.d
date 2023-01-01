@@ -4,9 +4,7 @@
 #+auto_tangle: t
 
 * Initialization
-
 ** Lexical scope
-
 #+begin_src emacs-lisp
 ;;; init.el --- user-init-file                    -*- lexical-binding: t -*-
 ;;;
@@ -15,13 +13,11 @@
 #+end_src
 
 * Package management
-
 I use Nix with the [[https://github.com/nix-community/emacs-overlay][emacs overlay]] to build Emacs including packages directly
 from =use-package= declarations in this file. The packages are already added to
 =load-path=, so we can disable Emacs' own package manager entirely.
 
 ** Disable Emacs' own package manager
-
 #+begin_src emacs-lisp :tangle early-init.el
 ;;; early-init.el --- user-init-file              -*- lexical-binding: t -*-
 ;;;
@@ -32,59 +28,17 @@ from =use-package= declarations in this file. The packages are already added to
       package-enable-at-startup nil)
 #+end_src
 
-** Install packages and add them to the current session's =load-path=
-
-A rebuild of my Emacs Nix expression will not alter the current session's
-=load-path=. The functions here are quick and dirty ways to load a package in the
-current session, without having to add Nix' store paths to =load-path= manually.
-
-#+begin_src emacs-lisp
-(defun dkellner/add-elpa-package-to-load-path (package)
-  "Install PACKAGE from ELPA and add Nix' store path to `load-path'.
-
-This does install dependencies but does not (yet) add them to
-`load-path'. You need to call this function manually for any
-missing dependencies."
-  (interactive "sPackage: ")
-  (dkellner/add-package-to-load-path "elpaPackages" package))
-
-(defun dkellner/add-melpa-package-to-load-path (package)
-  "Install PACKAGE from MELPA and add Nix' store path to `load-path'.
-
-This does install dependencies but does not (yet) add them to
-`load-path'. You need to call this function manually for any
-missing dependencies."
-  (interactive "sPackage: ")
-  (dkellner/add-package-to-load-path "melpaPackages" package))
-
-;; TODO: error handling
-(defun dkellner/add-package-to-load-path (packageSet package)
-  (let* ((nix-expr (format "nixpkgs#emacsPackages.%s.%s" packageSet package))
-         (build-output (shell-command-to-string
-                        (format "nix build --no-link %s" nix-expr)))
-         (root (shell-command-to-string
-                (format "nix eval --raw %s" nix-expr)))
-         (dir-regex (format "%s.*" package))
-         (path (car (directory-files
-                     (concat root "/share/emacs/site-lisp/elpa/")
-                     t dir-regex))))
-    (add-to-list 'load-path path)))
-#+end_src
-
 * Common
 These packages and functions are used by various other subsections.
 
 ** Keep ~/.emacs.d/ clean
-
 =no-littering= needs to be loaded as early as possible, see
 https://github.com/emacscollective/no-littering#usage for details.
 
 #+begin_src emacs-lisp
 (use-package no-littering
   :ensure t)
-#+end_src
 
-#+begin_src emacs-lisp :tangle early-init.el
 (when (fboundp 'startup-redirect-eln-cache)
   (startup-redirect-eln-cache
    (convert-standard-filename
@@ -92,14 +46,12 @@ https://github.com/emacscollective/no-littering#usage for details.
 #+end_src
 
 ** diminish
-
 #+begin_src emacs-lisp
 (use-package diminish
   :ensure t)
 #+end_src
 
 ** hydra
-
 #+begin_src emacs-lisp
 (use-package hydra
   :ensure t)
@@ -144,9 +96,7 @@ emacs frames in our sway configuration.
 #+end_src
 
 * Sensible defaults
-
 ** A good starting point: `better-defaults`
-
 From https://git.sr.ht/~technomancy/better-defaults: "[...] this package
 attempts to address the most obvious of deficiencies in uncontroversial ways
 that nearly everyone can agree upon."
@@ -159,33 +109,28 @@ that nearly everyone can agree upon."
 #+end_src
 
 ** Load custom.el
-
 #+begin_src emacs-lisp
 (when (file-exists-p custom-file)
   (load custom-file))
 #+end_src
 
 ** Revert buffers when files on disk change
-
 #+begin_src emacs-lisp
 (setq global-auto-revert-non-file-buffers t)
 (global-auto-revert-mode 1)
 #+end_src
 
 ** Remove trailing whitespace on save
-
 #+begin_src emacs-lisp
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 #+end_src
 
 ** Kill the current buffer without confirmation
-
 #+begin_src emacs-lisp
 (bind-key "C-x k" #'kill-current-buffer)
 #+end_src
 
 ** Enable some commands that are disabled by default
-
 #+begin_src emacs-lisp
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
@@ -195,13 +140,11 @@ that nearly everyone can agree upon."
 #+end_src
 
 ** Unify the way Emacs is asking for confirmation
-
 #+begin_src emacs-lisp
 (setq use-short-answers t)
 #+end_src
 
 ** recentf
-
 Auto-cleanup of recently used files is disabled, because it causes freezes when
 remote files are not accessible anymore. Call =recentf-cleanup= for manual
 cleanup.
@@ -219,22 +162,18 @@ cleanup.
 #+end_src
 
 ** Prevent suspending
-
 #+begin_src emacs-lisp
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 #+end_src
 
 ** Don't save duplicates in kill-ring
-
 #+begin_src emacs-lisp
 (setq kill-do-not-save-duplicates t)
 #+end_src
 
 * Navigation and editing
-
 ** Boon: modal editing
-
 #+begin_src emacs-lisp
 (use-package boon
   :ensure t
@@ -323,7 +262,6 @@ cleanup.
 #+end_src
 
 ** Avy
-
 #+begin_src emacs-lisp
 (use-package avy
   :ensure t
@@ -344,25 +282,12 @@ cleanup.
   :ensure t)
 #+end_src
 
-** undo-tree
-
-#+begin_src emacs-lisp
-(use-package undo-tree
-  :ensure t
-  :config
-  (global-undo-tree-mode)
-  (setq undo-tree-visualizer-diff t)
-  :diminish undo-tree-mode)
-#+end_src
-
 ** (Auto-)Filling
-
 #+begin_src emacs-lisp
 (setq-default fill-column 79)
 #+end_src
 
 ** Vertico and friends
-
 #+begin_src emacs-lisp
 (use-package vertico
   :ensure t
@@ -399,7 +324,6 @@ cleanup.
 #+end_src
 
 ** Completion
-
 #+begin_src emacs-lisp
 (use-package emacs
   :bind ("C-." . completion-at-point))
@@ -426,7 +350,6 @@ cleanup.
 #+end_src
 
 ** multiple-cursors
-
 #+begin_src emacs-lisp
 (use-package multiple-cursors
   :ensure t
@@ -435,7 +358,6 @@ cleanup.
 #+end_src
 
 ** unfill
-
 #+begin_src emacs-lisp
 (use-package unfill
   :ensure t
@@ -443,9 +365,7 @@ cleanup.
 #+end_src
 
 * Project management
-
 ** project.el
-
 #+begin_src emacs-lisp
 (use-package project
   :config
@@ -458,7 +378,6 @@ cleanup.
 #+end_src
 
 ** direnv integration
-
 #+begin_src emacs-lisp
 (use-package envrc
   :ensure t
@@ -468,9 +387,7 @@ cleanup.
 #+end_src
 
 * Org
-
 ** Use current version of =org= and =org-contrib=
-
 #+begin_src emacs-lisp
 (use-package org
   :ensure t)
@@ -480,7 +397,6 @@ cleanup.
 #+end_src
 
 ** Basic configuration
-
 #+begin_src emacs-lisp
 (setq org-directory "~/org/"
       org-agenda-files '("~/org/main.org" "~/org/tickler.org" "~/org/areas/")
@@ -524,9 +440,7 @@ cleanup.
 #+end_src
 
 ** Capturing
-
 *** Templates
-
 #+begin_src emacs-lisp
 (setq org-capture-templates
       '(("i" "Inbox" entry (file "~/org/inbox.org")
@@ -539,7 +453,6 @@ cleanup.
 #+end_src
 
 *** Use the same window
-
 #+begin_src emacs-lisp
 (use-package org-capture
   :config
@@ -579,7 +492,6 @@ See https://www.reddit.com/r/orgmode/comments/uycc8m/comment/ia422x6/ .
 #+end_src
 
 *** Capture buffers should start in insert state
-
 #+begin_src emacs-lisp
 (use-package org
   :after boon
@@ -587,9 +499,7 @@ See https://www.reddit.com/r/orgmode/comments/uycc8m/comment/ia422x6/ .
 #+end_src
 
 ** Agenda
-
 *** Customizing the agenda view
-
 #+begin_src emacs-lisp
 (setq org-agenda-use-time-grid nil
       org-agenda-skip-scheduled-if-done t
@@ -626,13 +536,11 @@ See https://www.reddit.com/r/orgmode/comments/uycc8m/comment/ia422x6/ .
 #+end_src
 
 ** Habits
-
 #+begin_src emacs-lisp
 (require 'org-habit)
 #+end_src
 
 ** Keybindings
-
 #+begin_src emacs-lisp
 (bind-key "C-c a" #'org-agenda)
 (bind-key "C-c c" #'org-capture)
@@ -640,7 +548,6 @@ See https://www.reddit.com/r/orgmode/comments/uycc8m/comment/ia422x6/ .
 #+end_src
 
 ** Literate Programming
-
 #+begin_src emacs-lisp
 (setq org-src-tab-acts-natively t
       org-edit-src-content-indentation 0
@@ -654,13 +561,11 @@ See https://www.reddit.com/r/orgmode/comments/uycc8m/comment/ia422x6/ .
 #+end_src
 
 ** Expand snippets like "<s"
-
 #+begin_src emacs-lisp
 (require 'org-tempo)
 #+end_src
 
 ** Prettification
-
 #+begin_src emacs-lisp
 (setq
  org-ellipsis " ⤵"
@@ -674,47 +579,19 @@ See https://www.reddit.com/r/orgmode/comments/uycc8m/comment/ia422x6/ .
 #+end_src
 
 ** Use org-mode for =*scratch*=
-
 #+begin_src emacs-lisp
 (setq initial-major-mode 'org-mode
       initial-scratch-message nil)
 #+end_src
 
 ** Visual indentation instead of actual spaces
-
 #+begin_src emacs-lisp
 (use-package org-indent
   :hook (org-mode . org-indent-mode)
   :diminish)
 #+end_src
 
-** org-store-link für qutebrowser
-
-#+begin_src emacs-lisp
-(defun dkellner/exwm-get-qutebrowser-url ()
-  "Rather crude way of extracting the current URL in qutebrowser.
-
-In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
-  (exwm-input--fake-key 'u)
-  (sleep-for 0.05)
-  (gui-backend-get-selection 'CLIPBOARD 'STRING))
-
-(defun dkellner/org-store-link-qutebrowser ()
-  "Store a link to the url of a qutebrowser buffer."
-  (when (and (equal major-mode 'exwm-mode)
-             (string= exwm-instance-name "qutebrowser"))
-    (org-store-link-props
-     :type "http"
-     :link (dkellner/exwm-get-qutebrowser-url)
-     :description exwm-title)))
-
-(use-package org
-  :config
-  (org-link-set-parameters "http" :store #'dkellner/org-store-link-qutebrowser))
-#+end_src
-
 ** Save org-mode buffers after refiling
-
 #+begin_src emacs-lisp
 (use-package org
   :config
@@ -722,7 +599,6 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
 #+end_src
 
 ** org-ql
-
 #+begin_src emacs-lisp
 (use-package org-ql
   :ensure t)
@@ -737,7 +613,6 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
 #+end_src
 
 ** org-auto-tangle
-
 #+begin_src emacs-lisp
 (use-package org-auto-tangle
   :ensure t
@@ -746,7 +621,6 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
 #+end_src
 
 * Magit
-
 #+begin_src emacs-lisp
 (use-package magit
   :ensure t
@@ -758,13 +632,7 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
 #+end_src
 
 * E-Mail
-
 #+begin_src emacs-lisp
-(defun dkellner/fetch-mail ()
-  "Fetch mail."
-  (interactive)
-  (async-shell-command "~/hacks/fetch-and-index-mail.sh"))
-
 (use-package notmuch
   :ensure t
   :config
@@ -780,9 +648,7 @@ In qutebrowser, 'u' has to be bound to 'yank pretty-url'."
 #+end_src
 
 * UI
-
 ** Themes
-
 Everybody's got one: their favorite theme. In my case I've always configured at
 least a dark and a light one, and I switch between them based on lighting
 conditions (e.g. when I'm working outside I'm likely to use the light theme).
@@ -824,13 +690,11 @@ theme will conveniently affect *all* of your computing.
 #+end_src
 
 ** Font
-
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(font . "Meslo LG M 12"))
 #+end_src
 
 ** Mode-line
-
 #+begin_src emacs-lisp
 (use-package all-the-icons
   :ensure t)
@@ -871,7 +735,6 @@ theme will conveniently affect *all* of your computing.
 #+end_src
 
 ** Remove distractions
-
 When you're using =unclutter= or similar to hide the mouse pointer, then setting
 =mouse-highlight= to =nil= is a must. Without, e.g. the agenda buffer will still
 keep highlighting the line the now invisible pointer is on.
@@ -883,7 +746,6 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Fringe and internal borders
-
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(internal-border-width . 7))
 
@@ -893,7 +755,6 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Scrolling
-
 #+begin_src emacs-lisp
 (setq auto-window-vscroll nil
       fast-but-imprecise-scrolling t
@@ -903,7 +764,6 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Customize startup
-
 #+begin_src emacs-lisp
 (setq inhibit-startup-screen t
       inhibit-startup-echo-area-message t
@@ -911,7 +771,6 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** which-key
-
 #+begin_src emacs-lisp
 (use-package which-key
   :ensure t
@@ -920,71 +779,7 @@ keep highlighting the line the now invisible pointer is on.
   (which-key-mode))
 #+end_src
 
-* Browsing the web
-
-** Qutebrowser
-
-#+begin_src emacs-lisp
-(defun dkellner/browse-url-qutebrowser (url &optional new-window)
-  "Ask qutebrowser to load URL."
-  (interactive (browse-url-interactive-arg "URL: "))
-  (let* ((url (browse-url-encode-url url))
-         (process-environment (browse-url-process-environment)))
-    (apply 'start-process
-           (concat "qutebrowser " url)
-           nil
-           "qutebrowser"
-           (list "--override-restore" "--target" "window" url))))
-#+end_src
-
-** Set up a Hydra
-
-#+begin_src emacs-lisp
-(setq browse-url-browser-function #'browse-url-firefox)
-
-(defun dkellner/browse-url-interactive-arg (prompt)
-  (let ((url-at-point (lambda () (thing-at-point 'url t))))
-    (advice-add 'browse-url-url-at-point :override url-at-point)
-    (prog1
-        (browse-url-interactive-arg prompt)
-      (advice-remove 'browse-url-url-at-point url-at-point))))
-
-(defun dkellner/browse-url (url-or-query &rest args)
-  "Ask a WWW browser to load URL-OR-QUERY.
-
-This behaves like `browse-url', with some differences:
-
-1. It sets `default-directory' of the browser buffer to
-\"~/\". This way the browser buffers will not be associated with
-any projects by Projectile.
-
-2. It overrides `browse-url-url-at-point' so that it only uses
-real URLs as default, not prefixing any possible filename with
-\"http://\".
-
-3. If URL-OR-QUERY contains spaces, it is considered a search
-query and opened with a search engine."
-  (interactive (dkellner/browse-url-interactive-arg "URL: "))
-  (let ((default-directory "~/")
-        (url (if (cl-search " " url-or-query)
-                 (format "https://duckduckgo.com/?q=%s" (url-encode-url url-or-query))
-               url-or-query)))
-    (apply #'browse-url url args)))
-
-(defhydra dkellner/browse (:exit t)
-  "Browse"
-  ("o" #'dkellner/browse-url "url or query")
-  ("b" #'dkellner/open-browser-bookmark "bookmark")
-  ("we" (dkellner/search-online
-         "https://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s")
-   "wikipedia")
-  ("wd" (dkellner/search-online
-         "https://www.wikipedia.org/search-redirect.php?language=de&go=Go&search=%s")
-   "wikipedia"))
-#+end_src
-
 * Programming
-
 ** Common
 #+begin_src emacs-lisp
 (use-package eldoc
@@ -1031,39 +826,26 @@ printing the error."
 #+end_src
 
 * Language support
-
-** Clojure
-
-#+begin_src emacs-lisp
-(use-package cider
-  :ensure t)
-#+end_src
-
 ** Docker
-
 #+begin_src emacs-lisp
 (use-package dockerfile-mode
   :ensure t)
 #+end_src
 
 ** Justfile
-
 #+begin_src emacs-lisp
 (use-package just-mode
   :ensure t)
 #+end_src
 
 ** Lisp
-
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
   :ensure t
-  :hook ((emacs-lisp-mode . rainbow-delimiters-mode)
-         (clojure-mode . rainbow-delimiters-mode)))
+  :hook ((emacs-lisp-mode . rainbow-delimiters-mode)))
 #+end_src
 
 ** Emacs Lisp
-
 #+begin_src emacs-lisp
 (use-package macrostep
   :ensure t
@@ -1085,21 +867,18 @@ printing the error."
 #+end_src
 
 ** Go
-See https://emacs.blog/2022/02/20/golang-ide-setup-in-emacs/
-
 #+begin_src emacs-lisp
 (use-package go-mode
   :ensure t)
 #+end_src
-** Markdown
 
+** Markdown
 #+begin_src emacs-lisp
 (use-package markdown-mode
   :ensure t)
 #+end_src
 
 ** Nix
-
 #+begin_src emacs-lisp
 (use-package nix-mode
   :ensure t
@@ -1107,7 +886,6 @@ See https://emacs.blog/2022/02/20/golang-ide-setup-in-emacs/
 #+end_src
 
 ** PHP, HTML
-
 #+begin_src emacs-lisp
 (use-package web-mode
   :ensure t
@@ -1133,7 +911,6 @@ See https://emacs.blog/2022/02/20/golang-ide-setup-in-emacs/
 #+end_src
 
 ** YAML
-
 #+begin_src emacs-lisp
 (use-package yaml-mode
   :ensure t)
@@ -1145,37 +922,7 @@ See https://emacs.blog/2022/02/20/golang-ide-setup-in-emacs/
 #+end_src
 
 * Misc
-
-** Select and run action
-=~/hacks/run-action.py= is a simple Python script I use as a command
-runner. Without arguments, it prints a list of available actions, e.g.:
-
-#+begin_example
-Firefox
-org-agenda
-Write new mail
-#+end_example
-
-If called with one of those actions as first argument, it will execute
-it. =dkellner/select-and-run-action= allows me to select one action using
-=completing-read=.
-
-#+begin_src emacs-lisp
-(defun dkellner/select-and-run-action ()
-  (interactive)
-  (let* ((action (dkellner/run-in-minibuffer-frame #'dkellner/select-action))
-         (cmd (format "~/hacks/run-action.py '%s'" action)))
-    (when (stringp action)
-      (start-process action nil "swaymsg" "exec" cmd))))
-
-(defun dkellner/select-action ()
-  (with-temp-buffer
-    (call-process-shell-command "~/hacks/run-action.py" nil t)
-    (let ((actions (s-lines (s-trim (buffer-string)))))
-      (completing-read "run " actions))))
-#+end_src
 ** Shutdown and reboot
-
 Simply running =shutdown -h now= in a terminal will cause Emacs to not shutdown
 properly. For example, the list of recently used files will not be persisted.
 
@@ -1218,7 +965,6 @@ saving recently used files, bookmarks, places etc."
 #+end_src
 
 ** Helpful
-
 #+begin_src emacs-lisp
 (use-package helpful
   :ensure t
@@ -1231,7 +977,6 @@ saving recently used files, bookmarks, places etc."
 #+end_src
 
 ** pdf-tools
-
 #+begin_src emacs-lisp
 (use-package pdf-tools
   :ensure t
@@ -1241,7 +986,6 @@ saving recently used files, bookmarks, places etc."
 #+end_src
 
 ** diff-hl
-
 #+begin_src emacs-lisp
 (use-package diff-hl
   :ensure t
@@ -1251,19 +995,7 @@ saving recently used files, bookmarks, places etc."
   (setq diff-hl-draw-borders t))
 #+end_src
 
-** olivetti-mode
-
-Olivetti is a nice little mode if you want to focus on writing one document.
-
-#+begin_src emacs-lisp
-(use-package olivetti
-  :ensure t
-  :custom
-  (olivetti-body-width 90))
-#+end_src
-
 ** Dired
-
 #+begin_src emacs-lisp
 (use-package dired
   :config
@@ -1285,30 +1017,24 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 #+end_src
 
 ** Make shebang (#!) file executable when saved
-
 #+begin_src emacs-lisp
 (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 #+end_src
 
 ** Better completions for Eshell
-
 #+begin_src emacs-lisp
 (use-package pcmpl-args
   :ensure t)
 #+end_src
 
 * Performance shenanigans
-
 ** Startup
-
 *** Inhibit implied frame resizing
-
 #+begin_src emacs-lisp
 (setq frame-inhibit-implied-resize t)
 #+end_src
 
 ** Better support for files with long lines
-
 #+begin_src emacs-lisp
 (setq-default bidi-paragraph-direction 'left-to-right
               bidi-inhibit-bpa t)
@@ -1316,19 +1042,16 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 #+end_src
 
 ** GC-Tuning
-
 #+begin_src emacs-lisp
 (setq gc-cons-threshold (* 16 1024 1024))
 #+end_src
 
 ** Read bigger chunks from external processes
-
 #+begin_src emacs-lisp
 (setq read-process-output-max (* 1024 1024))
 #+end_src
 
 * Playground
-
 Often I get quite excited about all the great new packages out there and try
 them out immediately. Sometimes only to find myself forgetting about these new
 additions to my config and then they go unnoticed until I stumple upon them
@@ -1340,14 +1063,12 @@ I don't use it as often as I thought I would, I just discard it
 again. Otherwise, I will move the entire section to a better place.
 
 ** vlf
-
 #+begin_src emacs-lisp
 (use-package vlf
   :ensure t)
 #+end_src
 
 ** hledger-mode
-
 #+begin_src emacs-lisp
 (use-package hledger-mode
   :ensure t
@@ -1359,7 +1080,6 @@ again. Otherwise, I will move the entire section to a better place.
 #+end_src
 
 ** org-roam
-
 #+begin_src emacs-lisp
 (use-package org-roam
   :ensure t
@@ -1384,20 +1104,6 @@ again. Otherwise, I will move the entire section to a better place.
   (bind-key* "C-c r" #'dkellner/org-roam/body))
 #+end_src
 
-** dict
-
-I've recently set up a `dictd` instance backed by wordnet on my machine and am
-still figuring out how best to use it. For starters, a function for calling the
-`dict` binary:
-
-#+begin_src emacs-lisp
-(defun dkellner/dict-lookup-word (word)
-  (interactive (list
-                (read-string (format "Word (%s): " (thing-at-point 'word))
-                             nil nil (thing-at-point 'word))))
-  (shell-command (format "dict -h localhost %s" word)))
-#+end_src
-
 ** org-tree-slide
 #+begin_src emacs-lisp
 (use-package org-tree-slide
@@ -1405,9 +1111,7 @@ still figuring out how best to use it. For starters, a function for calling the
 #+end_src
 
 * Meta
-
 ** Private configuration
-
 #+begin_src emacs-lisp
 (load "~/.emacs.d/private.el")
 #+end_src

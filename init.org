@@ -1414,6 +1414,12 @@ still figuring out how best to use it. For starters, a function for calling the
   (shell-command (format "dict -h localhost %s" word)))
 #+end_src
 
+** org-tree-slide
+#+begin_src emacs-lisp
+(use-package org-tree-slide
+  :ensure t)
+#+end_src
+
 * Meta
 
 ** Private configuration

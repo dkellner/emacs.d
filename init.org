@@ -383,10 +383,11 @@ cleanup.
 #+end_src
 
 ** Consult
-
 #+begin_src emacs-lisp
 (use-package consult
   :ensure t
+  :init
+  (require 'consult-imenu)
   :bind (("C-x b" . consult-buffer)
          ("C-x p b" . consult-project-buffer)
          ("M-y" . consult-yank-pop)

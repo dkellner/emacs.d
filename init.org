@@ -72,14 +72,7 @@ missing dependencies."
 #+end_src
 
 * Common
-
 These packages and functions are used by various other subsections.
-
-** use-package
-
-#+begin_src emacs-lisp
-(require 'use-package)
-#+end_src
 
 ** Keep ~/.emacs.d/ clean
 
@@ -807,8 +800,8 @@ theme will conveniently affect *all* of your computing.
     (load-theme 'sanityinc-tomorrow-day t)
     (custom-theme-set-faces
      'sanityinc-tomorrow-night
-     '(fringe ((t (:background nil))))
-     '(org-block ((t (:background nil))))))
+     '(fringe ((t (:background unspecified))))
+     '(org-block ((t (:background unspecified))))))
 
   (defun dkellner/load-dark-theme ()
     (interactive)
@@ -816,8 +809,8 @@ theme will conveniently affect *all* of your computing.
     (load-theme 'sanityinc-tomorrow-night t)
     (custom-theme-set-faces
      'sanityinc-tomorrow-night
-     '(fringe ((t (:background nil))))
-     '(org-block ((t (:background nil))))))
+     '(fringe ((t (:background unspecified))))
+     '(org-block ((t (:background unspecified))))))
 
   (defun dkellner/toggle-theme ()
     (interactive)
@@ -1018,11 +1011,12 @@ printing the error."
   (flymake-goto-prev-error))
 #+end_src
 
-** LSP
-
+** LSP (eglot)
 #+begin_src emacs-lisp
 (use-package eglot
-  :ensure t)
+  :after yasnippet
+  :config
+  (add-to-list 'eglot-server-programs '(rust-ts-mode "rust-analyzer"))
 
 (use-package consult-eglot
   :ensure t)
@@ -1125,13 +1119,9 @@ See https://emacs.blog/2022/02/20/golang-ide-setup-in-emacs/
 #+end_src
 
 ** Rust
-
-See https://robert.kra.hn/posts/2021-02-07_rust-with-emacs/
-
 #+begin_src emacs-lisp
-(use-package rust-mode
-  :ensure t
-  :hook (rust-mode . eglot-ensure))
+(use-package rust-ts-mode
+  :hook (rust-ts-mode . eglot-ensure))
 #+end_src
 
 ** YAML

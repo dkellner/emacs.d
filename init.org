@@ -4,7 +4,6 @@
 #+auto_tangle: t
 
 * Initialization
-** Lexical scope
 #+begin_src emacs-lisp
 ;;; init.el --- user-init-file                    -*- lexical-binding: t -*-
 ;;;
@@ -17,7 +16,6 @@ I use Nix with the [[https://github.com/nix-community/emacs-overlay][emacs overl
 from =use-package= declarations in this file. The packages are already added to
 =load-path=, so we can disable Emacs' own package manager entirely.
 
-** Disable Emacs' own package manager
 #+begin_src emacs-lisp :tangle early-init.el
 ;;; early-init.el --- user-init-file              -*- lexical-binding: t -*-
 ;;;

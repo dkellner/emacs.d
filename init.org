@@ -155,7 +155,7 @@ cleanup.
         recentf-auto-cleanup 'never)
   (add-to-list 'recentf-exclude no-littering-etc-directory)
   (add-to-list 'recentf-exclude no-littering-var-directory)
-  (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?:")
+  (add-to-list 'recentf-exclude "^/\\(?:sshx?\\|su\\|sudo\\)?:")
   (recentf-mode 1))
 #+end_src
 

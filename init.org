@@ -306,6 +306,10 @@ cleanup.
 #+end_src
 
 ** Consult
+I disable the automatic preview for =consult-buffer=, because in combination
+with =envrc-mode= Emacs hangs a couple of seconds evaluating when stepping over
+completion candidates.
+
 #+begin_src emacs-lisp
 (use-package consult
   :ensure t
@@ -318,7 +322,9 @@ cleanup.
          ("M-g I" . consult-imenu-multi)
          ("M-g o" . consult-outline)
          ("M-g f" . consult-flymake)
-         ("M-s g" . consult-ripgrep)))
+         ("M-s g" . consult-ripgrep))
+  :config
+  (consult-customize consult-buffer :preview-key (kbd "M-.")))
 #+end_src
 
 ** Completion

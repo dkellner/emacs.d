@@ -773,6 +773,11 @@ keep highlighting the line the now invisible pointer is on.
   (fringe-mode '(7 . 1)))
 #+end_src
 
+** Transparency
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(alpha-background . 95))
+#+end_src
+
 ** Scrolling
 #+begin_src emacs-lisp
 (setq auto-window-vscroll nil

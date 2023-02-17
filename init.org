@@ -1134,6 +1134,13 @@ again. Otherwise, I will move the entire section to a better place.
   :ensure t)
 #+end_src
 
+** Electric Pair mode
+#+begin_src emacs-lisp
+(use-package elec-pair
+  :config
+  (electric-pair-mode 1))
+#+end_src
+
 * Meta
 ** Private configuration
 #+begin_src emacs-lisp

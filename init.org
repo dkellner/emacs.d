@@ -1009,17 +1009,6 @@ saving recently used files, bookmarks, places etc."
   (setq diff-hl-draw-borders t))
 #+end_src
 
-** Dired
-#+begin_src emacs-lisp
-(use-package dired
-  :config
-  (require 'dired-x)
-  (setq dired-listing-switches "-ahl"
-        dired-omit-files "^\\.")
-  (add-hook 'dired-mode-hook
-            (lambda () (dired-omit-mode))))
-#+end_src
-
 ** consult-ssh
 #+begin_src emacs-lisp
 (defun dkellner/open-ssh-term ()
@@ -1129,6 +1118,19 @@ again. Otherwise, I will move the entire section to a better place.
 (use-package elec-pair
   :config
   (electric-pair-mode 1))
+#+end_src
+
+** Dirvish
+#+begin_src emacs-lisp
+(use-package dirvish
+  :ensure t
+  :config
+  (setq dirvish-attributes '(all-the-icons file-size collapse
+                             file-time subtree-state vc-state))
+  (dirvish-override-dired-mode)
+  :bind (("C-x C-d" . dired)
+         :map dirvish-mode-map
+         ("TAB" . dirvish-subtree-toggle)))
 #+end_src
 
 * Meta

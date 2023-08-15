@@ -328,10 +328,11 @@ completion candidates.
                 "--path-separator / "
                 "--smart-case "
                 "--no-heading "
+                "--with-filename "
                 "--line-number "
                 "--search-zip "
-                "--hidden "  ; added by me
-                ".")))
+                "--hidden"  ; added by me
+                )))
 #+end_src
 
 ** Completion

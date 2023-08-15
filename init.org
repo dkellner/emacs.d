@@ -922,6 +922,12 @@ printing the error."
   :diminish highlight-indentation-current-column-mode)
 #+end_src
 
+** OpenSCAD
+#+begin_src emacs-lisp
+(use-package scad-mode
+  :ensure t)
+#+end_src
+
 * Misc
 ** Shutdown and reboot
 Simply running =shutdown -h now= in a terminal will cause Emacs to not shutdown

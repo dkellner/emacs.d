@@ -287,7 +287,12 @@ cleanup.
   :ensure t
   :config
   (setq vertico-cycle t)
-  (vertico-mode))
+  (vertico-mode 1)
+
+  (vertico-multiform-mode 1)
+
+  (setq vertico-multiform-commands
+        '((consult-ripgrep buffer indexed))))
 
 (use-package marginalia
   :ensure t

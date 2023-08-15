@@ -336,29 +336,13 @@ completion candidates.
 #+end_src
 
 ** Completion
+*** Company
 #+begin_src emacs-lisp
-(use-package emacs
-  :bind ("C-." . completion-at-point))
-
-(use-package cape
+(use-package company
   :ensure t
+  :diminish
   :config
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
-
-(use-package corfu
-  :ensure t
-  :custom
-  (corfu-cycle t)
-  :config
-  ;; Silence the pcomplete capf, no errors or messages!
-  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-
-  ;; Ensure that pcomplete does not write to the buffer
-  ;; and behaves as a pure `completion-at-point-function'.
-  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
-
-  (global-corfu-mode 1))
+  (global-company-mode))
 #+end_src
 
 ** multiple-cursors

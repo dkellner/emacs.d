@@ -169,89 +169,39 @@ cleanup.
 #+begin_src emacs-lisp
 (use-package boon
   :ensure t
+  :load-path "~/dev/boon"
   :demand t
   :diminish boon-local-mode
   :config
   (setq boon-insert-conditions
         '((eq major-mode 'message-mode)
           (eq major-mode 'eshell-mode)))
+  (setq boon-special-conditions
+        '((bound-and-true-p magit-blame-mode)
+          (eq major-mode 'eat-mode)))
 
-  ;; Core commands
-  (define-key boon-command-map "x" 'boon-x-map)
-  (define-key boon-command-map "c" 'boon-c-god)
-  (define-key boon-command-map "g" '("goto" . boon-goto-map))
+  (remove-hook 'window-selection-change-functions
+               #'boon-reset-state-for-switchw)
 
-  ;; Switch to insert mode
-  (define-key boon-command-map "n" '("insert" . boon-set-insert-like-state))
-  (define-key boon-command-map "N" 'boon-substitute-region)
-  (define-key boon-command-map "r" '("open" . boon-open-next-line-and-insert))
-  (define-key boon-command-map "R" 'boon-open-line-and-insert)
+  (require 'boon-emacs)
 
-  ;; Other commands
-  (define-key boon-command-map "z" 'boon-repeat-command)
-  (define-key boon-command-map "t" 'boon-replace-by-character)
-  (define-key boon-command-map "T" 'boon-enclose)
-  (define-key boon-command-map "\"" 'boon-quote-character)
-  (define-key boon-command-map "/" 'occur)
-  (define-key boon-command-map "d" 'boon-take-region)
-  (define-key boon-command-map "D" 'boon-treasure-region)
-  (define-key boon-command-map "y" '("yank" . boon-splice))
-  (define-key boon-command-map "Y" 'yank-pop)
-  (define-key boon-command-map "q" '("quit" . quit-window))
-  (define-key boon-command-map "\\" 'indent-region)
-  (define-key boon-command-map "^" 'join-line)
-  (define-key boon-command-map "." 'dkellner/eglot-actions/body)
-
-  ;; Neo2-like movement
-  (define-key boon-moves-map "l" '("previous" . previous-line))
-  (define-key boon-moves-map "L" 'boon-smarter-upward)
-  (define-key boon-moves-map "a" '("next" . next-line))
-  (define-key boon-moves-map "A" 'boon-smarter-downward)
-  (define-key boon-moves-map "i" '("backward" . backward-char))
-  (define-key boon-moves-map "I" 'boon-smarter-backward)
-  (define-key boon-moves-map "e" '("forward" . forward-char))
-  (define-key boon-moves-map "E" 'boon-smarter-forward)
-  (define-key boon-moves-map "u" 'boon-beginning-of-line)
-  (define-key boon-moves-map "o" 'boon-end-of-line)
-
-  ;; Other movements
-  (define-key boon-moves-map "s" 'boon-forward-search-map)
-  (define-key boon-moves-map "S" 'boon-backward-search-map)
-  (define-key boon-moves-map "(" 'boon-beginning-of-expression)
-  (define-key boon-moves-map ")" 'boon-end-of-expression)
-  (define-key boon-moves-map "{" 'backward-paragraph)
-  (define-key boon-moves-map "}" 'forward-paragraph)
-  (define-key boon-moves-map "<" 'beginning-of-buffer)
-  (define-key boon-moves-map ">" 'end-of-buffer)
-  (define-key boon-moves-map "@" 'boon-switch-mark)
-
-  ;; Selections
-  (define-key boon-select-map "w" 'boon-select-word)
-  (define-key boon-select-map "h" 'boon-select-paragraph)
-  (define-key boon-select-map "H" 'boon-select-document)
-  (define-key boon-select-map "s" 'boon-select-wim)
-  (define-key boon-select-map "S" 'boon-select-sentence)
-  (define-key boon-select-map "r" 'boon-select-justline)
-  (define-key boon-select-map "g" 'boon-select-block)
-  (define-key boon-select-map "q" 'boon-select-outside-quotes)
-  (define-key boon-select-map "x" 'boon-select-outside-pairs)
-  (define-key boon-select-map "c" 'boon-select-inside-pairs)
-  (define-key boon-select-map "C" 'boon-select-comment)
-  (define-key boon-select-map "V" 'boon-select-blanks)
-  (define-key boon-select-map "v" 'boon-select-with-spaces)
-  (define-key boon-select-map "z" 'boon-select-content)
-  (define-key boon-select-map "t" 'boon-select-borders)
-  (define-key boon-select-map "T" 'boon-select-org-tree)
-  (define-key boon-select-map "G" 'boon-select-org-table-cell)
-
-  ;; Extensions of the goto map
-  (define-key boon-goto-map "w" 'avy-goto-subword-1)
+  (define-key boon-command-map "l" 'dkellner/eglot-actions/body)
+  (define-key boon-command-map "." 'embark-act)
+  (define-key boon-command-map "," 'er/expand-region)
+  (define-key boon-command-map "h" 'avy-goto-char-timer)
 
   (define-key boon-forward-search-map "m" 'dkellner/flymake-goto-next-error)
   (define-key boon-backward-search-map "m" 'dkellner/flymake-goto-prev-error)
 
   (boon-mode))
 #+end_src
+
+*** TODO Upstream: Add option to `boon-reset-state-for-switchw`
+Boon will return to a buffer's "natural" state after switching windows. I found
+that this messes up with corfu completions and other workflows. E.g. I
+sometimes open an Emacs frame for note-taking and switch to it using my window
+manager shortcuts. Switching back and forth, I will always end up in command
+state, which is confusing.
 
 ** Avy
 #+begin_src emacs-lisp

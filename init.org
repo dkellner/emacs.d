@@ -1120,6 +1120,25 @@ again. Otherwise, I will move the entire section to a better place.
          ("TAB" . dirvish-subtree-toggle)))
 #+end_src
 
+** Embark
+#+begin_src emacs-lisp
+(use-package embark
+  :ensure t
+  :bind ("C-." . embark-act))
+
+(use-package embark-consult
+  :ensure t)
+#+end_src
+
+** Eat
+#+begin_src emacs-lisp
+(use-package eat
+  :ensure t
+  :config
+  (setq eshell-visual-commands nil)
+  (add-hook 'eshell-load-hook #'eat-eshell-mode))
+#+end_src
+
 * Meta
 ** Private configuration
 #+begin_src emacs-lisp

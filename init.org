@@ -908,6 +908,8 @@ printing the error."
 ** Rust
 #+begin_src emacs-lisp
 (use-package rust-ts-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
   :hook (rust-ts-mode . eglot-ensure))
 #+end_src
 

@@ -370,6 +370,7 @@ completion candidates.
                       ("@phone" . ,(string-to-char "p"))
                       ("@home" . ,(string-to-char "h"))
                       ("@errands" . ,(string-to-char "e"))
+                      ("@westwork" . ,(string-to-char "w"))
                       (:endgroup)))
 
 (setq org-startup-folded 'content
@@ -411,52 +412,6 @@ completion candidates.
 
 (use-package ol-notmuch
   :ensure t)
-#+end_src
-
-*** Use the same window
-#+begin_src emacs-lisp
-(use-package org-capture
-  :config
-  (defun dkellner/org-pop-to-buffer (&rest args)
-    "Use `pop-to-buffer' instead of `switch-to-buffer' to open buffer.'"
-    (let ((buf (car args)))
-      (switch-to-buffer
-       (cond ((stringp buf) (get-buffer-create buf))
-             ((bufferp buf) buf)
-             (t (error "Invalid buffer %s" buf))))))
-
-  (advice-add #'org-switch-to-buffer-other-window
-              :override #'dkellner/org-pop-to-buffer)
-
-  (defun dkellner/org-capture-place-template (oldfun &rest args)
-    "Don't delete other windows in `org-capture-place-template'."
-    (cl-letf (((symbol-function #'delete-other-windows) #'ignore))
-      (apply oldfun args)))
-
-  (advice-add #'org-capture-place-template
-              :around #'dkellner/org-capture-place-template))
-#+end_src
-
-*** Delete dedicated frame after capture
-See https://www.reddit.com/r/orgmode/comments/uycc8m/comment/ia422x6/ .
-
-#+begin_src emacs-lisp
-(defun dkellner/delete-frame-after-org-capture (&optional oldfun &rest args)
-  (when (and (dkellner/dedicated-frame-p)
-             (not (eq this-command #'org-capture-refile)))
-    (delete-frame)))
-
-(advice-add #'org-capture-finalize
-            :after #'dkellner/delete-frame-after-org-capture)
-(advice-add #'org-capture-refile
-            :after #'dkellner/delete-frame-after-org-capture)
-#+end_src
-
-*** Capture buffers should start in insert state
-#+begin_src emacs-lisp
-(use-package org
-  :after boon
-  :hook (org-capture-mode . boon-set-insert-like-state))
 #+end_src
 
 ** Agenda
@@ -743,6 +698,18 @@ keep highlighting the line the now invisible pointer is on.
   :diminish
   :config
   (which-key-mode))
+#+end_src
+
+** Buffer display rules
+#+begin_src emacs-lisp
+(use-package window
+  :config
+  (setq display-buffer-alist nil)
+  (add-to-list 'display-buffer-alist
+               '("^CAPTURE-.*"
+                 (display-buffer-pop-up-frame)
+                 (dedicated . t)
+                 (pop-up-frame-parameters . '(name . "emacs-floating")))))
 #+end_src
 
 * Programming

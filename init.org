@@ -1080,6 +1080,21 @@ again. Otherwise, I will move the entire section to a better place.
   (add-hook 'eshell-load-hook #'eat-eshell-mode))
 #+end_src
 
+** csv-mode
+#+begin_src emacs-lisp
+(use-package csv-mode
+  :ensure t)
+#+end_src
+
+** deadgrep + wgrep
+#+begin_src emacs-lisp
+(use-package deadgrep
+  :ensure t)
+
+(use-package wgrep-deadgrep
+  :ensure t)
+#+end_src
+
 * Meta
 ** Private configuration
 #+begin_src emacs-lisp

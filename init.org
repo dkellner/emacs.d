@@ -175,33 +175,24 @@ cleanup.
   :config
   (setq boon-insert-conditions
         '((eq major-mode 'message-mode)
-          (eq major-mode 'eshell-mode)))
+          (eq major-mode 'eshell-mode)
+          (bound-and-true-p org-capture-mode)))
   (setq boon-special-conditions
         '((bound-and-true-p magit-blame-mode)
           (eq major-mode 'eat-mode)))
-
-  (remove-hook 'window-selection-change-functions
-               #'boon-reset-state-for-switchw)
 
   (require 'boon-emacs)
 
   (define-key boon-command-map "l" 'dkellner/eglot-actions/body)
   (define-key boon-command-map "." 'embark-act)
   (define-key boon-command-map "," 'er/expand-region)
-  (define-key boon-command-map "h" 'avy-goto-char-timer)
+  (define-key boon-command-map "m" 'avy-goto-char-timer)
 
   (define-key boon-forward-search-map "m" 'dkellner/flymake-goto-next-error)
   (define-key boon-backward-search-map "m" 'dkellner/flymake-goto-prev-error)
 
   (boon-mode))
 #+end_src
-
-*** TODO Upstream: Add option to `boon-reset-state-for-switchw`
-Boon will return to a buffer's "natural" state after switching windows. I found
-that this messes up with corfu completions and other workflows. E.g. I
-sometimes open an Emacs frame for note-taking and switch to it using my window
-manager shortcuts. Switching back and forth, I will always end up in command
-state, which is confusing.
 
 ** Avy
 #+begin_src emacs-lisp
@@ -210,7 +201,10 @@ state, which is confusing.
   :bind (("M-g g" . avy-goto-line)
          ("M-g M-g" . avy-goto-line))
   :config
-  (setq avy-keys (number-sequence ?a ?z)))
+  (setq avy-keys '(?o ?d ?e ?t ?i ?n ?s ?r ?c ?h))
+  (setq avy-all-windows t)
+  (setq avy-orders-alist '((avy-goto-line . avy-order-closest)
+                           (avy-goto-char-timer . avy-order-closest))))
 #+end_src
 
 ** yasnippet
@@ -253,7 +247,8 @@ state, which is confusing.
   :ensure t
   :custom
   (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+  (completion-category-overrides '((file (styles basic partial-completion))))
+  (orderless-smart-case nil))
 #+end_src
 
 ** Consult

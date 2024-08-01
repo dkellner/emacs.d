@@ -329,6 +329,16 @@ completion candidates.
 (use-package unfill
   :ensure t
   :bind ("M-q" . unfill-toggle))
+
+** Indentation
+#+begin_src emacs-lisp
+(use-package simple
+  :bind (("RET" . newline-and-indent)
+         ("C-j" . newline)))
+
+(use-package electric
+  :config
+  (electric-indent-mode -1))
 #+end_src
 
 * Project management

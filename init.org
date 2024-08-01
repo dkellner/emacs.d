@@ -1153,6 +1153,29 @@ again. Otherwise, I will move the entire section to a better place.
   :ensure t)
 #+end_src
 
+** apheleia
+#+begin_src emacs-lisp
+(cl-defun apheleia-indent-eglot-managed-buffer
+    (&key buffer scratch callback &allow-other-keys)
+  "Copy BUFFER to SCRATCH, then format scratch, then call CALLBACK."
+  (with-current-buffer scratch
+    (setq-local eglot--cached-server
+                (with-current-buffer buffer
+                  (eglot-current-server)))
+    (let ((buffer-file-name (buffer-local-value 'buffer-file-name buffer)))
+      (eglot-format-buffer))
+    (funcall callback)))
+
+(use-package apheleia
+  :ensure t
+  :diminish
+  :config
+  (add-to-list 'apheleia-formatters
+               '(eglot-managed . apheleia-indent-eglot-managed-buffer))
+  (add-to-list 'apheleia-mode-alist '(c++-ts-mode . eglot-managed))
+  (apheleia-global-mode +1))
+#+end_src
+
 * Meta
 ** Private configuration
 #+begin_src emacs-lisp

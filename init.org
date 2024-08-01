@@ -806,6 +806,14 @@ printing the error."
 #+end_src
 
 * Language support
+** C++
+#+begin_src emacs-lisp
+(use-package c++-ts-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-ts-mode))
+  :hook (c++-ts-mode . eglot-ensure))
+#+end_src
+
 ** Docker
 #+begin_src emacs-lisp
 (use-package dockerfile-mode

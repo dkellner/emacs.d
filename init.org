@@ -293,13 +293,27 @@ completion candidates.
 #+end_src
 
 ** Completion
-*** Company
 #+begin_src emacs-lisp
-(use-package company
+(use-package corfu
   :ensure t
-  :diminish
+  :custom
+  (corfu-cycle t)
   :config
-  (global-company-mode))
+  (global-corfu-mode))
+
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+
+(use-package emacs
+  :init
+  (setq tab-always-indent 'complete)
+  (setq text-mode-ispell-word-completion nil)
+  (setq read-extended-command-predicate #'command-completion-default-include-p)
+  (setq completion-ignore-case t)
+  (setq read-buffer-completion-ignore-case t)
+  (setq read-file-name-completion-ignore-case t))
 #+end_src
 
 ** multiple-cursors

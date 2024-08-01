@@ -760,6 +760,19 @@ printing the error."
   (eglot-booster-mode))
 #+end_src
 
+** Eshell
+#+begin_src emacs-lisp
+(use-package esh-mode
+  :config
+  (setq eshell-scroll-to-bottom-on-output t))
+
+(use-package em-hist
+  :bind (:map eshell-hist-mode-map
+              ("C-c C-l" . consult-history))
+  :config
+  (setq eshell-history-size 1024))
+#+end_src
+
 * Language support
 ** Docker
 #+begin_src emacs-lisp
@@ -957,6 +970,15 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 #+begin_src emacs-lisp
 (use-package pcmpl-args
   :ensure t)
+#+end_src
+
+** dired
+#+begin_src emacs-lisp
+(use-package emacs
+  :bind
+  ("C-x C-d" . dired)
+  :config
+  (setq dired-omit-files (rx (seq bol "."))))
 #+end_src
 
 * Performance shenanigans

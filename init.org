@@ -164,6 +164,13 @@ cleanup.
 (setq kill-do-not-save-duplicates t)
 #+end_src
 
+** Skip asking for confirmation for async-shell-command
+#+begin_src emacs-lisp
+(use-package emacs
+  :config
+  (setopt async-shell-command-buffer 'new-buffer))
+#+end_src
+
 * Navigation and editing
 ** Boon: modal editing
 #+begin_src emacs-lisp

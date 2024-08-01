@@ -1021,6 +1021,43 @@ INITIAL-INPUT can be given as the initial minibuffer input."
   (setq dired-omit-files (rx (seq bol "."))))
 #+end_src
 
+** hledger-mode
+#+begin_src emacs-lisp
+(use-package hledger-mode
+  :ensure t
+  :demand t
+  :mode ("\\.journal\\'" "\\.hledger\\'")
+  :hook ((hledger-mode . (lambda () (setq-local tab-width 4)))
+         (hledger-mode . turn-on-diff-hl-mode))
+  :config
+  (setq hledger-currency-string "EUR"))
+#+end_src
+
+** org-roam
+#+begin_src emacs-lisp
+(use-package org-roam
+  :ensure t
+  :hook (after-init . org-roam-setup)
+  :diminish
+  :init (setq org-roam-v2-ack t)
+  :config
+  (setq org-roam-directory "~/org/roam"
+        emacsql-sqlite3-executable (executable-find "sqlite3")
+        org-roam-capture-templates
+        '(("d" "default" plain "%?" :if-new
+           (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t
+           :immediate-finish t)))
+
+  (defhydra dkellner/org-roam (:exit t)
+    "org-roam"
+    ("f" #'org-roam-node-find "find")
+    ("i" #'org-roam-node-insert "insert")
+    ("b" #'org-roam-buffer-toggle "backlinks"))
+
+  (bind-key* "C-c r" #'dkellner/org-roam/body))
+#+end_src
+
 * Performance shenanigans
 ** Startup
 *** Inhibit implied frame resizing
@@ -1060,43 +1097,6 @@ again. Otherwise, I will move the entire section to a better place.
 #+begin_src emacs-lisp
 (use-package vlf
   :ensure t)
-#+end_src
-
-** hledger-mode
-#+begin_src emacs-lisp
-(use-package hledger-mode
-  :ensure t
-  :demand t
-  :mode ("\\.journal\\'" "\\.hledger\\'")
-  :hook ((hledger-mode . (lambda () (setq-local tab-width 4)))
-         (hledger-mode . turn-on-diff-hl-mode))
-  :config
-  (setq hledger-currency-string "EUR"))
-#+end_src
-
-** org-roam
-#+begin_src emacs-lisp
-(use-package org-roam
-  :ensure t
-  :hook (after-init . org-roam-setup)
-  :diminish
-  :init (setq org-roam-v2-ack t)
-  :config
-  (setq org-roam-directory "~/org/roam"
-        emacsql-sqlite3-executable (executable-find "sqlite3")
-        org-roam-capture-templates
-        '(("d" "default" plain "%?" :if-new
-           (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-           :unnarrowed t
-           :immediate-finish t)))
-
-  (defhydra dkellner/org-roam (:exit t)
-    "org-roam"
-    ("f" #'org-roam-node-find "find")
-    ("i" #'org-roam-node-insert "insert")
-    ("b" #'org-roam-buffer-toggle "backlinks"))
-
-  (bind-key* "C-c r" #'dkellner/org-roam/body))
 #+end_src
 
 ** org-tree-slide

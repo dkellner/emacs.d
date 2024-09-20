@@ -1169,11 +1169,11 @@ again. Otherwise, I will move the entire section to a better place.
 (use-package apheleia
   :ensure t
   :diminish
+  :hook ((prog-mode . apheleia-mode))
   :config
   (add-to-list 'apheleia-formatters
                '(eglot-managed . apheleia-indent-eglot-managed-buffer))
-  (add-to-list 'apheleia-mode-alist '(c++-ts-mode . eglot-managed))
-  (apheleia-global-mode +1))
+  (add-to-list 'apheleia-mode-alist '(c++-ts-mode . eglot-managed)))
 #+end_src
 
 * Meta

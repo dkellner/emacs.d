@@ -1185,6 +1185,16 @@ again. Otherwise, I will move the entire section to a better place.
   (add-to-list 'apheleia-mode-alist '(c++-ts-mode . eglot-managed)))
 #+end_src
 
+** justl.el
+#+begin_src emacs-lisp
+(use-package justl
+  :ensure t
+  :demand t
+  :custom
+  (justl-recipe-width 32)
+  (justl-per-recipe-buffer t))
+#+end_src
+
 * Meta
 ** Private configuration
 #+begin_src emacs-lisp

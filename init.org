@@ -699,6 +699,15 @@ keep highlighting the line the now invisible pointer is on.
   (fringe-mode '(7 . 1)))
 #+end_src
 
+** Line numbers
+#+begin_src emacs-lisp
+(use-package display-line-numbers
+  :custom
+  (display-line-numbers-type 'relative)
+  :config
+  (global-display-line-numbers-mode))
+#+end_src
+
 ** Transparency
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(alpha-background . 95))

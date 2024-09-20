@@ -239,7 +239,8 @@ cleanup.
 (use-package vertico
   :ensure t
   :config
-  (setq vertico-cycle t)
+  (setq vertico-cycle t
+        vertico-buffer-display-action '(display-buffer-at-bottom))
   (vertico-mode 1)
 
   (vertico-multiform-mode 1)
@@ -573,7 +574,8 @@ completion candidates.
   :ensure t
   :config
   (setq magit-display-buffer-function
-        #'magit-display-buffer-same-window-except-diff-v1
+        #'magit-display-buffer-traditional
+        magit-commit-show-diff nil
         magit-section-initial-visibility-alist '((stashes . hide)
                                                  (unpushed . show))))
 #+end_src
@@ -744,12 +746,16 @@ keep highlighting the line the now invisible pointer is on.
 #+begin_src emacs-lisp
 (use-package window
   :config
-  (setq display-buffer-alist nil)
-  (add-to-list 'display-buffer-alist
-               '("^CAPTURE-.*"
-                 (display-buffer-pop-up-frame)
-                 (dedicated . t)
-                 (pop-up-frame-parameters . '(name . "emacs-floating")))))
+  (setq pop-up-windows nil)
+  (setq display-buffer-base-action '(display-buffer-same-window))
+  (setq display-buffer-alist
+        '(("^CAPTURE-.*"
+           (display-buffer-pop-up-frame)
+           (dedicated . t)
+           (pop-up-frame-parameters . '(name . "emacs-floating")))
+          ("^\\*Flymake diagnostics .*"
+           (display-buffer-pop-up-frame)
+           (dedicated . t)))))
 #+end_src
 
 * Programming
@@ -1147,7 +1153,9 @@ again. Otherwise, I will move the entire section to a better place.
 #+begin_src emacs-lisp
 (use-package embark
   :ensure t
-  :bind ("C-." . embark-act))
+  :bind ("C-." . embark-act)
+  :custom
+  (embark-verbose-indicator-display-action '(display-buffer-at-bottom)))
 
 (use-package embark-consult
   :ensure t)
@@ -1198,6 +1206,24 @@ again. Otherwise, I will move the entire section to a better place.
   (add-to-list 'apheleia-formatters
                '(eglot-managed . apheleia-indent-eglot-managed-buffer))
   (add-to-list 'apheleia-mode-alist '(c++-ts-mode . eglot-managed)))
+#+end_src
+
+** Sway
+This is a workaround for a bug in Sway
+https://github.com/swaywm/sway/issues/6216 .
+
+#+begin_src emacs-lisp
+(use-package sway
+  :ensure t
+  :demand t
+  :config
+  (sway-x-focus-through-sway-mode)
+
+  ;; Ensure frame titles are unique, otherwise sway.el breaks under emacs-pgtk.
+  (setq frame-title-format
+        '("%b — GNU Emacs ["
+          (:eval (frame-parameter (selected-frame) 'window-id))
+          "]")))
 #+end_src
 
 ** justl.el

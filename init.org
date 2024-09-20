@@ -183,7 +183,8 @@ cleanup.
   (setq boon-insert-conditions
         '((eq major-mode 'message-mode)
           (eq major-mode 'eshell-mode)
-          (bound-and-true-p org-capture-mode)))
+          (bound-and-true-p org-capture-mode)
+          (bound-and-true-p git-commit-mode)))
   (setq boon-special-conditions
         '((bound-and-true-p magit-blame-mode)
           (eq major-mode 'eat-mode)))

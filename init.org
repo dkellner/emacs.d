@@ -823,6 +823,12 @@ printing the error."
   :hook (c++-ts-mode . eglot-ensure))
 #+end_src
 
+** CMake
+#+begin_src emacs-lisp
+(use-package cmake-mode
+  :ensure t)
+#+end_src
+
 ** Docker
 #+begin_src emacs-lisp
 (use-package dockerfile-mode
@@ -861,6 +867,13 @@ printing the error."
                 (eq (char-after) ?'))
       (insert "'"))))
 (bind-key "#" #'endless/sharp emacs-lisp-mode-map)
+#+end_src
+
+** Python
+#+begin_src emacs-lisp
+(use-package python-ts-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode)))
 #+end_src
 
 ** Go

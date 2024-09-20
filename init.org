@@ -1062,9 +1062,10 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 
 ** dired
 #+begin_src emacs-lisp
-(use-package emacs
+(use-package dired
   :bind
   ("C-x C-d" . dired)
+  :hook (dired-mode . dired-omit-mode)
   :config
   (setq dired-omit-files (rx (seq bol "."))))
 #+end_src
@@ -1151,20 +1152,6 @@ again. Otherwise, I will move the entire section to a better place.
 #+begin_src emacs-lisp
 (use-package org-tree-slide
   :ensure t)
-#+end_src
-
-** Dirvish
-#+begin_src emacs-lisp
-(use-package dirvish
-  :ensure t
-  :init
-  (dirvish-override-dired-mode)
-  :config
-  (setq dirvish-attributes '(all-the-icons file-size collapse
-                             file-time subtree-state vc-state))
-  :bind (("C-x C-d" . dired)
-         :map dirvish-mode-map
-         ("TAB" . dirvish-subtree-toggle)))
 #+end_src
 
 ** Embark

@@ -351,6 +351,17 @@ completion candidates.
   (electric-indent-mode -1))
 #+end_src
 
+** Electric Pairs
+#+begin_src emacs-lisp
+(use-package elec-pair
+  :init
+  (electric-pair-mode +1)
+  :config
+  (setq electric-pair-preserve-balance nil)
+  (setq electric-pair-open-newline-between-pairs t)
+  (setq electric-pair-skip-self nil))
+#+end_src
+
 * Project management
 ** project.el
 #+begin_src emacs-lisp
@@ -1212,6 +1223,16 @@ again. Otherwise, I will move the entire section to a better place.
   (add-to-list 'apheleia-formatters
                '(eglot-managed . apheleia-indent-eglot-managed-buffer))
   (add-to-list 'apheleia-mode-alist '(c++-ts-mode . eglot-managed)))
+#+end_src
+
+** Sideline
+#+begin_src emacs-lisp
+(use-package sideline-flymake
+  :ensure t
+  :diminish sideline-mode
+  :hook (flymake-mode . sideline-mode)
+  :init
+  (setq sideline-backends-right '(sideline-flymake)))
 #+end_src
 
 ** Combobulate

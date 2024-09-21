@@ -366,14 +366,35 @@ completion candidates.
 * Project management
 ** project.el
 #+begin_src emacs-lisp
+(defun dkellner/open-external-terminal ()
+  (interactive)
+  (let* ((dir (or (project-root (project-current))
+                  default-directory))
+         (dir (expand-file-name dir)))
+    (call-process-shell-command
+     (format "alacritty --working-directory=%s" dir)
+     nil 0)))
+
+(defun dkellner/project-justl ()
+  (interactive)
+  (let ((default-directory (project-root (project-current))))
+    (justl)))
+
 (use-package project
+  :bind (:map project-prefix-map
+              ("r" . consult-ripgrep)
+              ("R" . project-query-replace-regexp)
+              ("s" . dkellner/open-external-terminal)
+              ("j" . justl))
   :config
   (setq project-switch-commands
         '((project-find-file "Find file")
-          (project-find-regexp "Find regexp")
+          (consult-ripgrep "Find regexp" ?r)
           (project-find-dir "Find directory")
           (project-eshell "Eshell")
-          (magit-project-status "Magit" ?m))))
+          (magit-project-status "Magit" ?g)
+          (dkellner/open-external-terminal "Shell" ?s)
+          (dkellner/project-justl "Just" ?j))))
 #+end_src
 
 ** direnv integration

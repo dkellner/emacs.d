@@ -804,6 +804,10 @@ keep highlighting the line the now invisible pointer is on.
   :diminish eldoc-mode
   :config
   (setq eldoc-echo-area-use-multiline-p nil))
+
+(use-package compile
+  :config
+  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter))
 #+end_src
 
 ** Flymake

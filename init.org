@@ -171,6 +171,11 @@ cleanup.
   (setopt async-shell-command-buffer 'new-buffer))
 #+end_src
 
+** No initial message in scratch buffer
+#+begin_src emacs-lisp
+(setq initial-scratch-message nil)
+#+end_src
+
 * Navigation and editing
 ** Boon: modal editing
 #+begin_src emacs-lisp
@@ -564,12 +569,6 @@ completion candidates.
   :hook (org-mode . org-bullets-mode)
   :config
   (setq org-bullets-bullet-list '("◉" "❃" "✿" "✤")))
-#+end_src
-
-** Use org-mode for =*scratch*=
-#+begin_src emacs-lisp
-(setq initial-major-mode 'org-mode
-      initial-scratch-message nil)
 #+end_src
 
 ** Visual indentation instead of actual spaces

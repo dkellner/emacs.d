@@ -815,22 +815,24 @@ keep highlighting the line the now invisible pointer is on.
 
 ** Flymake
 #+begin_src emacs-lisp
-(use-package flymake-diagnostic-at-point
-  :ensure t
-  :after flymake
-  :hook (flymake-mode . flymake-diagnostic-at-point-mode))
+(use-package flymake
+  :hook (flymake-project-diagnostics-mode . dkellner/flymake-sort-by-type)
+  :init
+  (defun dkellner/flymake-sort-by-type ()
+    (tabulated-list--sort-by-column-name "Type")
+    (tabulated-list--sort-by-column-name "Type"))
 
-(defun dkellner/flymake-goto-next-error ()
-  "Call `flymake-goto-next-error' non-interactively to suppress
-printing the error."
-  (interactive)
-  (flymake-goto-next-error))
+  (defun dkellner/flymake-goto-next-error ()
+    "Call `flymake-goto-next-error' non-interactively to suppress
+   printing the error."
+    (interactive)
+    (flymake-goto-next-error))
 
-(defun dkellner/flymake-goto-prev-error ()
-  "Call `flymake-goto-prev-error' non-interactively to suppress
-printing the error."
-  (interactive)
-  (flymake-goto-prev-error))
+  (defun dkellner/flymake-goto-prev-error ()
+    "Call `flymake-goto-prev-error' non-interactively to suppress
+   printing the error."
+    (interactive)
+    (flymake-goto-prev-error)))
 #+end_src
 
 ** LSP (eglot)

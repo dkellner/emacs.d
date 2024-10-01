@@ -1148,11 +1148,6 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 (global-so-long-mode 1)
 #+end_src
 
-** GC-Tuning
-#+begin_src emacs-lisp
-(setq gc-cons-threshold (* 16 1024 1024))
-#+end_src
-
 ** Read bigger chunks from external processes
 #+begin_src emacs-lisp
 (setq read-process-output-max (* 1024 1024))

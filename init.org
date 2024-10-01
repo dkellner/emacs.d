@@ -801,7 +801,7 @@ keep highlighting the line the now invisible pointer is on.
 ** Common
 #+begin_src emacs-lisp
 (use-package eldoc
-  :diminish
+  :diminish eldoc-mode
   :config
   (setq eldoc-echo-area-use-multiline-p nil))
 #+end_src
@@ -918,7 +918,7 @@ printing the error."
 
 ** Python
 #+begin_src emacs-lisp
-(use-package python-ts-mode
+(use-package python
   :init
   (add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode)))
 #+end_src
@@ -1088,6 +1088,8 @@ INITIAL-INPUT can be given as the initial minibuffer input."
   ("C-x C-d" . dired)
   :hook (dired-mode . dired-omit-mode)
   :config
+  (setq dired-guess-shell-alist-user
+        '(("\\.pdf$" "zathura")))
   (setq dired-omit-files (rx (seq bol "."))))
 #+end_src
 

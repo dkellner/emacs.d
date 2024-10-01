@@ -1282,6 +1282,22 @@ https://github.com/swaywm/sway/issues/6216 .
   (justl-per-recipe-buffer t))
 #+end_src
 
+** gptel
+#+begin_src emacs-lisp
+(use-package gptel
+  :ensure t)
+#+end_src
+
+** Denote
+#+begin_src emacs-lisp
+(use-package denote
+  :ensure t
+  :hook (dired-mode . denote-dired-mode)
+  :custom
+  (denote-directory (expand-file-name "~/org/denote"))
+  (denote-known-keywords nil))
+#+end_src
+
 * Meta
 ** Private configuration
 #+begin_src emacs-lisp

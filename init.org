@@ -194,17 +194,11 @@ cleanup.
         '((bound-and-true-p magit-blame-mode)
           (eq major-mode 'eat-mode)))
 
-  (defun dkellner/expand-region (arg)
-    (interactive "p")
-    (if (bound-and-true-p combobulate-mode)
-        (combobulate-mark-node-dwim arg)
-      (er/expand-region arg)))
-
   (require 'boon-emacs)
 
   (define-key boon-command-map "l" 'dkellner/eglot-actions/body)
   (define-key boon-command-map "." 'embark-act)
-  (define-key boon-command-map "," 'dkellner/expand-region)
+  (define-key boon-command-map "," 'er/expand-region)
   (define-key boon-command-map "m" 'avy-goto-char)
   (define-key boon-command-map "z" 'zap-up-to-char)
   (define-key boon-command-map "Z" 'zap-to-char)
@@ -1260,15 +1254,6 @@ again. Otherwise, I will move the entire section to a better place.
   :hook (flymake-mode . sideline-mode)
   :init
   (setq sideline-backends-right '(sideline-flymake)))
-#+end_src
-
-** Combobulate
-#+begin_src emacs-lisp
-(use-package combobulate
-  :load-path "~/dev/combobulate"
-  :hook ((prog-mode . combobulate-mode))
-  :custom
-  (combobulate-key-prefix "C-c o"))
 #+end_src
 
 ** Sway

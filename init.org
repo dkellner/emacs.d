@@ -4,6 +4,7 @@
 #+auto_tangle: t
 
 * Initialization
+
 #+begin_src emacs-lisp
 ;;; init.el --- user-init-file                    -*- lexical-binding: t -*-
 ;;;
@@ -12,20 +13,20 @@
 #+end_src
 
 * Package management
-I use Nix with the [[https://github.com/nix-community/emacs-overlay][emacs overlay]] to build Emacs including packages directly
-from =use-package= declarations in this file. Hence I "disable" the included
-package manager to not accidentally install packages another way.
+
+I use Nix with the [[https://github.com/nix-community/emacs-overlay][emacs overlay]] to build Emacs including packages directly from =use-package= declarations in this file. Hence I "disable" the included package manager to not accidentally install packages another way.
 
 #+begin_src emacs-lisp
 (setq package-archives nil)
 #+end_src
 
 * Common
+
 These packages and functions are used by various other subsections.
 
 ** Keep ~/.emacs.d/ clean
-=no-littering= needs to be loaded as early as possible, see
-https://github.com/emacscollective/no-littering#usage for details.
+
+=no-littering= needs to be loaded as early as possible, see https://github.com/emacscollective/no-littering#usage for details.
 
 #+begin_src emacs-lisp
 (use-package no-littering
@@ -38,18 +39,21 @@ https://github.com/emacscollective/no-littering#usage for details.
 #+end_src
 
 ** diminish
+
 #+begin_src emacs-lisp
 (use-package diminish
   :ensure t)
 #+end_src
 
 ** hydra
+
 #+begin_src emacs-lisp
 (use-package hydra
   :ensure t)
 #+end_src
 
 ** Run commands in an external terminal
+
 #+begin_src emacs-lisp
 (defun dkellner/term-command (cmd &rest args)
   (let* ((cmd-with-args (s-join " " (cons cmd args)))
@@ -66,8 +70,8 @@ https://github.com/emacscollective/no-littering#usage for details.
 #+end_src
 
 ** Run functions in dedicated frames
-We set the title to "emacs-floating", so we can distinguish them from regular
-emacs frames in our sway configuration.
+
+We set the title to "emacs-floating", so we can distinguish them from regular Emacs frames in our sway configuration.
 
 #+begin_src emacs-lisp
 (defun dkellner/run-in-dedicated-frame (fn)
@@ -89,9 +93,8 @@ emacs frames in our sway configuration.
 
 * Sensible defaults
 ** A good starting point: `better-defaults`
-From https://git.sr.ht/~technomancy/better-defaults: "[...] this package
-attempts to address the most obvious of deficiencies in uncontroversial ways
-that nearly everyone can agree upon."
+
+From https://git.sr.ht/~technomancy/better-defaults: "[...] this package attempts to address the most obvious of deficiencies in uncontroversial ways that nearly everyone can agree upon."
 
 #+begin_src emacs-lisp
 (use-package better-defaults
@@ -101,28 +104,33 @@ that nearly everyone can agree upon."
 #+end_src
 
 ** Load custom.el
+
 #+begin_src emacs-lisp
 (when (file-exists-p custom-file)
   (load custom-file))
 #+end_src
 
 ** Revert buffers when files on disk change
+
 #+begin_src emacs-lisp
 (setq global-auto-revert-non-file-buffers t)
 (global-auto-revert-mode 1)
 #+end_src
 
 ** Remove trailing whitespace on save
+
 #+begin_src emacs-lisp
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 #+end_src
 
 ** Kill the current buffer without confirmation
+
 #+begin_src emacs-lisp
 (bind-key "C-x k" #'kill-current-buffer)
 #+end_src
 
 ** Enable some commands that are disabled by default
+
 #+begin_src emacs-lisp
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
@@ -132,14 +140,14 @@ that nearly everyone can agree upon."
 #+end_src
 
 ** Unify the way Emacs is asking for confirmation
+
 #+begin_src emacs-lisp
 (setq use-short-answers t)
 #+end_src
 
 ** recentf
-Auto-cleanup of recently used files is disabled, because it causes freezes when
-remote files are not accessible anymore. Call =recentf-cleanup= for manual
-cleanup.
+
+Auto-cleanup of recently used files is disabled, because it causes freezes when remote files are not accessible anymore. Call =recentf-cleanup= for manual cleanup.
 
 #+begin_src emacs-lisp
 (use-package recentf
@@ -154,17 +162,20 @@ cleanup.
 #+end_src
 
 ** Prevent suspending
+
 #+begin_src emacs-lisp
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 #+end_src
 
 ** Don't save duplicates in kill-ring
+
 #+begin_src emacs-lisp
 (setq kill-do-not-save-duplicates t)
 #+end_src
 
 ** Skip asking for confirmation for async-shell-command
+
 #+begin_src emacs-lisp
 (use-package emacs
   :config
@@ -172,12 +183,14 @@ cleanup.
 #+end_src
 
 ** No initial message in scratch buffer
+
 #+begin_src emacs-lisp
 (setq initial-scratch-message nil)
 #+end_src
 
 * Navigation and editing
 ** Boon: modal editing
+
 #+begin_src emacs-lisp
 (use-package boon
   :ensure t
@@ -211,6 +224,7 @@ cleanup.
 #+end_src
 
 ** Avy
+
 #+begin_src emacs-lisp
 (use-package avy
   :ensure t
@@ -224,6 +238,7 @@ cleanup.
 #+end_src
 
 ** yasnippet
+
 #+begin_src emacs-lisp
 (use-package yasnippet
   :ensure t
@@ -237,11 +252,13 @@ cleanup.
 #+end_src
 
 ** (Auto-)Filling
+
 #+begin_src emacs-lisp
 (setq-default fill-column 79)
 #+end_src
 
 ** Vertico and friends
+
 #+begin_src emacs-lisp
 (use-package vertico
   :ensure t
@@ -269,9 +286,8 @@ cleanup.
 #+end_src
 
 ** Consult
-I disable the automatic preview for =consult-buffer=, because in combination
-with =envrc-mode= Emacs hangs a couple of seconds evaluating when stepping over
-completion candidates.
+
+I disable the automatic preview for =consult-buffer=, because in combination with =envrc-mode= Emacs hangs a couple of seconds evaluating when stepping over completion candidates.
 
 #+begin_src emacs-lisp
 (use-package consult
@@ -303,6 +319,7 @@ completion candidates.
 #+end_src
 
 ** Completion
+
 #+begin_src emacs-lisp
 (use-package corfu
   :ensure t
@@ -327,6 +344,7 @@ completion candidates.
 #+end_src
 
 ** multiple-cursors
+
 #+begin_src emacs-lisp
 (use-package multiple-cursors
   :ensure t
@@ -335,6 +353,7 @@ completion candidates.
 #+end_src
 
 ** unfill
+
 #+begin_src emacs-lisp
 (use-package unfill
   :ensure t
@@ -342,6 +361,7 @@ completion candidates.
 #+end_src
 
 ** Indentation
+
 #+begin_src emacs-lisp
 (use-package simple
   :bind (("RET" . newline-and-indent)
@@ -353,6 +373,7 @@ completion candidates.
 #+end_src
 
 ** Electric Pairs
+
 #+begin_src emacs-lisp
 (use-package elec-pair
   :init
@@ -365,6 +386,7 @@ completion candidates.
 
 * Project management
 ** project.el
+
 #+begin_src emacs-lisp
 (defun dkellner/open-external-terminal ()
   (interactive)
@@ -398,6 +420,7 @@ completion candidates.
 #+end_src
 
 ** direnv integration
+
 #+begin_src emacs-lisp
 (use-package envrc
   :ensure t
@@ -411,6 +434,7 @@ completion candidates.
 
 * Org
 ** Use current version of =org= and =org-contrib=
+
 #+begin_src emacs-lisp
 (use-package org
   :ensure t)
@@ -420,6 +444,7 @@ completion candidates.
 #+end_src
 
 ** Basic configuration
+
 #+begin_src emacs-lisp
 (setq org-directory "~/org/"
       org-agenda-files '("~/org/main.org" "~/org/tickler.org" "~/org/areas/")
@@ -474,7 +499,7 @@ completion candidates.
 #+end_src
 
 ** Capturing
-*** Templates
+
 #+begin_src emacs-lisp
 (setq org-capture-templates
       '(("i" "Inbox" entry (file "~/org/inbox.org")
@@ -487,7 +512,7 @@ completion candidates.
 #+end_src
 
 ** Agenda
-*** Customizing the agenda view
+
 #+begin_src emacs-lisp
 (setq org-agenda-use-time-grid nil
       org-agenda-skip-scheduled-if-done t
@@ -526,11 +551,13 @@ completion candidates.
 #+end_src
 
 ** Habits
+
 #+begin_src emacs-lisp
 (require 'org-habit)
 #+end_src
 
 ** Keybindings
+
 #+begin_src emacs-lisp
 (bind-key "C-c a" #'org-agenda)
 (bind-key "C-c c" #'org-capture)
@@ -538,6 +565,7 @@ completion candidates.
 #+end_src
 
 ** Literate Programming
+
 #+begin_src emacs-lisp
 (setq org-src-tab-acts-natively t
       org-edit-src-content-indentation 0
@@ -551,31 +579,53 @@ completion candidates.
 #+end_src
 
 ** Expand snippets like "<s"
+
 #+begin_src emacs-lisp
 (require 'org-tempo)
 #+end_src
 
-** Prettification
-#+begin_src emacs-lisp
-(setq
- org-ellipsis " ⤵"
- org-agenda-block-separator 9472)
+** Use visual line breaks
 
-(use-package org-bullets
-  :ensure t
-  :hook (org-mode . org-bullets-mode)
-  :config
-  (setq org-bullets-bullet-list '("◉" "❃" "✿" "✤")))
+#+begin_src emacs-lisp
+(use-package simple
+  :diminish visual-line-mode
+  :hook ((org-mode . visual-line-mode)
+         (org-mode . visual-fill-column-mode)))
 #+end_src
 
-** Visual indentation instead of actual spaces
+** Prettification
+
 #+begin_src emacs-lisp
-(use-package org-indent
-  :hook (org-mode . org-indent-mode)
-  :diminish)
+(setq
+ org-ellipsis "…"
+ org-agenda-block-separator 9472
+ org-hide-emphasis-markers t)
+
+(use-package org-faces
+  :config
+  (let ((fixed-pitch-height 0.91))
+    (custom-theme-set-faces
+     'user
+     '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
+
+     `(org-block ((t (:inherit fixed-pitch :height ,fixed-pitch-height))))
+     '(org-block-begin-line ((t (:inherit org-block))))
+     '(org-block-end-line ((t (:inherit org-block))))
+
+     `(org-code ((t (:inherit fixed-pitch :height ,fixed-pitch-height))))
+     `(org-indent ((t (:inherit (org-hide fixed-pitch) :height ,fixed-pitch-height))))
+     `(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch) :height ,fixed-pitch-height))))
+     `(org-property-value ((t (:inherit fixed-pitch :height ,fixed-pitch-height))) t)
+     `(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch) :height ,fixed-pitch-height))))
+     `(org-table ((t (:inherit fixed-pitch :height ,fixed-pitch-height))))
+     `(org-verbatim ((t (:inherit fixed-pitch :height ,fixed-pitch-height)))))))
+
+(use-package face-remap
+  :hook (org-mode . variable-pitch-mode))
 #+end_src
 
 ** Save org-mode buffers after refiling
+
 #+begin_src emacs-lisp
 (use-package org
   :config
@@ -583,6 +633,7 @@ completion candidates.
 #+end_src
 
 ** org-ql
+
 #+begin_src emacs-lisp
 (use-package org-ql
   :ensure t)
@@ -597,6 +648,7 @@ completion candidates.
 #+end_src
 
 ** org-auto-tangle
+
 #+begin_src emacs-lisp
 (use-package org-auto-tangle
   :ensure t
@@ -605,6 +657,7 @@ completion candidates.
 #+end_src
 
 * Magit
+
 #+begin_src emacs-lisp
 (use-package magit
   :ensure t
@@ -617,6 +670,7 @@ completion candidates.
 #+end_src
 
 * E-Mail
+
 #+begin_src emacs-lisp
 (use-package notmuch
   :ensure t
@@ -634,12 +688,10 @@ completion candidates.
 
 * UI
 ** Themes
-Everybody's got one: their favorite theme. In my case I've always configured at
-least a dark and a light one, and I switch between them based on lighting
-conditions (e.g. when I'm working outside I'm likely to use the light theme).
 
-This is another area where going "all-in" Emacs really shines: Switching your
-theme will conveniently affect *all* of your computing.
+Everybody's got one: their favorite theme. In my case I've always configured at least a dark and a light one, and I switch between them based on lighting conditions (e.g. when I'm working outside I'm likely to use the light theme).
+
+This is another area where going "all-in" Emacs really shines: Switching your theme will conveniently affect *all* of your computing.
 
 #+begin_src emacs-lisp
 (setq custom--inhibit-theme-enable nil)
@@ -675,11 +727,18 @@ theme will conveniently affect *all* of your computing.
 #+end_src
 
 ** Font
+
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(font . "Meslo LG M 12"))
+
+(custom-theme-set-faces
+ 'user
+ '(variable-pitch ((t (:family "Noto Sans" :height 1.1))))
+ '(fixed-pitch ((t (:family "Meslo LG M")))))
 #+end_src
 
 ** Mode-line
+
 #+begin_src emacs-lisp
 (use-package all-the-icons
   :ensure t)
@@ -720,9 +779,8 @@ theme will conveniently affect *all* of your computing.
 #+end_src
 
 ** Remove distractions
-When you're using =unclutter= or similar to hide the mouse pointer, then setting
-=mouse-highlight= to =nil= is a must. Without, e.g. the agenda buffer will still
-keep highlighting the line the now invisible pointer is on.
+
+When you're using =unclutter= or similar to hide the mouse pointer, then setting =mouse-highlight= to =nil= is a must. Without, e.g. the agenda buffer will still keep highlighting the line the now invisible pointer is on.
 
 #+begin_src emacs-lisp
 (diminish 'auto-revert-mode)
@@ -731,6 +789,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Fringe and internal borders
+
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(internal-border-width . 7))
 
@@ -740,20 +799,27 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Line numbers
+
 #+begin_src emacs-lisp
 (use-package display-line-numbers
   :hook (prog-mode . display-line-numbers-mode)
   :custom
   (display-line-numbers-type 'relative)
   :config
+  (custom-theme-set-faces
+   'user
+   '(line-number ((t (:inherit fixed-pitch))) t)
+   '(line-number-current-line ((t (:inherit (line-number fixed-pitch) :weight normal))) t)))
 #+end_src
 
 ** Transparency
+
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(alpha-background . 95))
 #+end_src
 
 ** Scrolling
+
 #+begin_src emacs-lisp
 (setq auto-window-vscroll nil
       fast-but-imprecise-scrolling t
@@ -763,6 +829,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Customize startup
+
 #+begin_src emacs-lisp
 (setq inhibit-startup-screen t
       inhibit-startup-echo-area-message t
@@ -770,6 +837,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** which-key
+
 #+begin_src emacs-lisp
 (use-package which-key
   :ensure t
@@ -779,6 +847,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Buffer display rules
+
 #+begin_src emacs-lisp
 (use-package window
   :config
@@ -796,6 +865,7 @@ keep highlighting the line the now invisible pointer is on.
 
 * Programming
 ** Common
+
 #+begin_src emacs-lisp
 (use-package eldoc
   :diminish eldoc-mode
@@ -808,6 +878,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Flymake
+
 #+begin_src emacs-lisp
 (use-package flymake
   :hook (flymake-project-diagnostics-mode . dkellner/flymake-sort-by-type)
@@ -830,6 +901,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** LSP (eglot)
+
 #+begin_src emacs-lisp
 (use-package eglot
   :after yasnippet
@@ -856,6 +928,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Eshell
+
 #+begin_src emacs-lisp
 (use-package esh-mode
   :config
@@ -870,6 +943,7 @@ keep highlighting the line the now invisible pointer is on.
 
 * Language support
 ** C++
+
 #+begin_src emacs-lisp
 (use-package c++-ts-mode
   :init
@@ -878,24 +952,28 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** CMake
+
 #+begin_src emacs-lisp
 (use-package cmake-mode
   :ensure t)
 #+end_src
 
 ** Docker
+
 #+begin_src emacs-lisp
 (use-package dockerfile-mode
   :ensure t)
 #+end_src
 
 ** Justfile
+
 #+begin_src emacs-lisp
 (use-package just-mode
   :ensure t)
 #+end_src
 
 ** Lisp
+
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
   :ensure t
@@ -903,6 +981,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Emacs Lisp
+
 #+begin_src emacs-lisp
 (use-package macrostep
   :ensure t
@@ -924,6 +1003,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Python
+
 #+begin_src emacs-lisp
 (use-package python
   :init
@@ -931,18 +1011,21 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Go
+
 #+begin_src emacs-lisp
 (use-package go-mode
   :ensure t)
 #+end_src
 
 ** Markdown
+
 #+begin_src emacs-lisp
 (use-package markdown-mode
   :ensure t)
 #+end_src
 
 ** Nix
+
 #+begin_src emacs-lisp
 (use-package nix-mode
   :ensure t
@@ -950,6 +1033,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** PHP, HTML
+
 #+begin_src emacs-lisp
 (use-package web-mode
   :ensure t
@@ -969,6 +1053,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** Rust
+
 #+begin_src emacs-lisp
 (use-package rust-mode
   :ensure t
@@ -985,6 +1070,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** YAML
+
 #+begin_src emacs-lisp
 (use-package yaml-mode
   :ensure t)
@@ -996,6 +1082,7 @@ keep highlighting the line the now invisible pointer is on.
 #+end_src
 
 ** OpenSCAD
+
 #+begin_src emacs-lisp
 (use-package scad-mode
   :ensure t)
@@ -1003,12 +1090,10 @@ keep highlighting the line the now invisible pointer is on.
 
 * Misc
 ** Shutdown and reboot
-Simply running =shutdown -h now= in a terminal will cause Emacs to not shutdown
-properly. For example, the list of recently used files will not be persisted.
 
-=dkellner/prepare-kill-and-run= solves this by placing the actual shutdown
-command at the end of =kill-emacs-hook=. This way it is executed just before
-Emacs would exit normally.
+Simply running =shutdown -h now= in a terminal will cause Emacs to not shutdown properly. For example, the list of recently used files will not be persisted.
+
+=dkellner/prepare-kill-and-run= solves this by placing the actual shutdown command at the end of =kill-emacs-hook=. This way it is executed just before Emacs would exit normally.
 
 #+begin_src emacs-lisp
 (defhydra dkellner/shutdown-or-reboot (:exit t)
@@ -1045,6 +1130,7 @@ saving recently used files, bookmarks, places etc."
 #+end_src
 
 ** Helpful
+
 #+begin_src emacs-lisp
 (use-package helpful
   :ensure t
@@ -1057,6 +1143,7 @@ saving recently used files, bookmarks, places etc."
 #+end_src
 
 ** pdf-tools
+
 #+begin_src emacs-lisp
 (use-package pdf-tools
   :ensure t
@@ -1066,6 +1153,7 @@ saving recently used files, bookmarks, places etc."
 #+end_src
 
 ** diff-hl
+
 #+begin_src emacs-lisp
 (use-package diff-hl
   :ensure t
@@ -1076,6 +1164,7 @@ saving recently used files, bookmarks, places etc."
 #+end_src
 
 ** consult-ssh
+
 #+begin_src emacs-lisp
 (defun dkellner/open-ssh-term ()
   "Run `ssh` for a hosts configured in ~/.ssh/config.
@@ -1086,17 +1175,20 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 #+end_src
 
 ** Make shebang (#!) file executable when saved
+
 #+begin_src emacs-lisp
 (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 #+end_src
 
 ** Better completions for Eshell
+
 #+begin_src emacs-lisp
 (use-package pcmpl-args
   :ensure t)
 #+end_src
 
 ** dired
+
 #+begin_src emacs-lisp
 (use-package dired
   :bind
@@ -1109,6 +1201,7 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 #+end_src
 
 ** hledger-mode
+
 #+begin_src emacs-lisp
 (use-package hledger-mode
   :ensure t
@@ -1121,6 +1214,7 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 #+end_src
 
 ** org-roam
+
 #+begin_src emacs-lisp
 (use-package org-roam
   :ensure t
@@ -1147,12 +1241,13 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 
 * Performance shenanigans
 ** Startup
-*** Inhibit implied frame resizing
+
 #+begin_src emacs-lisp
 (setq frame-inhibit-implied-resize t)
 #+end_src
 
 ** Better support for files with long lines
+
 #+begin_src emacs-lisp
 (setq-default bidi-paragraph-direction 'left-to-right
               bidi-inhibit-bpa t)
@@ -1160,34 +1255,33 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 #+end_src
 
 ** Read bigger chunks from external processes
+
 #+begin_src emacs-lisp
 (setq read-process-output-max (* 1024 1024))
 #+end_src
 
 * Playground
-Often I get quite excited about all the great new packages out there and try
-them out immediately. Sometimes only to find myself forgetting about these new
-additions to my config and then they go unnoticed until I stumple upon them
-again months later.
 
-This section is there to prevent it: I'm adding new packages, snippets
-etc. here for the purpose of reevaluating their usefulness after some time. If
-I don't use it as often as I thought I would, I just discard it
-again. Otherwise, I will move the entire section to a better place.
+Often I get quite excited about all the great new packages out there and try them out immediately. Sometimes only to find myself forgetting about these new additions to my config and then they go unnoticed until I stumple upon them again months later.
+
+This section is there to prevent it: I'm adding new packages, snippets etc. here for the purpose of reevaluating their usefulness after some time. If I don't use it as often as I thought I would, I just discard it again. Otherwise, I will move the entire section to a better place.
 
 ** vlf
+
 #+begin_src emacs-lisp
 (use-package vlf
   :ensure t)
 #+end_src
 
 ** org-tree-slide
+
 #+begin_src emacs-lisp
 (use-package org-tree-slide
   :ensure t)
 #+end_src
 
 ** Embark
+
 #+begin_src emacs-lisp
 (use-package embark
   :ensure t
@@ -1200,6 +1294,7 @@ again. Otherwise, I will move the entire section to a better place.
 #+end_src
 
 ** Eat
+
 #+begin_src emacs-lisp
 (use-package eat
   :ensure t
@@ -1209,12 +1304,14 @@ again. Otherwise, I will move the entire section to a better place.
 #+end_src
 
 ** csv-mode
+
 #+begin_src emacs-lisp
 (use-package csv-mode
   :ensure t)
 #+end_src
 
 ** deadgrep + wgrep
+
 #+begin_src emacs-lisp
 (use-package deadgrep
   :ensure t)
@@ -1224,6 +1321,7 @@ again. Otherwise, I will move the entire section to a better place.
 #+end_src
 
 ** apheleia
+
 #+begin_src emacs-lisp
 (cl-defun apheleia-indent-eglot-managed-buffer
     (&key buffer scratch callback &allow-other-keys)
@@ -1247,6 +1345,7 @@ again. Otherwise, I will move the entire section to a better place.
 #+end_src
 
 ** Sideline
+
 #+begin_src emacs-lisp
 (use-package sideline-flymake
   :ensure t
@@ -1257,8 +1356,8 @@ again. Otherwise, I will move the entire section to a better place.
 #+end_src
 
 ** Sway
-This is a workaround for a bug in Sway
-https://github.com/swaywm/sway/issues/6216 .
+
+This is a workaround for a bug in Sway https://github.com/swaywm/sway/issues/6216 .
 
 #+begin_src emacs-lisp
 (use-package sway
@@ -1275,6 +1374,7 @@ https://github.com/swaywm/sway/issues/6216 .
 #+end_src
 
 ** justl.el
+
 #+begin_src emacs-lisp
 (use-package justl
   :ensure t
@@ -1285,12 +1385,14 @@ https://github.com/swaywm/sway/issues/6216 .
 #+end_src
 
 ** gptel
+
 #+begin_src emacs-lisp
 (use-package gptel
   :ensure t)
 #+end_src
 
 ** Denote
+
 #+begin_src emacs-lisp
 (use-package denote
   :ensure t
@@ -1300,8 +1402,17 @@ https://github.com/swaywm/sway/issues/6216 .
   (denote-known-keywords nil))
 #+end_src
 
+** visual-fill-column
+
+#+begin_src emacs-lisp
+(use-package visual-fill-column
+  :ensure t
+  :hook (org-mode . visual-fill-column-mode))
+#+end_src
+
 * Meta
 ** Private configuration
+
 #+begin_src emacs-lisp
 (load "~/.emacs.d/private.el")
 #+end_src

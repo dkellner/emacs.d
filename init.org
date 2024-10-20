@@ -1283,13 +1283,6 @@ This section is there to prevent it: I'm adding new packages, snippets etc. here
   :ensure t)
 #+end_src
 
-** org-tree-slide
-
-#+begin_src emacs-lisp
-(use-package org-tree-slide
-  :ensure t)
-#+end_src
-
 ** Embark
 
 #+begin_src emacs-lisp

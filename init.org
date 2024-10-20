@@ -742,10 +742,10 @@ keep highlighting the line the now invisible pointer is on.
 ** Line numbers
 #+begin_src emacs-lisp
 (use-package display-line-numbers
+  :hook (prog-mode . display-line-numbers-mode)
   :custom
   (display-line-numbers-type 'relative)
   :config
-  (global-display-line-numbers-mode))
 #+end_src
 
 ** Transparency

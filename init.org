@@ -38,10 +38,10 @@ These packages and functions are used by various other subsections.
     (expand-file-name  "var/eln-cache/" user-emacs-directory))))
 #+end_src
 
-** diminish
+** delight
 
 #+begin_src emacs-lisp
-(use-package diminish
+(use-package delight
   :ensure t)
 #+end_src
 
@@ -196,7 +196,7 @@ Auto-cleanup of recently used files is disabled, because it causes freezes when 
   :ensure t
   :load-path "~/dev/boon"
   :demand t
-  :diminish boon-local-mode
+  :delight boon-local-mode
   :config
   (setq boon-insert-conditions
         '((eq major-mode 'message-mode)
@@ -245,7 +245,7 @@ Auto-cleanup of recently used files is disabled, because it causes freezes when 
   :demand t
   :config
   (yas-global-mode)
-  :diminish yas-minor-mode)
+  :delight yas-minor-mode)
 
 (use-package yasnippet-snippets
   :ensure t)
@@ -424,7 +424,7 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
 #+begin_src emacs-lisp
 (use-package envrc
   :ensure t
-  :diminish
+  :delight
   :config
   (envrc-global-mode 1))
 
@@ -589,7 +589,7 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
 
 #+begin_src emacs-lisp
 (use-package simple
-  :diminish visual-line-mode
+  :delight visual-line-mode
   :hook ((org-mode . visual-line-mode)
          (org-mode . visual-fill-column-mode)))
 #+end_src
@@ -622,6 +622,7 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
      `(org-verbatim ((t (:inherit fixed-pitch :height ,fixed-pitch-height)))))))
 
 (use-package face-remap
+  :delight buffer-face-mode
   :hook (org-mode . variable-pitch-mode))
 #+end_src
 
@@ -654,7 +655,7 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
 (use-package org-auto-tangle
   :ensure t
   :hook (org-mode . org-auto-tangle-mode)
-  :diminish)
+  :delight)
 #+end_src
 
 * Magit
@@ -784,7 +785,6 @@ This is another area where going "all-in" Emacs really shines: Switching your th
 When you're using =unclutter= or similar to hide the mouse pointer, then setting =mouse-highlight= to =nil= is a must. Without, e.g. the agenda buffer will still keep highlighting the line the now invisible pointer is on.
 
 #+begin_src emacs-lisp
-(diminish 'auto-revert-mode)
 (setq mouse-highlight nil
       ring-bell-function 'ignore)
 #+end_src
@@ -842,7 +842,7 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
 #+begin_src emacs-lisp
 (use-package which-key
   :ensure t
-  :diminish
+  :delight
   :config
   (which-key-mode))
 #+end_src
@@ -869,9 +869,9 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
 
 #+begin_src emacs-lisp
 (use-package eldoc
-  :diminish eldoc-mode
+  :delight
   :config
-  (setq eldoc-echo-area-use-multiline-p nil))
+  (global-eldoc-mode +1))
 
 (use-package compile
   :config
@@ -1088,7 +1088,7 @@ I've tried many approaches to correctly set =initializationOptions= for /rust-an
 (use-package highlight-indentation
   :ensure t
   :hook (yaml-mode . highlight-indentation-current-column-mode)
-  :diminish highlight-indentation-current-column-mode)
+  :delight highlight-indentation-current-column-mode)
 #+end_src
 
 ** OpenSCAD
@@ -1229,7 +1229,7 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 (use-package org-roam
   :ensure t
   :hook (after-init . org-roam-setup)
-  :diminish
+  :delight
   :init (setq org-roam-v2-ack t)
   :config
   (setq org-roam-directory "~/org/roam"
@@ -1339,7 +1339,7 @@ This section is there to prevent it: I'm adding new packages, snippets etc. here
 
 (use-package apheleia
   :ensure t
-  :diminish
+  :delight
   :hook ((prog-mode . apheleia-mode))
   :config
   (add-to-list 'apheleia-formatters

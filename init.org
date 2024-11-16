@@ -924,13 +924,17 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
 #+begin_src emacs-lisp
 (use-package eglot
   :after yasnippet
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-sync-connect nil)
+  ;; Disable debug logging for performance:
+  (eglot-events-buffer-config '(:size 0 :format full))
   :config
   (defhydra dkellner/eglot-actions (:exit t)
     "Eglot"
     ("a" #'eglot-code-actions "code actions")
     ("f" #'eglot-format "format")
     ("r" #'eglot-rename "rename"))
-
   :hook ((eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1)))))
 
 (use-package consult-eglot
@@ -1285,7 +1289,16 @@ INITIAL-INPUT can be given as the initial minibuffer input."
 ** Read bigger chunks from external processes
 
 #+begin_src emacs-lisp
-(setq read-process-output-max (* 1024 1024))
+(setq read-process-output-max (* 1024 1024)
+      process-adaptive-read-buffering nil)
+#+end_src
+
+** Don't log JSON RPC events
+
+#+begin_src emacs-lisp
+(use-package jsonrpc
+  :config
+  (fset #'jsonrpc--log-event #'ignore))
 #+end_src
 
 * Playground

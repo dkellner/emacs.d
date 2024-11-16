@@ -864,9 +864,16 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
 (use-package window
   :config
   (setq pop-up-windows nil)
-  (setq display-buffer-base-action '(display-buffer-same-window))
+  (setq display-buffer-base-action
+        '((display-buffer-reuse-window display-buffer-same-window)
+          (reusable-frames . t)))
   (setq display-buffer-alist
-        '(("^CAPTURE-.*"
+        '(("^*just-.*"
+           (display-buffer-reuse-window display-buffer-pop-up-frame)
+           (reusable-frames . t)
+           (dedicated . t)
+           (pop-up-frame-parameters . '(unsplittable . t)))
+          ("^CAPTURE-.*"
            (display-buffer-pop-up-frame)
            (dedicated . t)
            (pop-up-frame-parameters . '(name . "emacs-floating")))

@@ -576,7 +576,8 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
  'org-babel-load-languages
  '((emacs-lisp . t)
    (shell . t)
-   (python . t)))
+   (python . t)
+   (dot . t)))
 #+end_src
 
 ** Expand snippets like "<s"

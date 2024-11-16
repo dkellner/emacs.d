@@ -217,9 +217,6 @@ Auto-cleanup of recently used files is disabled, because it causes freezes when 
   (define-key boon-command-map "Z" 'zap-to-char)
   (define-key boon-command-map ":" 'repeat)
 
-  (define-key boon-forward-search-map "m" 'dkellner/flymake-goto-next-error)
-  (define-key boon-backward-search-map "m" 'dkellner/flymake-goto-prev-error)
-
   (boon-mode))
 #+end_src
 
@@ -708,8 +705,7 @@ This is another area where going "all-in" Emacs really shines: Switching your th
     (load-theme 'sanityinc-tomorrow-day t)
     (custom-theme-set-faces
      'sanityinc-tomorrow-night
-     '(fringe ((t (:background unspecified))))
-     '(org-block ((t (:background unspecified))))))
+     '(fringe ((t (:background unspecified))))))
 
   (defun dkellner/load-dark-theme ()
     (interactive)
@@ -717,8 +713,7 @@ This is another area where going "all-in" Emacs really shines: Switching your th
     (load-theme 'sanityinc-tomorrow-night t)
     (custom-theme-set-faces
      'sanityinc-tomorrow-night
-     '(fringe ((t (:background unspecified))))
-     '(org-block ((t (:background unspecified))))))
+     '(fringe ((t (:background unspecified))))))
 
   (defun dkellner/toggle-theme ()
     (interactive)
@@ -1346,17 +1341,6 @@ This section is there to prevent it: I'm adding new packages, snippets etc. here
   (add-to-list 'apheleia-formatters
                '(eglot-managed . apheleia-indent-eglot-managed-buffer))
   (add-to-list 'apheleia-mode-alist '(c++-ts-mode . eglot-managed)))
-#+end_src
-
-** Sideline
-
-#+begin_src emacs-lisp
-(use-package sideline-flymake
-  :ensure t
-  :diminish sideline-mode
-  :hook (flymake-mode . sideline-mode)
-  :init
-  (setq sideline-backends-right '(sideline-flymake)))
 #+end_src
 
 ** Sway

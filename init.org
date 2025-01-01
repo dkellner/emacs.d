@@ -1110,7 +1110,8 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
   :init
   (setq rustic-lsp-client 'eglot)
   :config
-  (setq rustic-format-on-save nil)
+  (setq rustic-format-on-save nil))
+#+end_src
 
 *** Fix for `initializationOptions`
 

@@ -17,7 +17,10 @@
 I use Nix with the [[https://github.com/nix-community/emacs-overlay][emacs overlay]] to build Emacs including packages directly from =use-package= declarations in this file. Hence I "disable" the included package manager to not accidentally install packages another way.
 
 #+begin_src emacs-lisp
-(setq package-archives nil)
+(use-package package
+  :config
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (package-initialize))
 #+end_src
 
 * Common

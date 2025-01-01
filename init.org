@@ -1083,6 +1083,7 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
 (use-package rustic
   :ensure t
   :after (rust-mode inheritenv)
+  :hook (rustic-mode . (lambda () (electric-pair-mode -1)))
   :init
   (setq rustic-lsp-client 'eglot)
   :config

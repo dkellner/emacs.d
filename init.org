@@ -188,6 +188,14 @@ Auto-cleanup of recently used files is disabled, because it causes freezes when 
 (setq initial-scratch-message nil)
 #+end_src
 
+** Modifier keys for Mac
+
+#+begin_src emacs-lisp
+(setq mac-command-modifier 'control)
+(setq mac-control-modifier 'meta)
+(setq mac-option-modifier 'none)
+#+end_src
+
 * Navigation and editing
 ** Boon: modal editing
 

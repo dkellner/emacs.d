@@ -1551,6 +1551,17 @@ This is a workaround for a bug in Sway https://github.com/swaywm/sway/issues/621
   (undo-tree-auto-save-history nil)
   :config
   (global-undo-tree-mode +1))
+** vterm
+
+#+begin_src emacs-lisp
+(use-package vterm
+  :ensure t
+  :custom
+  (vterm-shell "/opt/homebrew/bin/fish")
+  (vterm-buffer-name-string "vterm %s")
+  (vterm-max-scrollback 10000))
+#+end_src
+
 #+end_src
 
 * Meta

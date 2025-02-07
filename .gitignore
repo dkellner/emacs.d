@@ -3,3 +3,5 @@
 /private.org
 /var/
 /backups/
+/eln-cache/
+/tree-sitter/

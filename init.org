@@ -395,7 +395,9 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
                 "--with-filename "
                 "--line-number "
                 "--search-zip "
-                "--hidden"  ; added by me
+                ;; added by me:
+                "--hidden "
+                "--glob=!.git/* "
                 )))
 #+end_src
 

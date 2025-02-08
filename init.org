@@ -820,11 +820,23 @@ This is another area where going "all-in" Emacs really shines: Switching your th
 
 ** Font
 #+begin_src emacs-lisp
-(set-face-attribute 'default nil :family "Menlo" :height 130)
-(custom-theme-set-faces
- 'user
- '(variable-pitch ((t (:family "Optima" :height 1.3))))
- '(fixed-pitch ((t (:family "Menlo")))))
+(defun dkellner/set-darwin-fonts ()
+  (set-face-attribute 'default nil :family "Menlo" :height 130)
+  (custom-theme-set-faces
+   'user
+   '(variable-pitch ((t (:family "Optima" :height 1.3))))
+   '(fixed-pitch ((t (:family "Menlo"))))))
+
+(defun dkellner/set-default-fonts ()
+  (set-face-attribute 'default nil :family "Meslo LG M" :height 120)
+  (custom-theme-set-faces
+   'user
+   '(variable-pitch ((t (:family "Noto Sans" :height 1.3))))
+   '(fixed-pitch ((t (:family "Meslo LG M"))))))
+
+(if (eq system-type 'darwin)
+    (dkellner/set-darwin-fonts)
+  (dkellner/set-default-fonts))
 #+end_src
 
 ** Icons

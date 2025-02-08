@@ -5,3 +5,4 @@
 /backups/
 /eln-cache/
 /tree-sitter/
+.aider*

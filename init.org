@@ -1582,6 +1582,13 @@ vundo is a more lightweight alternative to undo-tree.
   (vterm-max-scrollback 10000))
 #+end_src
 
+** aider
+#+begin_src emacs-lisp
+(use-package aider
+  :ensure (:host github :repo "tninja/aider.el" :files ("aider.el"))
+  :bind ("C-c m" . 'aider-transient-menu)
+  :config
+  (setq aider-args '("--model" "sonnet")))
 #+end_src
 
 * Meta

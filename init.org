@@ -1044,6 +1044,18 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
   (eglot-booster-mode))
 #+end_src
 
+** Tree-Sitter
+
+#+begin_src emacs-lisp
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+#+end_src
+
 ** Eshell
 
 #+begin_src emacs-lisp

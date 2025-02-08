@@ -1546,18 +1546,14 @@ This is a workaround for a bug in Sway https://github.com/swaywm/sway/issues/621
   :hook (org-mode . visual-fill-column-mode))
 #+end_src
 
-** undo-tree
+** vundo
+vundo is a more lightweight alternative to undo-tree.
 
 #+begin_src emacs-lisp
-(use-package undo-tree
-  :ensure t
-  :delight
-  :custom
-  (undo-tree-visualizer-diff t)
-  (undo-tree-visualizer-timestamps t)
-  (undo-tree-auto-save-history nil)
-  :config
-  (global-undo-tree-mode +1))
+(use-package vundo
+  :ensure t)
+#+end_src
+
 ** vterm
 
 #+begin_src emacs-lisp

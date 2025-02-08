@@ -29,12 +29,12 @@
 ** Bootstrap elpaca
 
 #+begin_src emacs-lisp
-(defvar elpaca-installer-version 0.8)
+(defvar elpaca-installer-version 0.9)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                              :ref nil :depth 1
+                              :ref nil :depth 1 :inherit ignore
                               :files (:defaults "elpaca-test.el" (:exclude "extensions"))
                               :build (:not elpaca--activate-package)))
 (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
@@ -71,11 +71,6 @@
 ;; Enable use-package support.
 (elpaca elpaca-use-package
   (elpaca-use-package-mode))
-
-;; (use-package package
-;;   :config
-;;   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;;   (package-initialize))
 #+end_src
 
 ** Use newer versions of built-in packages
@@ -106,7 +101,7 @@ These packages and functions are used by various other subsections.
 
 #+begin_src emacs-lisp
 (use-package no-littering
-  :ensure t)
+  :ensure (:wait t))
 
 (when (fboundp 'startup-redirect-eln-cache)
   (startup-redirect-eln-cache
@@ -118,14 +113,14 @@ These packages and functions are used by various other subsections.
 
 #+begin_src emacs-lisp
 (use-package delight
-  :ensure t)
+  :ensure (:wait t))
 #+end_src
 
 ** hydra
 
 #+begin_src emacs-lisp
 (use-package hydra
-  :ensure t)
+  :ensure (:wait t))
 #+end_src
 
 ** Run commands in an external terminal

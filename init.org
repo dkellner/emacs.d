@@ -1566,7 +1566,6 @@ vundo is a more lightweight alternative to undo-tree.
 (use-package vterm
   :ensure t
   :custom
-  (vterm-shell "/opt/homebrew/bin/fish")
   (vterm-buffer-name-string "vterm %s")
   (vterm-max-scrollback 10000))
 #+end_src

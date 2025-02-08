@@ -970,18 +970,15 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
         '((display-buffer-reuse-window display-buffer-same-window)
           (reusable-frames . t)))
   (setq display-buffer-alist
-        '(("^*just-.*"
-           (display-buffer-reuse-window display-buffer-pop-up-frame)
-           (reusable-frames . t)
-           (dedicated . t)
-           (pop-up-frame-parameters . '(unsplittable . t)))
-          ("^CAPTURE-.*"
+        '(("^CAPTURE-.*"
            (display-buffer-pop-up-frame)
            (dedicated . t)
-           (pop-up-frame-parameters . '(name . "emacs-floating")))
-          ("^\\*Flymake diagnostics .*"
-           (display-buffer-pop-up-frame)
-           (dedicated . t)))))
+           (pop-up-frame-parameters (name . "emacs-floating")
+                                    (width . 90)
+                                    (height . 30)
+                                    (left . 0.5)
+                                    (top . 0.5)
+                                    (fullscreen . nil))))))
 #+end_src
 
 * Programming

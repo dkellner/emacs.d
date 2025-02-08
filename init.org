@@ -1026,8 +1026,6 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
   :custom
   (eglot-autoshutdown t)
   (eglot-sync-connect nil)
-  ;; Disable debug logging for performance:
-  (eglot-events-buffer-config '(:size 0 :format full))
   :config
   (defhydra dkellner/eglot-actions (:exit t)
     "Eglot"

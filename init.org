@@ -466,14 +466,12 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
 ** project.el
 
 #+begin_src emacs-lisp
-(defun dkellner/open-external-terminal ()
+(defun dkellner/project-vterm ()
   (interactive)
   (let* ((dir (or (project-root (project-current))
                   default-directory))
-         (dir (expand-file-name dir)))
-    (call-process-shell-command
-     (format "alacritty --working-directory=%s" dir)
-     nil 0)))
+         (default-directory (expand-file-name dir)))
+    (vterm)))
 
 (defun dkellner/project-justl ()
   (interactive)
@@ -505,7 +503,7 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
               ("c" . dkellner/project-compile)
               ("r" . consult-ripgrep)
               ("R" . project-query-replace-regexp)
-              ("s" . dkellner/open-external-terminal)
+              ("s" . dkellner/project-vterm)
               ("j" . justl))
   :config
   (setq project-switch-commands
@@ -514,7 +512,7 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
           (project-find-dir "Find directory")
           (project-eshell "Eshell")
           (magit-project-status "Magit" ?g)
-          (dkellner/open-external-terminal "Shell" ?s)
+          (dkellner/project-vterm "Shell" ?s)
           (dkellner/project-justl "Just" ?j))))
 #+end_src
 

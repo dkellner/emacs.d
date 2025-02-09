@@ -46,8 +46,8 @@ the most fun but also hardest tasks. Usually there are at least a dozen
 different packages to consider, try out and integrate into your workflow.
 
 I'm trying to unify different language-dependent solutions using
-[Nix](https://nixos.org/nix/), [direnv](https://direnv.net/) and LSP. For
-Python and Rust this works reasonably well.
+[direnv](https://direnv.net/), LSP and Tree-Sitter. For Python and Rust this
+works reasonably well.
 
 ## Inspirations
 

@@ -535,18 +535,13 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
 ** Basic configuration
 
 #+begin_src emacs-lisp
-(setq org-directory "~/org/"
-      org-agenda-files '("~/org/main.org" "~/org/tickler.org" "~/org/areas/")
+(setq org-directory "~/exobrain/org/"
+      org-agenda-files '("~/exobrain/org/main.org" "~/exobrain/org/tickler.org" "~/exobrain/org/areas/")
       org-refile-use-outline-path 'file
       org-outline-path-complete-in-steps nil
       org-refile-targets '((nil . (:maxlevel . 2))
-                           ("~/org/inbox.org" . (:level . 0))
-                           ("~/org/cookbook.org" . (:level . 0))
-                           ("~/org/pap.org" . (:maxlevel . 1))
-                           (org-agenda-files . (:maxlevel . 2))
-                           ("~/org/calendars/personal.org" . (:level . 0))
-                           ("~/org/calendars/puzzleandplay.org" . (:level . 0))
-                           ("~/org/bookmarks.org" . (:maxlevel . 1)))
+                           ("~/exobrain/org/inbox.org" . (:level . 0))
+                           (org-agenda-files . (:maxlevel . 2)))
       org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
 ;; This list contains tags I want to use in almost any file as they are tied to
@@ -593,9 +588,9 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
 
 #+begin_src emacs-lisp
 (setq org-capture-templates
-      '(("i" "Inbox" entry (file "~/org/inbox.org")
+      '(("i" "Inbox" entry (file "~/exobrain/org/inbox.org")
          "* %?\nCreated: %U")
-        ("I" "Inbox (with link)" entry (file "~/org/inbox.org")
+        ("I" "Inbox (with link)" entry (file "~/exobrain/org/inbox.org")
          "* %?\n%a\nCreated: %U")))
 
 (use-package ol-notmuch
@@ -613,16 +608,7 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
          ((agenda "" ((org-agenda-span 'day)))
           (todo "TODO"
                 ((org-agenda-sorting-strategy
-                  '(priority-down tag-up))))))
-        ("w" "Work"
-         ((agenda "" ((org-agenda-span 'day)))
-          (todo "TODO"
-                ((org-agenda-sorting-strategy
-                  '(priority-down tag-up)))))
-         ((org-agenda-files
-           (append org-agenda-files '("~/org/pap.org" "~/org/calendars/puzzleandplay.org")))
-          (org-super-agenda-groups
-           (append org-super-agenda-groups '((:name "@work" :tag "@work"))))))))
+                  '(priority-down tag-up))))))))
 
 (use-package org-super-agenda
   :ensure t
@@ -1275,6 +1261,7 @@ This allows us to shutting down or rebooting the whole system and still
 saving recently used files, bookmarks, places etc."
   (when (org-clock-is-active)
     (org-clock-out))
+  (shell-command "just -f ~/.exobrain/justfile sync")
   (let ((kill-emacs-hook (append (remove #'server-force-stop kill-emacs-hook)
                                  (list (lambda () (shell-command command))))))
     (save-buffers-kill-emacs)))
@@ -1541,7 +1528,7 @@ This is a workaround for a bug in Sway https://github.com/swaywm/sway/issues/621
   :demand t
   :hook (dired-mode . denote-dired-mode)
   :custom
-  (denote-directory (expand-file-name "~/org/denote"))
+  (denote-directory (expand-file-name "~/exobrain/kb"))
   (denote-known-keywords nil))
 #+end_src
 

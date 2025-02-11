@@ -744,7 +744,8 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
         #'magit-display-buffer-traditional
         magit-commit-show-diff nil
         magit-section-initial-visibility-alist '((stashes . hide)
-                                                 (unpushed . show))))
+                                                 (unpushed . show))
+        magit-format-file-function #'magit-format-file-nerd-icons))
 #+end_src
 
 * E-Mail

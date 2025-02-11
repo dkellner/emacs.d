@@ -1378,6 +1378,7 @@ This is a workaround for a bug in Sway https://github.com/swaywm/sway/issues/621
 
 #+begin_src emacs-lisp
 (use-package sway
+  :if (eq system-type 'gnu/linux)
   :ensure t
   :demand t
   :config

@@ -1578,6 +1578,16 @@ vundo is a more lightweight alternative to undo-tree.
   (setq aider-args '("--model" "sonnet")))
 #+end_src
 
+** age
+#+begin_src emacs-lisp
+(use-package age
+  :ensure t
+  :config
+  (setq age-default-identity "~/exobrain/.id"
+        age-default-recipient '("~/exobrain/.id.pub"))
+  (age-file-enable))
+#+end_src
+
 * Meta
 ** Private configuration
 

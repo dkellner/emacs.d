@@ -806,7 +806,7 @@ This is another area where going "all-in" Emacs really shines: Switching your th
 #+begin_src emacs-lisp :tangle early-init.el
 (if (eq system-type 'darwin)
     (setq dkellner/font-fixed-pitch '(:family "Menlo" :height 130)
-          dkellner/font-variable-pitch '(:family "Optima" :height 130))
+          dkellner/font-variable-pitch '(:family "Optima" :height 160))
   (setq dkellner/font-fixed-pitch '(:family "Meslo LG M" :height 110)
         dkellner/font-variable-pitch '(:family "Noto Sans" :height 130)))
 #+end_src

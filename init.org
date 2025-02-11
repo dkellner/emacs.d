@@ -450,18 +450,6 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
   (electric-indent-mode -1))
 #+end_src
 
-** Electric Pairs
-
-#+begin_src emacs-lisp
-(use-package elec-pair
-  :init
-  (electric-pair-mode +1)
-  :config
-  (setq electric-pair-preserve-balance nil)
-  (setq electric-pair-open-newline-between-pairs t)
-  (setq electric-pair-skip-self nil))
-#+end_src
-
 * Project management
 ** project.el
 
@@ -1187,7 +1175,6 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
 (use-package rustic
   :ensure t
   :after (rust-mode inheritenv)
-  :hook (rustic-mode . (lambda () (electric-pair-mode -1)))
   :init
   (setq rustic-lsp-client 'eglot)
   :config

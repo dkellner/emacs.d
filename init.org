@@ -534,11 +534,13 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
 
 #+begin_src emacs-lisp
 (setq org-directory "~/exobrain/org/"
-      org-agenda-files '("~/exobrain/org/main.org" "~/exobrain/org/tickler.org" "~/exobrain/org/areas/")
+      org-agenda-files (append
+                        (directory-files "~/exobrain/org" t ".org.age")
+                        (directory-files "~/exobrain/org/areas" t ".org.age"))
       org-refile-use-outline-path 'file
       org-outline-path-complete-in-steps nil
       org-refile-targets '((nil . (:maxlevel . 2))
-                           ("~/exobrain/org/inbox.org" . (:level . 0))
+                           ("~/exobrain/org/inbox.org.age" . (:level . 0))
                            (org-agenda-files . (:maxlevel . 2)))
       org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
@@ -586,9 +588,9 @@ I disable the automatic preview for =consult-buffer=, because in combination wit
 
 #+begin_src emacs-lisp
 (setq org-capture-templates
-      '(("i" "Inbox" entry (file "~/exobrain/org/inbox.org")
+      '(("i" "Inbox" entry (file "~/exobrain/org/inbox.org.age")
          "* %?\nCreated: %U")
-        ("I" "Inbox (with link)" entry (file "~/exobrain/org/inbox.org")
+        ("I" "Inbox (with link)" entry (file "~/exobrain/org/inbox.org.age")
          "* %?\n%a\nCreated: %U")))
 
 (use-package ol-notmuch

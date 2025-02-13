@@ -851,7 +851,7 @@ When you're using =unclutter= or similar to hide the mouse pointer, then setting
          (text-mode . display-line-numbers-mode)
          (conf-mode . display-line-numbers-mode))
   :custom
-  (display-line-numbers-type 'relative)
+  (display-line-numbers-type 'visual)
   :config
   (custom-theme-set-faces
    'user

@@ -1472,6 +1472,12 @@ vundo is a more lightweight alternative to undo-tree.
   (age-file-enable))
 #+end_src
 
+** git-timemachine
+#+begin_src emacs-lisp
+(use-package git-timemachine
+  :ensure t)
+#+end_src
+
 * Meta
 ** Private configuration
 #+begin_src emacs-lisp

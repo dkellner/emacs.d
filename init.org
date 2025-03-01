@@ -1478,6 +1478,17 @@ vundo is a more lightweight alternative to undo-tree.
   :ensure t)
 #+end_src
 
+** ultra-scroll
+#+begin_src emacs-lisp
+(use-package ultra-scroll
+  :ensure (:host github :repo "jdtsmith/ultra-scroll")
+  :init
+  (setq scroll-conservatively 101 ; important!
+        scroll-margin 0)
+  :config
+  (ultra-scroll-mode 1))
+#+end_src
+
 * Meta
 ** Private configuration
 #+begin_src emacs-lisp

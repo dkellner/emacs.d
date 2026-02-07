@@ -1,5 +1,9 @@
 # My Emacs configuration
 
+> [!NOTE] 
+> I've merged my Emacs configuration into 
+> [my rig](https://codeberg.org/lekellner/rig).
+
 Simply put, this is my configuration for Emacs. To a greater degree, it is an
 ongoing attempt to discover how my ideal computing environment should look
 like.
